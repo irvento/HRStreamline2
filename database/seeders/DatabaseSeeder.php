@@ -16,7 +16,10 @@ class DatabaseSeeder extends Seeder
     {
         // Clear the table before inserting
         DB::table('users')->truncate();
-    
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        User::truncate(); // Truncate users table
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+        
         DB::table('users')->insert([
             [
                 'name' => 'admin',
