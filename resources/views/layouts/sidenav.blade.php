@@ -17,6 +17,11 @@
                 </x-nav-link>
             </li>
             <!-- Add more links as needed -->
+            <li>
+                <x-nav-link :href="route('employee')" :active="request()->routeIs('employee')">
+                    {{ __('Employee') }}
+                </x-nav-link>
+            </li>
         </ul>
     </nav>
 </div>
