@@ -36,39 +36,6 @@
             <main>
                 <div class="container-fluid">
                     <div class="column">
-                        <!-- Sidebar -->
-                        <div class="col-md-3 col-lg-2 d-md-block bg-light sidebar vh-100">
-                            <div class="position-sticky p-3">
-                                <h4 class="text-primary mb-4">Navigation</h4>
-                                <ul class="nav flex-column">
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link text-dark">
-                                            <i class="fas fa-home me-2"></i> Dashboard
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link text-dark">
-                                            <i class="fas fa-user me-2"></i> Profile
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link text-dark">
-                                            <i class="fas fa-cogs me-2"></i> Settings
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link text-dark">
-                                            <i class="fas fa-chart-bar me-2"></i> Reports
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link text-dark">
-                                            <i class="fas fa-question-circle me-2"></i> Help
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
 
                         <!-- Main Content -->
                         <div class="col-md-9 col-lg-10 ms-sm-auto px-md-4 py-4">

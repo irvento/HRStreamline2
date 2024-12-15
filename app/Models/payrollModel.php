@@ -6,5 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class payrollModel extends Model
 {
-    //
+    protected $table = 'tbl_salary'
+;
 }
