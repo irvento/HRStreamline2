@@ -1,5 +1,5 @@
-<nav x-data="{ open: false }"
-<div class="sticky top-0 bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-700 z-20 pb-2">
+<nav x-data="{ open: false }" <div
+    class="sticky top-0 bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-700 z-20 pb-2">
     <!-- Primary Navigation Menu -->
     <div class="px-4 sm:px-6 lg:px-8">
         <div class="flex justify-end h-16">
@@ -24,6 +24,10 @@
 
                         <x-slot name="content">
                             <x-dropdown-link :href="route('profile.edit')">
+                                {{ __('Account') }}
+                            </x-dropdown-link>
+
+                            <x-dropdown-link :href="route('profile-information')">
                                 {{ __('Profile') }}
                             </x-dropdown-link>
 
