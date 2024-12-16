@@ -15,7 +15,6 @@ Route::get('/', function () {
 });
 
 
-
 Route::middleware('auth')->group(function () {
     Route::get('/account', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/account', [ProfileController::class, 'update'])->name('profile.update');
@@ -30,14 +29,16 @@ require __DIR__ . '/auth.php';
 
 
 
-//EMPLOYEE ROUTES
-Route::get('/employees', [employeeController::class, 'index'])->name('employees.index');
-Route::get('/employees/create', [employeeController::class, 'create'])->name('employees.create');
-Route::post('/employees', [employeeController::class, 'store'])->name('employees.store');
-Route::get('/employees/{id}/edit', [employeeController::class, 'edit'])->name('employees.edit');
-Route::put('/employees/{id}', [employeeController::class, 'update'])->name('employees.update');
-Route::delete('/employees/{id}', [employeeController::class, 'destroy'])->name('employees.destroy');
-Route::get('/employee', [employee_user_viewController::class, 'show'])->middleware('auth')->name('employee');
+Route::get('/employees', [EmployeeController::class, 'index'])->name('employees.index')->middleware('auth');
+Route::get('/employees', [employeeController::class, 'index'])->name('employees')->middleware('auth');
+Route::get('/employees/create', [employeeController::class, 'create'])->name('employees.create')->middleware('auth');
+Route::post('/employees', action: [employeeController::class, 'store'])->name('employees.store')->middleware('auth');
+Route::get('/employees/{id}/edit', [employeeController::class, 'edit'])->name('employees.edit')->middleware('auth');
+Route::put('/employees/{id}', [employeeController::class, 'update'])->name('employees.update')->middleware('auth');
+Route::delete('/employees/{id}', [employeeController::class, 'destroy'])->name('employees.destroy')->middleware('auth');
+Route::get('/employees/{id}', [EmployeeController::class, 'show'])->name('employees.show');
+
+
 
 //PROFILE ROUTES
 Route::get('/profile', [employee_user_viewController::class, 'index'])->name('profile-information')->middleware('auth');
@@ -50,17 +51,36 @@ Route::get('/payroll', [payrollController::class, 'index'])->name('payroll')->mi
 Route::get('/performance', [performanceController::class, 'index'])->name('performance')->middleware('auth');
 
 
+
+
+
+
+
+//ADMIN
+    Route::middleware(['role:admin'])->group(function () {
+        // Define your admin routes here
+        Route::get('/admin/dashboard', function () {
+            return view('dashboard');});
+    });
+//MANAGER
+    Route::middleware(['role:manager'])->group(function () {
+        // Define your manager routes here
+        Route::get('/manager/dashboard', function () {
+            return view('dashboard');});
+    });
+//USER
+    Route::middleware(['role:user'])->group(function () {
+        // Define your user routes here
+        Route::get('/user/dashboard', function () {
+            return view('dashboard');});
+    });
+    
+    
 //DASHBOARD ROUTES
 
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-Route::get('/manager/dashboard', function () {
-    return view('dashboard');
+
 });
-Route::get('/admin/dashboard', function () {
-    return view('dashboard');
-});
+

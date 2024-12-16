@@ -17,11 +17,17 @@
                 </x-nav-link>
             </li>
             <!-- Add more links as needed -->
-            <li>
-                <x-nav-link :href="route('employee')" :active="request()->routeIs('employee')">
-                    {{ __('Employee') }}
-                </x-nav-link>
-            </li>
+            
+            
+            <!-- Show Employee Tab only if the user is admin -->
+            @if(Auth::user()->role === 'admin' || Auth::user()->role === 'manager' )
+                <li>
+                    <x-nav-link :href="route('employees')" :active="request()->routeIs('employees')">
+                        {{ __('Employee') }}
+                    </x-nav-link>
+                </li>
+            @endif
+
             <li>
                 <x-nav-link :href="route('payroll')" :active="request()->routeIs('payroll')">
                     {{ __('Payroll') }}
