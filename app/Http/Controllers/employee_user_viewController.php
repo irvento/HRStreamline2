@@ -20,21 +20,25 @@ class employee_user_viewController extends Controller
     }
 
     public function index()
-    {
-        // Fetch the logged-in user
-        $user = Auth::user();
-    
-        // Find the employee data that corresponds to the logged-in user
-        $employee = employee_user_viewModel::where('user_id', $user->id)->first();
-    
-        // Check if the user ID matches the employee's user_id
-        if ($user->id === $employee->user_id) {
-            // Pass the employee data to the view
-            return view('profile.profile-information', data: ['employee' => $employee]);
-        }
-    
-        // If no match is found, return a suitable response (e.g., error or redirect)
-        return redirect()->route('dashboard')->withErrors('Employee data not found or access denied.');
+{
+    // Get the logged-in user
+    $user = auth()->user();
+
+    if (!$user) {
+        // Handle case where user is not logged in
+        return redirect()->route('login')->with('error', 'You need to log in first.');
     }
+
+    // Find the employee data that corresponds to the logged-in user
+    $employee = employee_user_viewModel::where('user_id', $user->id)->first();
+
+    if (!$employee) {
+        // Redirect to create employee if no employee record is found
+        return redirect()->route('employees.create')->with('info', 'No employee record found. Please create one.');
+    }
+
+    // Pass the employee data to the view
+    return view('profile.profile-information', ['employee' => $employee]);
+}
 
 }

@@ -6,11 +6,24 @@
         </h2>
     </x-slot>
 
+
+        
     <div class="py-12 bg-gray-100 dark:bg-gray-900 min-h-screen">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+     
+
             <!-- Profile Card -->
             <div class="p-6 bg-white dark:bg-gray-800 shadow-lg rounded-lg">
-                <h1 class="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-6">Employee Details</h1>
+ 
+                    @if ($employee->employee_id == null){
+                            <!-- Link to Create New Self Employee -->
+                            <a href="{{ route('employees.create') }}" class="bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600">
+                                Add Information
+                            </a>
+                    }
+                        
+                    @else{
+                        <h1 class="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-6">Employee Details</h1>
 
                 <!-- Name Section -->
                 <div class="mb-8">
@@ -22,7 +35,7 @@
                         <p class="text-gray-600 dark:text-gray-400 mt-4">Full Name: <span class="font-semibold text-gray-800 dark:text-gray-100">{{$employee->full_name}}</span></p>
                     </div>
                 </div>
-    <br><br>
+                <br><br>
                 <!-- Address Section -->
                 <div class="mb-8">
                     <h2 class="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-4">Address</h2>
@@ -52,6 +65,10 @@
                 <div>
                     <p class="text-gray-600 dark:text-gray-400">Employee ID: <span class="font-semibold text-gray-800 dark:text-gray-100">{{$employee->employee_id}}</span></p>
                 </div>
+                    }
+                        
+                    @endif
+                
             </div>
         </div>
     </div>

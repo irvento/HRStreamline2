@@ -15,10 +15,7 @@
                 </div>
             @endif
 
-            <!-- Link to Create New Employee -->
-            <a href="{{ route('employees.create') }}" class="bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600">
-                Add New Employee
-            </a>
+           
 
             <!-- Employee Table -->
             <div class="mt-6 bg-white dark:bg-gray-800 shadow-md rounded-lg overflow-hidden">
