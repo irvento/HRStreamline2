@@ -14,11 +14,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-
 
 Route::middleware('auth')->group(function () {
     Route::get('/account', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -36,13 +31,14 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-
-Route::get('/employees', [employeeController::class, 'index'])->name('employee')->middleware('auth');
+Route::get('/employees', [EmployeeController::class, 'index'])->name('employees.index')->middleware('auth');
+Route::get('/employees', [employeeController::class, 'index'])->name('employees')->middleware('auth');
 Route::get('/employees/create', [employeeController::class, 'create'])->name('employees.create')->middleware('auth');
 Route::post('/employees', action: [employeeController::class, 'store'])->name('employees.store')->middleware('auth');
 Route::get('/employees/{id}/edit', [employeeController::class, 'edit'])->name('employees.edit')->middleware('auth');
 Route::put('/employees/{id}', [employeeController::class, 'update'])->name('employees.update')->middleware('auth');
 Route::delete('/employees/{id}', [employeeController::class, 'destroy'])->name('employees.destroy')->middleware('auth');
+Route::get('/employees/{id}', [EmployeeController::class, 'show'])->name('employees.show');
 
 
 
@@ -54,7 +50,29 @@ Route::get('/leaves', [leavesController::class, 'index'])->name('leaves')->middl
 Route::get('/payroll', [payrollController::class, 'index'])->name('payroll')->middleware('auth');
 Route::get('/performance', [performanceController::class, 'index'])->name('performance')->middleware('auth');
 
-Route::get('/manager/dashboard', function () {
-    return view('dashboard');});
-Route::get('/admin/dashboard', function () {
-    return view('dashboard');});
+
+
+
+
+
+//ADMIN
+    Route::middleware(['role:admin'])->group(function () {
+        // Define your admin routes here
+        Route::get('/admin/dashboard', function () {
+            return view('dashboard');});
+    });
+//MANAGER
+    Route::middleware(['role:manager'])->group(function () {
+        // Define your manager routes here
+        Route::get('/manager/dashboard', function () {
+            return view('dashboard');});
+    });
+//USER
+    Route::middleware(['role:user'])->group(function () {
+        // Define your user routes here
+        Route::get('/user/dashboard', function () {
+            return view('dashboard');});
+    });
+    
+    
+    
