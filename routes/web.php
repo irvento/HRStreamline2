@@ -28,9 +28,7 @@ Route::middleware('auth')->group(function () {
 
 });
 
-Route::get('/employee', function () {
-    return view('employee');
-})->middleware(['auth', 'verified'])->name('employee');
+
 
 require __DIR__.'/auth.php';
 
@@ -47,7 +45,7 @@ Route::put('/employees/{id}', [employeeController::class, 'update'])->name('empl
 Route::delete('/employees/{id}', [employeeController::class, 'destroy'])->name('employees.destroy');
 
 
-Route::get('/employee', [employee_user_viewController::class, 'show'])->middleware('auth');
+Route::get('/employee', [employee_user_viewController::class, 'show'])->middleware('auth')->name('employee');
 
 Route::get('/profile', [employee_user_viewController::class, 'index'])->name('profile-information')->middleware('auth');
 

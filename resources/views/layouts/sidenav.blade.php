@@ -22,6 +22,31 @@
                     {{ __('Employee') }}
                 </x-nav-link>
             </li>
+            <li>
+                <x-nav-link :href="route('payroll')" :active="request()->routeIs('payroll')">
+                    {{ __('Payroll') }}
+                </x-nav-link>
+            </li>
+            <li>
+                <x-nav-link :href="route('leaves')" :active="request()->routeIs('leaves')">
+                    {{ __('Leaves') }}
+                </x-nav-link>
+            </li>
+            <li>
+                <x-nav-link :href="route('attendance')" :active="request()->routeIs('attendance')">
+                    {{ __('Attendance') }}
+                </x-nav-link>
+            </li>
+            <li>
+                <x-nav-link :href="route('performance')" :active="request()->routeIs('performance')">
+                    {{ __('Performance') }}
+                </x-nav-link>
+            </li>
+            <li>
+                <x-nav-link :href="route('department')" :active="request()->routeIs('department')">
+                    {{ __('Department') }}
+                </x-nav-link>
+            </li>
         </ul>
     </nav>
 </div>
