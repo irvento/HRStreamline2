@@ -37,15 +37,14 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 
-Route::get('/employees', [employeeController::class, 'index'])->name('employees.index');
-Route::get('/employees/create', [employeeController::class, 'create'])->name('employees.create');
-Route::post('/employees', [employeeController::class, 'store'])->name('employees.store');
-Route::get('/employees/{id}/edit', [employeeController::class, 'edit'])->name('employees.edit');
-Route::put('/employees/{id}', [employeeController::class, 'update'])->name('employees.update');
-Route::delete('/employees/{id}', [employeeController::class, 'destroy'])->name('employees.destroy');
+Route::get('/employees', [employeeController::class, 'index'])->name('employee')->middleware('auth');
+Route::get('/employees/create', [employeeController::class, 'create'])->name('employees.create')->middleware('auth');
+Route::post('/employees', action: [employeeController::class, 'store'])->name('employees.store')->middleware('auth');
+Route::get('/employees/{id}/edit', [employeeController::class, 'edit'])->name('employees.edit')->middleware('auth');
+Route::put('/employees/{id}', [employeeController::class, 'update'])->name('employees.update')->middleware('auth');
+Route::delete('/employees/{id}', [employeeController::class, 'destroy'])->name('employees.destroy')->middleware('auth');
 
 
-Route::get('/employee', [employee_user_viewController::class, 'show'])->middleware('auth')->name('employee');
 
 Route::get('/profile', [employee_user_viewController::class, 'index'])->name('profile-information')->middleware('auth');
 

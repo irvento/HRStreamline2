@@ -13,7 +13,7 @@ class employeeController extends Controller
     public function index()
     {
         $employees = employeeModel::all();
-        return view('employees.index', compact('employees'));
+        return view('employee',data: ['employees'=>$employees]);
     }
 
     // Show the form for creating a new employee
