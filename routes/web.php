@@ -25,11 +25,9 @@ Route::middleware('auth')->group(function () {
 
 
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+
 
 Route::get('/employees', [EmployeeController::class, 'index'])->name('employees.index')->middleware('auth');
 Route::get('/employees', [employeeController::class, 'index'])->name('employees')->middleware('auth');
@@ -42,13 +40,16 @@ Route::get('/employees/{id}', [EmployeeController::class, 'show'])->name('employ
 
 
 
+//PROFILE ROUTES
 Route::get('/profile', [employee_user_viewController::class, 'index'])->name('profile-information')->middleware('auth');
 
+//ROUTES TO BE CLASSIFIED
 Route::get('/department', [departmentController::class, 'index'])->name('department')->middleware('auth');
 Route::get('/attendance', [attendanceController::class, 'index'])->name('attendance')->middleware('auth');
 Route::get('/leaves', [leavesController::class, 'index'])->name('leaves')->middleware('auth');
 Route::get('/payroll', [payrollController::class, 'index'])->name('payroll')->middleware('auth');
 Route::get('/performance', [performanceController::class, 'index'])->name('performance')->middleware('auth');
+
 
 
 
@@ -75,4 +76,11 @@ Route::get('/performance', [performanceController::class, 'index'])->name('perfo
     });
     
     
-    
+//DASHBOARD ROUTES
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+});
+
