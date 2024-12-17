@@ -61,12 +61,25 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/leaves/{leave}', [leavesController::class, 'show'])->name('leaves.show');
 });
 
+Route::middleware(['auth'])->group(function () {
+    // Show the attendance form
+    Route::get('/attendance', [attendanceController::class, 'index'])->name('attendance.index');
+
+    // Log in (Clock In)
+    Route::post('/attendance/login', [attendanceController::class, 'login'])->name('attendance.login');
+
+    // Log out (Clock Out)
+    Route::post('/attendance/logout', [attendanceController::class, 'logout'])->name('attendance.logout');
+
+    // Show attendance history
+    Route::get('/attendance/history', [attendanceController::class, 'showAttendance'])->name('attendance.history');
+});
+
 //PROFILE ROUTES
 Route::get('/profile', [employee_user_viewController::class, 'index'])->name('profile-information')->middleware('auth');
 
 
 //ROUTES TO BE CLASSIFIED
-Route::get('/attendance', [attendanceController::class, 'index'])->name('attendance')->middleware('auth');
 Route::get('/performance', [performanceController::class, 'index'])->name('performance')->middleware('auth');
 
 

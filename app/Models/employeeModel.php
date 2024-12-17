@@ -17,4 +17,10 @@ class employeeModel extends Model
         'address_line_1', 'address_line_2', 'city', 'state', 
         'postal_code', 'country', 'contact1'
     ];
+
+    // Relationship to the user
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
 }
