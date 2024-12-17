@@ -40,11 +40,20 @@ Route::put('/employees/{id}', [employeeController::class, 'update'])->name('empl
 Route::delete('/employees/{id}', [employeeController::class, 'destroy'])->name('employees.destroy')->middleware('auth');
 Route::get('/employees/{id}', [EmployeeController::class, 'show'])->name('employees.show');
 
-
+Route::middleware('auth')->group(function () {
+    // Department Routes
+    Route::get('/department', [departmentController::class, 'index'])->name('department.index');
+    Route::get('/department/create', [departmentController::class, 'create'])->name('department.create');
+    Route::post('/department', [departmentController::class, 'store'])->name('department.store');
+    Route::get('/department/{id}/edit', [departmentController::class, 'edit'])->name('department.edit');
+    Route::put('/department/{id}', [departmentController::class, 'update'])->name('department.update');
+    Route::delete('/department/{id}', [departmentController::class, 'destroy'])->name('department.destroy');
+    Route::get('/department/{id}/delete', [departmentController::class, 'showDeleteConfirmation'])->name('department.delete_confirmation');
+    
+});
 
 Route::get('/profile', [employee_user_viewController::class, 'index'])->name('profile-information')->middleware('auth');
 
-Route::get('/department', [departmentController::class, 'index'])->name('department')->middleware('auth');
 Route::get('/attendance', [attendanceController::class, 'index'])->name('attendance')->middleware('auth');
 Route::get('/leaves', [leavesController::class, 'index'])->name('leaves')->middleware('auth');
 Route::get('/payroll', [payrollController::class, 'index'])->name('payroll')->middleware('auth');
