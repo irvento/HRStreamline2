@@ -34,7 +34,7 @@
                 </x-nav-link>
             </li>
             <li>
-                <x-nav-link :href="route('leaves')" :active="request()->routeIs('leaves')">
+                <x-nav-link :href="route('leaves.index')" :active="request()->routeIs('leaves.index')">
                     {{ __('Leaves') }}
                 </x-nav-link>
             </li>

@@ -51,14 +51,22 @@ Route::middleware('auth')->group(function () {
     
 });
 
+Route::middleware(['auth'])->group(function () {
+    Route::get('/leaves', [leavesController::class, 'index'])->name('leaves.index');
+    Route::get('/leaves/create', [leavesController::class, 'create'])->name('leaves.create');
+    Route::post('/leaves', [leavesController::class, 'store'])->name('leaves.store');
+    Route::get('/leaves/{leave}/edit', [leavesController::class, 'edit'])->name('leaves.edit');
+    Route::put('/leaves/{leave}', [leavesController::class, 'update'])->name('leaves.update');
+    Route::delete('/leaves/{leave}', [leavesController::class, 'destroy'])->name('leaves.destroy');
+    Route::get('/leaves/{leave}', [leavesController::class, 'show'])->name('leaves.show');
+});
+
 //PROFILE ROUTES
 Route::get('/profile', [employee_user_viewController::class, 'index'])->name('profile-information')->middleware('auth');
 
 
 //ROUTES TO BE CLASSIFIED
 Route::get('/attendance', [attendanceController::class, 'index'])->name('attendance')->middleware('auth');
-Route::get('/leaves', [leavesController::class, 'index'])->name('leaves')->middleware('auth');
-
 Route::get('/performance', [performanceController::class, 'index'])->name('performance')->middleware('auth');
 
 
