@@ -54,11 +54,8 @@ Route::middleware('auth')->group(function () {
 //PROFILE ROUTES
 Route::get('/profile', [employee_user_viewController::class, 'index'])->name('profile-information')->middleware('auth');
 
-<<<<<<< HEAD
-=======
+
 //ROUTES TO BE CLASSIFIED
-Route::get('/department', [departmentController::class, 'index'])->name('department')->middleware('auth');
->>>>>>> d766fc09e9e42904797729396fe5a8384766bcb9
 Route::get('/attendance', [attendanceController::class, 'index'])->name('attendance')->middleware('auth');
 Route::get('/leaves', [leavesController::class, 'index'])->name('leaves')->middleware('auth');
 
