@@ -5,7 +5,7 @@
         </h2>
     </x-slot>
 
-    <div class="w-full mt-8">
+    <div x-data="{ showModal: false, deleteUrl: '', departmentName: '' }" class="w-full mt-8">
         <!-- Search Bar -->
         <div class="mb-4 flex justify-between items-center">
             <form method="GET" action="{{ route('department.index') }}" class="flex gap-4 items-center">
@@ -39,10 +39,11 @@
                                 <i class="bi bi-pencil"></i> Edit
                             </a>
                             <!-- Delete Button -->
-                            <a href="{{ route('department.delete_confirmation', $department->department_id) }}" 
+                            <button 
+                                @click="showModal = true; deleteUrl = '{{ route('department.destroy', $department->department_id) }}'; departmentName = '{{ $department->department_name }}';"
                                 class="px-4 py-2 text-sm text-white bg-red-500 rounded-lg hover:bg-red-600 transition">
                                 <i class="bi bi-trash"></i> Delete
-                            </a>
+                            </button>
                         </div>
                     </div>
                 @endforeach
@@ -55,31 +56,29 @@
         <div class="mt-4">
             {{ $departments->links('pagination::tailwind') }}
         </div>
-    </div>
 
-    <!-- Delete Confirmation Modal -->
-    @if(session('delete_id'))
-        <div class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
-            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg max-w-sm w-full p-6">
-                <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">Delete Department</h2>
-                <p class="text-gray-600 dark:text-gray-400 mb-6">
-                    Are you sure you want to delete the department <strong>{{ session('delete_name') }}</strong>? This action cannot be undone.
+        <!-- Delete Confirmation Modal -->
+        <div x-show="showModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+            <div class="w-full max-w-sm p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
+                <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">Confirm Deletion</h2>
+                <p class="text-sm text-gray-600 dark:text-gray-400 mb-6">
+                    Are you sure you want to delete the department <strong x-text="departmentName"></strong>? This action cannot be undone.
                 </p>
-                <form action="{{ route('department.destroy', session('delete_id')) }}" method="POST">
-                    @csrf
-                    @method('DELETE')
-                    <div class="flex justify-end gap-4">
-                        <button type="button" class="px-4 py-2 text-sm text-gray-800 dark:text-gray-200 bg-gray-300 dark:bg-gray-700 rounded-lg hover:bg-gray-400 transition" 
-                            onclick="window.location.href='{{ route('department.index') }}'">
-                            Cancel
-                        </button>
+                <div class="flex justify-end gap-4">
+                    <button @click="showModal = false" 
+                        class="px-4 py-2 text-sm text-gray-800 bg-gray-200 rounded-lg hover:bg-gray-300 transition">
+                        Cancel
+                    </button>
+                    <form :action="deleteUrl" method="POST" class="inline">
+                        @csrf
+                        @method('DELETE')
                         <button type="submit" 
                             class="px-4 py-2 text-sm text-white bg-red-500 rounded-lg hover:bg-red-600 transition">
-                            Delete
+                            Confirm Delete
                         </button>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
-    @endif
+    </div>
 </x-app-layout>
