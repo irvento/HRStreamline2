@@ -4,13 +4,13 @@
             {{ __('Salaries') }}
         </h2>
     </x-slot>
-  
-   
+
+
     <div x-data="{ activeTab: 'Salary Type', showModal: false }" class="mb-40">
-       <!-- Tab Navigation -->
+        <!-- Tab Navigation -->
         <ul
             class="flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400">
-            <template x-for="tab in ['Salary Type', 'Payment Type', 'Settings', 'Contacts']" :key="tab">
+            <template x-for="tab in ['Salary Type', 'Payment Type']" :key="tab">
                 <li class="me-2">
                     <a href="#" @click.prevent="activeTab = tab" :aria-current="activeTab === tab ? 'page' : false"
                         :class="{
@@ -25,9 +25,9 @@
                 </li>
             </template>
         </ul>
-     <!-- Salary Type Tab Content -->
+        <!-- Salary Type Tab Content -->
         <div class="mt-4">
-       
+
             <div x-show="activeTab === 'Salary Type'" class="p-4 bg-white dark:bg-gray-800 rounded-lg shadow">
 
                 <div x-data="{ modalIsOpen: false }" class="flex justify-end mb-4">
@@ -37,64 +37,81 @@
                         Add New Salary
                     </button>
                     <!-- Modal -->
-                    <div x-cloak x-show="modalIsOpen" x-transition.opacity.duration.200ms
+                    <div x-cloak x-show="modalIsOpen" x-transition.opacity.duration.300ms
                         x-trap.inert.noscroll="modalIsOpen" @keydown.esc.window="modalIsOpen = false"
                         @click.self="modalIsOpen = false"
-                        class="fixed inset-0 z-30 flex items-end justify-center bg-black/20 p-4 pb-8 backdrop-blur-md sm:items-center lg:p-8"
+                        class="fixed inset-0 z-40 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4"
                         role="dialog" aria-modal="true" aria-labelledby="modalTitle">
 
                         <!-- Modal Dialog -->
-                        <div x-show="modalIsOpen"
-                            x-transition:enter="transition ease-out duration-200 delay-100 motion-reduce:transition-opacity"
-                            x-transition:enter-start="opacity-0 scale-50" x-transition:enter-end="opacity-100 scale-100"
-                            class="flex max-w-lg flex-col gap-4 overflow-hidden rounded-md border border-neutral-300 bg-white text-neutral-600 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-300">
+                        <div x-show="modalIsOpen" x-transition:enter="transition ease-out duration-300"
+                            x-transition:enter-start="opacity-0 translate-y-8"
+                            x-transition:enter-end="opacity-100 translate-y-0"
+                            class="relative w-full max-w-lg rounded-xl bg-white shadow-xl dark:bg-gray-800 text-gray-700 dark:text-gray-300">
 
-                            <!-- Dialog Header -->
+                            <!-- Header -->
                             <div
-                                class="flex items-center justify-between border-b border-neutral-300 bg-neutral-50/60 p-4 dark:border-neutral-700 dark:bg-neutral-950/20">
-                                <h3 id="modalTitle"
-                                    class="font-semibold tracking-wide text-neutral-900 dark:text-white">Add New Salary
-                                </h3>
-                                <button @click="modalIsOpen = false" aria-label="close modal">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"
-                                        stroke="currentColor" fill="none" stroke-width="1.4" class="w-5 h-5">
+                                class="flex items-center justify-between bg-gradient-to-r from-blue-500 to-blue-700 p-4 rounded-t-xl">
+                                <h3 id="modalTitle" class="text-lg font-semibold text-white">Add New Salary</h3>
+                                <button @click="modalIsOpen = false" aria-label="close modal"
+                                    class="text-white hover:text-gray-300">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                        stroke="currentColor" stroke-width="1.5" class="w-6 h-6">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                                     </svg>
                                 </button>
                             </div>
 
-                            <!-- Form to Add Salary -->
-                            <form action="{{ route('salaries.store') }}" method="POST">
+                            <!-- Form -->
+                            <form action="{{ route('salaries.store') }}" method="POST" class="p-6 space-y-4">
                                 @csrf
-                                <div class="mt-4">
-                                    <label for="salary_grade" class="block text-gray-700 dark:text-gray-300">Salary
-                                        Grade</label>
+                                <!-- Salary Grade -->
+                                <div>
+                                    <label for="salary_grade" class="block text-sm font-medium">Salary Grade</label>
                                     <input type="text" name="salary_grade" id="salary_grade"
-                                        class="w-full p-2 mt-2 border border-gray-300 dark:border-gray-600 rounded-md"
-                                        required>
+                                        class="mt-1 w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 placeholder-gray-400 text-black"
+                                        placeholder="Enter salary grade" required>
                                 </div>
-                                <div class="mt-4">
-                                    <label for="salary_amount" class="block text-gray-700 dark:text-gray-300">Salary
-                                        Amount</label>
+
+                                <!-- Salary Amount -->
+                                <div>
+                                    <label for="salary_amount" class="block text-sm font-medium">Salary Amount</label>
                                     <input type="number" name="salary_amount" id="salary_amount"
-                                        class="w-full p-2 mt-2 border border-gray-300 dark:border-gray-600 rounded-md"
-                                        required>
+                                        class="mt-1 w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 placeholder-gray-400 text-black"
+                                        placeholder="Enter salary amount" required>
                                 </div>
-                                <div class="mt-4">
-                                    <label for="payment_frequency_id"
-                                        class="block text-gray-700 dark:text-gray-300">Payment Frequency ID</label>
-                                    <input type="text" name="payment_frequency_id" id="payment_frequency_id"
-                                        class="w-full p-2 mt-2 border border-gray-300 dark:border-gray-600 rounded-md"
-                                        required>
+
+                                <!-- Payment Frequency Dropdown -->
+                                <div>
+                                    <label for="payment_frequency_id" class="block text-sm font-medium">Payment
+                                        Frequency</label>
+                                    <select name="payment_frequency_id" id="payment_frequency_id"
+                                        class="mt-1 w-full rounded-lg border-gray-300 text-gray-500 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                                        @change="(e) => e.target.classList.add('text-black')" required>
+                                        <option value="" disabled selected>Select Payment Frequency</option>
+                                        @foreach ($paymentFrequencies as $frequency)
+                                            <option value="{{ $frequency->payment_frequency_id }}" class="text-black">
+                                                {{ $frequency->payment_name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
                                 </div>
-                                <div class="mt-6 text-right">
+
+                                <!-- Footer Buttons -->
+                                <div class="flex justify-end gap-3 mt-6">
+                                    <button type="button" @click="modalIsOpen = false"
+                                        class="px-4 py-2 text-sm font-medium text-gray-600 bg-gray-200 rounded-lg hover:bg-gray-300 focus:ring-2 focus:ring-gray-400">
+                                        Cancel
+                                    </button>
                                     <button type="submit"
-                                        class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">Add
-                                        Salary</button>
+                                        class="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-500">
+                                        Add Salary
+                                    </button>
                                 </div>
                             </form>
                         </div>
                     </div>
+
                 </div>
                 <!-- Table displaying salary data -->
                 @include('Salary.salary-type') <!-- Top Navigation -->

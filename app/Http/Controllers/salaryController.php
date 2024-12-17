@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Salary;
+use App\Models\payment_frequencyModel;
 use Illuminate\Http\Request;
 
 class salaryController extends Controller
@@ -11,9 +12,10 @@ class salaryController extends Controller
     {
         // Fetch all salaries securely
         $salaries = Salary::all();
+        $paymentFrequencies = payment_frequencyModel::all(); // Fetch payment frequency data
     
         // Return the view only for authenticated users
-        return view('salary.index', compact('salaries'));
+        return view('salary.index', compact('salaries', 'paymentFrequencies'));
     }
     
     public function store(Request $request)
