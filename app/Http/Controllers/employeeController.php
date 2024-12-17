@@ -138,8 +138,10 @@ class employeeController extends Controller
     $employee = employeeModel::findOrFail($id);
     $employee->delete();
 
-    return redirect()->route('employees')->with('success', 'Employee deleted successfully!');
-}
+
+        return redirect()->route('employees')->with('success', 'Employee deleted successfully!');
+    }
+
 
     public function show($id)
     {
