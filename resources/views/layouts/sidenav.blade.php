@@ -29,8 +29,8 @@
             @endif
 
             <li>
-                <x-nav-link :href="route('payroll')" :active="request()->routeIs('payroll')">
-                    {{ __('Payroll') }}
+                <x-nav-link :href="route('salary')" :active="request()->routeIs('salary')">
+                    {{ __('Salary') }}
                 </x-nav-link>
             </li>
             <li>
