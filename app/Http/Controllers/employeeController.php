@@ -133,13 +133,13 @@ class employeeController extends Controller
 
     
 
-    public function destroy($id)
-    {
-        $employee = employeeModel::findOrFail($id);
-        $employee->delete();
+  public function destroy($id)
+{
+    $employee = employeeModel::findOrFail($id);
+    $employee->delete();
 
-        return redirect()->route('employees.index')->with('success', 'Employee deleted successfully!');
-    }
+    return redirect()->route('employees')->with('success', 'Employee deleted successfully!');
+}
 
     public function show($id)
     {

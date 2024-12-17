@@ -31,7 +31,7 @@ require __DIR__ . '/auth.php';
 
 
 Route::get('/employees', [EmployeeController::class, 'index'])->name('employees.index')->middleware('auth');
-Route::get('/employees', [employeeController::class, 'index'])->name('employees')->middleware('auth');
+Route::get('/employee', [employeeController::class, 'index'])->name('employees')->middleware('auth');
 Route::get('/employees/create', [employeeController::class, 'create'])->name('employees.create')->middleware('auth');
 Route::post('/employees', action: [employeeController::class, 'store'])->name('employees.store')->middleware('auth');
 Route::get('/employees/{id}/edit', [employeeController::class, 'edit'])->name('employees.edit')->middleware('auth');
@@ -57,6 +57,16 @@ Route::get('/performance', [performanceController::class, 'index'])->name('perfo
 Route::get('/salaries', [salaryController::class, 'index'])->name('salary')->middleware('auth');
 Route::post('/salaries', [salaryController::class, 'store'])->name('salaries.store')->middleware('auth');
 Route::get('/payment-frequencies', [paymentFrequencyController::class, 'index']);
+// Route for viewing the salary details
+Route::get('/salary/{salary_id}', [SalaryController::class, 'show'])->name('salary.view');
+// Route for displaying the edit form for a salary
+Route::get('/salary/{salary_id}/edit', [SalaryController::class, 'edit'])->name('salary.edit');
+// Route for updating the salary details
+Route::put('/salary/{salary_id}', [SalaryController::class, 'update'])->name('salary.update');
+// Route for deleting a salary
+Route::delete('/salaries/{salary_id}', [salaryController::class, 'destroy'])->name('salary.destroy');
+
+
 
 //ADMIN
 Route::middleware(['role:admin'])->group(function () {

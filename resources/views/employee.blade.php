@@ -53,6 +53,11 @@
                                     </div>
                                 </div>
                                 <div class="flex items-center gap-4">
+                                     <!-- View Button -->
+                                     <a href="{{ route('employees.show', $employee->employee_id) }}"
+                                        class="px-4 py-2 text-sm text-white bg-yellow-500 rounded-lg hover:bg-yellow-600 transition">
+                                        <i class="bi bi-pencil"></i> View
+                                    </a>
                                     <!-- Edit Button -->
                                     <a href="{{ route('employees.edit', $employee->employee_id) }}"
                                         class="px-4 py-2 text-sm text-white bg-yellow-500 rounded-lg hover:bg-yellow-600 transition">
@@ -63,11 +68,7 @@
                                         class="px-4 py-2 text-sm text-white bg-red-500 rounded-lg hover:bg-red-600 transition">
                                         <i class="bi bi-trash"></i> Delete
                                     </button>
-                                     <!-- View Button -->
-                                     <a href="{{ route('employees.show', $employee->employee_id) }}"
-                                        class="px-4 py-2 text-sm text-white bg-yellow-500 rounded-lg hover:bg-yellow-600 transition">
-                                        <i class="bi bi-pencil"></i> View
-                                    </a>
+                                    
                                 </div>
                             </div>
                         @endforeach

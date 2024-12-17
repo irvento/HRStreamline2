@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class payment_frequencyModel extends Model
+class paymentFrequencyModel extends Model
 {
     protected $table = 'tbl_payment_frequency_type'; // Table name
     protected $primaryKey = 'payment_frequency_id'; // PK

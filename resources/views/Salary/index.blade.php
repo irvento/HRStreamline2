@@ -5,12 +5,12 @@
         </h2>
     </x-slot>
 
-
+    
     <div x-data="{ activeTab: 'Salary Type', showModal: false }" class="mb-40">
         <!-- Tab Navigation -->
         <ul
             class="flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400">
-            <template x-for="tab in ['Salary Type', 'Payment Type']" :key="tab">
+            <template x-for="tab in ['Salary Type', 'Payment Frequency Type']" :key="tab">
                 <li class="me-2">
                     <a href="#" @click.prevent="activeTab = tab" :aria-current="activeTab === tab ? 'page' : false"
                         :class="{
@@ -121,7 +121,7 @@
         <!-- Payment Type Tab Content -->
         <div class="mt-4">
 
-            <div x-show="activeTab === 'Payment Type'" class="p-4 bg-white dark:bg-gray-800 rounded-lg shadow">
+            <div x-show="activeTab === 'Payment Frequency Type'" class="p-4 bg-white dark:bg-gray-800 rounded-lg shadow">
                 @include('Salary.frequency-type')
             </div>
 
