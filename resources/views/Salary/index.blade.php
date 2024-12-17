@@ -122,8 +122,7 @@
         <div class="mt-4">
 
             <div x-show="activeTab === 'Payment Type'" class="p-4 bg-white dark:bg-gray-800 rounded-lg shadow">
-
-                testtest
+                @include('Salary.frequency-type')
             </div>
 
         </div>

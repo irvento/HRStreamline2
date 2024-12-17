@@ -5,6 +5,7 @@ use App\Http\Controllers\attendanceController;
 use App\Http\Controllers\departmentController;
 use App\Http\Controllers\employee_user_viewController;
 use App\Http\Controllers\leavesController;
+use App\Http\Controllers\paymentFrequencyController;
 use App\Http\Controllers\SalaryController;
 use App\Http\Controllers\performanceController;
 use App\Http\Controllers\ProfileController;
@@ -55,7 +56,7 @@ Route::get('/performance', [performanceController::class, 'index'])->name('perfo
 // Secure the salaries route
 Route::get('/salaries', [salaryController::class, 'index'])->name('salary')->middleware('auth');
 Route::post('/salaries', [salaryController::class, 'store'])->name('salaries.store')->middleware('auth');
-
+Route::get('/payment-frequencies', [paymentFrequencyController::class, 'index']);
 
 //ADMIN
 Route::middleware(['role:admin'])->group(function () {
