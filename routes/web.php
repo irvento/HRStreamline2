@@ -5,7 +5,7 @@ use App\Http\Controllers\attendanceController;
 use App\Http\Controllers\departmentController;
 use App\Http\Controllers\employee_user_viewController;
 use App\Http\Controllers\leavesController;
-use App\Http\Controllers\payrollController;
+use App\Http\Controllers\SalaryController;
 use App\Http\Controllers\performanceController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -46,9 +46,14 @@ Route::get('/profile', [employee_user_viewController::class, 'index'])->name('pr
 Route::get('/department', [departmentController::class, 'index'])->name('department')->middleware('auth');
 Route::get('/attendance', [attendanceController::class, 'index'])->name('attendance')->middleware('auth');
 Route::get('/leaves', [leavesController::class, 'index'])->name('leaves')->middleware('auth');
-Route::get('/payroll', [payrollController::class, 'index'])->name('payroll')->middleware('auth');
+
 Route::get('/performance', [performanceController::class, 'index'])->name('performance')->middleware('auth');
 
+
+//SALARIES ROUTES
+// Secure the salaries route
+Route::get('/salaries', [salaryController::class, 'index'])->name('salary')->middleware('auth');
+Route::post('/salaries', [salaryController::class, 'store'])->name('salaries.store')->middleware('auth');
 
 //DASHBOARD ROUTES
 
