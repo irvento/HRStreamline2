@@ -56,7 +56,6 @@
                     <div class="space-y-2">
                         <p class="text-gray-600 dark:text-gray-400">Email: <span class="font-medium">{{$employee->employee_email}}</span></p>
                         <p class="text-gray-600 dark:text-gray-400">Contact 1: <span class="font-medium">{{$employee->contact1}}</span></p>
-                        <p class="text-gray-600 dark:text-gray-400">Contact 2: <span class="font-medium">{{$employee->contact2}}</span></p>
                     </div>
                 </div>
                 <br><br>
