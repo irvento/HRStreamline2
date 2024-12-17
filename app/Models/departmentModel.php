@@ -7,4 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class departmentModel extends Model
 {
     protected $table = 'tbl_department';
+    protected $primaryKey = 'department_id'; 
+    public $timestamps = false;
+
 }
