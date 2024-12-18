@@ -19,6 +19,10 @@
                 <p class="text-gray-600 dark:text-gray-400">{{ $salary->paymentFrequency->payment_name }}</p>
             </div>
             <div class="flex justify-end mt-6 gap-4">
+                <a href="{{ route('salary', $salary->salary_id) }}"
+                    class="px-4 py-2 text-sm text-white bg-green-500 rounded-lg hover:bg-green-600 transition">
+                     Back
+                 </a>
                 <a href="{{ route('salary.edit', $salary->salary_id) }}"
                    class="px-4 py-2 text-sm text-white bg-green-500 rounded-lg hover:bg-green-600 transition">
                     Edit
