@@ -5,7 +5,7 @@
                 <th class="px-4 py-2 text-left text-gray-600 dark:text-gray-300">Salary ID</th>
                 <th class="px-4 py-2 text-left text-gray-600 dark:text-gray-300">Salary Grade</th>
                 <th class="px-4 py-2 text-left text-gray-600 dark:text-gray-300">Salary Amount</th>
-                <th class="px-4 py-2 text-left text-gray-600 dark:text-gray-300">Payment Frequency ID</th>
+                <th class="px-4 py-2 text-left text-gray-600 dark:text-gray-300">Payment Frequency Type</th>
                 <th class="px-4 py-2 text-left text-gray-600 dark:text-gray-300">Actions</th>
             </tr>
         </thead>
@@ -15,7 +15,7 @@
                     <td class="px-4 py-2 text-gray-800 dark:text-gray-300">{{ $salary->salary_id }}</td>
                     <td class="px-4 py-2 text-gray-800 dark:text-gray-300">{{ $salary->salary_grade }}</td>
                     <td class="px-4 py-2 text-gray-800 dark:text-gray-300">{{ $salary->salary_amount }}</td>
-                    <td class="px-4 py-2 text-gray-800 dark:text-gray-300">{{ $salary->payment_frequency_id }}</td>
+                    <td class="px-4 py-2 text-gray-800 dark:text-gray-300">{{ $salary->paymentFrequency->payment_name }}</td>
                     <td class="px-4 py-2 text-gray-800 dark:text-gray-300">
                         <div class="flex items-center gap-4">
                             <!-- View Button -->
