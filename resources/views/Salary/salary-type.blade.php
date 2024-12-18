@@ -1,4 +1,4 @@
-<div class="overflow-x-auto">
+<div class="overflow-x-auto" x-data="{ showModal: false, deleteUrl: '' }">
     <table class="min-w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-md rounded-lg">
         <thead class="bg-gray-100 dark:bg-gray-700">
             <tr>
@@ -10,61 +10,63 @@
             </tr>
         </thead>
         <tbody>
-            <!-- Example Rows for Design -->
-            <tr class="border-b border-gray-200 dark:border-gray-700">
-                <td class="px-4 py-2 text-gray-800 dark:text-gray-300">001</td>
-                <td class="px-4 py-2 text-gray-800 dark:text-gray-300">A</td>
-                <td class="px-4 py-2 text-gray-800 dark:text-gray-300">$50,000</td>
-                <td class="px-4 py-2 text-gray-800 dark:text-gray-300">Monthly</td>
-                <td class="px-4 py-2 text-gray-800 dark:text-gray-300">
-                    <div class="flex items-center gap-4">
-                        <a href="#" class="px-4 py-2 text-sm text-white bg-yellow-500 rounded-lg hover:bg-yellow-600 transition">
-                            <i class="bi bi-eye"></i> View
-                        </a>
-                        <a href="#" class="px-4 py-2 text-sm text-white bg-green-500 rounded-lg hover:bg-green-600 transition">
-                            <i class="bi bi-pencil"></i> Edit
-                        </a>
-                        <button class="px-4 py-2 text-sm text-white bg-red-500 rounded-lg hover:bg-red-600 transition">
-                            <i class="bi bi-trash"></i> Delete
-                        </button>
-                    </div>
-                </td>
-            </tr>
-            <tr class="border-b border-gray-200 dark:border-gray-700">
-                <td class="px-4 py-2 text-gray-800 dark:text-gray-300">002</td>
-                <td class="px-4 py-2 text-gray-800 dark:text-gray-300">B</td>
-                <td class="px-4 py-2 text-gray-800 dark:text-gray-300">$60,000</td>
-                <td class="px-4 py-2 text-gray-800 dark:text-gray-300">Bi-Weekly</td>
-                <td class="px-4 py-2 text-gray-800 dark:text-gray-300">
-                    <div class="flex items-center gap-4">
-                        <a href="#" class="px-4 py-2 text-sm text-white bg-yellow-500 rounded-lg hover:bg-yellow-600 transition">
-                            <i class="bi bi-eye"></i> View
-                        </a>
-                        <a href="#" class="px-4 py-2 text-sm text-white bg-green-500 rounded-lg hover:bg-green-600 transition">
-                            <i class="bi bi-pencil"></i> Edit
-                        </a>
-                        <button class="px-4 py-2 text-sm text-white bg-red-500 rounded-lg hover:bg-red-600 transition">
-                            <i class="bi bi-trash"></i> Delete
-                        </button>
-                    </div>
-                </td>
-            </tr>
+            @foreach ($salaries as $salary)
+                <tr class="border-b border-gray-200 dark:border-gray-700">
+                    <td class="px-4 py-2 text-gray-800 dark:text-gray-300">{{ $salary->salary_id }}</td>
+                    <td class="px-4 py-2 text-gray-800 dark:text-gray-300">{{ $salary->salary_grade }}</td>
+                    <td class="px-4 py-2 text-gray-800 dark:text-gray-300">{{ $salary->salary_amount }}</td>
+                    <td class="px-4 py-2 text-gray-800 dark:text-gray-300">
+                        @if($salary->paymentFrequency)
+                            {{ $salary->paymentFrequency->payment_name }}
+                        @else
+                            <span class="text-gray-400">No Payment Frequency</span>
+                        @endif
+                    </td>
+                    <td class="px-4 py-2 text-gray-800 dark:text-gray-300">
+                        <div class="flex items-center gap-4">
+                            <!-- View Button -->
+                            <a href="{{ route('salary.view', $salary->salary_id) }}"
+                                class="px-4 py-2 text-sm text-white bg-yellow-500 rounded-lg hover:bg-yellow-600 transition">
+                                <i class="bi bi-pencil"></i> View
+                            </a>
+
+                            <!-- Edit Button -->
+                            <a href="{{ route('salary.edit', $salary->salary_id) }}"
+                                class="px-4 py-2 text-sm text-white bg-green-500 rounded-lg hover:bg-green-600 transition">
+                                <i class="bi bi-pencil"></i> Edit
+                            </a>
+
+                            <!-- Delete Button that triggers the Modal -->
+                            <button @click="showModal = true; deleteUrl = '{{ route('salary.destroy', $salary->salary_id) }}'"
+                                class="px-4 py-2 text-sm text-white bg-red-500 rounded-lg hover:bg-red-600 transition">
+                                <i class="bi bi-trash"></i> Delete
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            @endforeach
         </tbody>
     </table>
 
-    <!-- Modal for Delete Confirmation -->
-    <div class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 hidden">
+    <!-- Delete Confirmation Modal -->
+    <div x-show="showModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50" x-cloak>
         <div class="w-full max-w-sm p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
             <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">Confirm Deletion</h2>
             <p class="text-sm text-gray-600 dark:text-gray-400 mb-6">Are you sure you want to delete this record? This action cannot be undone.</p>
             <div class="flex justify-end gap-4">
-                <button class="px-4 py-2 text-sm text-gray-800 bg-gray-200 rounded-lg hover:bg-gray-300 transition">
+                <button @click="showModal = false" class="px-4 py-2 text-sm text-gray-800 bg-gray-200 rounded-lg hover:bg-gray-300 transition">
                     Cancel
                 </button>
-                <button class="px-4 py-2 text-sm text-white bg-red-500 rounded-lg hover:bg-red-600 transition">
-                    Confirm Delete
-                </button>
+                <!-- The delete form is submitted with the deleteUrl -->
+                <form :action="deleteUrl" method="POST" class="inline">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="px-4 py-2 text-sm text-white bg-red-500 rounded-lg hover:bg-red-600 transition">
+                        Confirm Delete
+                    </button>
+                </form>
             </div>
         </div>
     </div>
+    
 </div>

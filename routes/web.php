@@ -75,6 +75,9 @@ Route::middleware('auth')->group(function () {
     Route::post('performance/store', [performanceController::class, 'store'])->name('performance.store');
     Route::get('performance', [performanceController::class, 'index'])->name('performance.index');
     Route::get('/performance/create', [performanceController::class, 'create'])->name('performance.create');
+    Route::get('performance/{id}/edit', [performanceController::class, 'edit'])->name('performance.edit'); // Show form to edit a rating
+    Route::put('performance/{id}', [performanceController::class, 'update'])->name('performance.update'); // Update an existing rating
+    Route::delete('performance/{id}', [performanceController::class, 'destroy'])->name('performance.destroy');
 
     //SALARIES ROUTES
     Route::get('/salaries', [salaryController::class, 'index'])->name('salary');

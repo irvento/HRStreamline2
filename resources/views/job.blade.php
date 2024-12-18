@@ -5,15 +5,30 @@
         </h2>
     </x-slot>
 
-    <div class="py-12 bg-gray-100 dark:bg-gray-900 min-h-screen">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+    <div class="w-full mt-8">
+        <div class="w-full mt-8 mb-4">
             <div class="bg-gray-800 shadow-md rounded-lg p-6">
-                <!-- Add New Job Button -->
+                <!-- Header with Search and Add Button -->
                 <div class="flex justify-between items-center mb-4">
                     <h3 class="text-lg font-medium text-gray-300">Jobs List</h3>
-                    <a href="{{ route('jobs.create') }}" class="px-4 py-2 bg-blue-600 text-gray-100 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                        Add New Job
-                    </a>
+                    <div class="flex space-x-4">
+                        <!-- Search Form -->
+                        <form action="{{ route('job.index') }}" method="GET" class="flex items-center space-x-2">
+                            <input type="text" name="search" value="{{ request('search') }}" 
+                                class="px-4 py-2 text-sm rounded-md border border-gray-600 bg-gray-700 text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                placeholder="Search jobs..." />
+                            <button type="submit" 
+                                class="px-4 py-2 bg-blue-600 text-gray-100 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                Search
+                            </button>
+                        </form>
+
+                        <!-- Add New Job Button -->
+                        <a href="{{ route('jobs.create') }}" 
+                            class="px-4 py-2 bg-blue-600 text-gray-100 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            Add New Job
+                        </a>
+                    </div>
                 </div>
 
                 <!-- Job Table -->
@@ -37,13 +52,15 @@
                                     <td class="px-4 py-2 border-b border-gray-600 text-gray-300">{{ $job->salary->salary_grade ?? 'N/A' }}</td>
                                     <td class="px-4 py-2 border-b border-gray-600">
                                         <div class="flex items-center space-x-2">
-                                            <a href="{{ route('jobs.edit', $job->job_id) }}" class="px-3 py-1 bg-yellow-500 text-gray-100 rounded-md hover:bg-yellow-600 focus:outline-none">
+                                            <a href="{{ route('jobs.edit', $job->job_id) }}" 
+                                                class="px-3 py-1 bg-yellow-500 text-gray-100 rounded-md hover:bg-yellow-600 focus:outline-none">
                                                 Edit
                                             </a>
                                             <form action="{{ route('jobs.destroy', $job->job_id) }}" method="POST" class="inline-block">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="px-3 py-1 bg-red-600 text-gray-100 rounded-md hover:bg-red-700 focus:outline-none"
+                                                <button type="submit" 
+                                                    class="px-3 py-1 bg-red-600 text-gray-100 rounded-md hover:bg-red-700 focus:outline-none"
                                                     onclick="return confirm('Are you sure you want to delete this job?')">
                                                     Delete
                                                 </button>
@@ -60,6 +77,11 @@
                             @endforelse
                         </tbody>
                     </table>
+                </div>
+
+                <!-- Pagination -->
+                <div class="mt-4">
+                    {{ $jobs->links() }}
                 </div>
             </div>
         </div>
