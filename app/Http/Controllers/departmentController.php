@@ -19,7 +19,7 @@ class departmentController extends Controller
 
         $departments = $query->paginate(10)->withQueryString();
 
-        return view('department', ['departments' => $departments, 'search' => $search]);
+        return view('department.index', ['departments' => $departments, 'search' => $search]);
     }
 
     // Show the form for creating a new department

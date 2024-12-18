@@ -12,14 +12,28 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-    
+
     <!-- Favicon -->
     <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs" defer></script>
+
+
 </head>
 
 <body class="font-sans antialiased">
+    <div x-data="{ loading: false }" x-show="loading" x-transition:enter="transition ease-out duration-500"
+        x-transition:leave="transition ease-out duration-1000"
+        class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-75 z-50"
+        @click="loading = true; setTimeout(() => loading = false, 1000)">
+        <!-- Loading Spinner -->
+        <div class="text-white text-xl">
+            <div class="loader border-t-4 border-b-4 border-white w-16 h-16 rounded-full animate-spin"></div>
+            <p class="mt-4">Loading...</p>
+        </div>
+    </div>
     <div class="min-h-screen bg-gray-100 dark:bg-gray-900 flex">
         @include('layouts.sidenav') <!-- Side Navigation -->
 
