@@ -15,9 +15,10 @@
 
                 <!-- Department Name -->
                 <div class="mb-4">
-                    <label for="name" class="block text-sm font-semibold text-gray-700 dark:text-gray-300">Department Name</label>
-                    <input type="text" name="department_name" value="{{ old('department_name', $department->department_name) }}"
- 
+                    <label for="name" class="block text-sm font-semibold text-gray-700 dark:text-gray-300">Department
+                        Name</label>
+                    <input type="text" name="department_name"
+                        value="{{ old('department_name', $department->department_name) }}"
                         class="mt-1 block w-full px-4 py-2 text-sm rounded-lg border border-gray-300 dark:border-gray-700 focus:ring focus:ring-primary-200" />
                     @error('name')
                         <span class="text-red-500 text-xs">{{ $message }}</span>
@@ -28,7 +29,9 @@
 
                 <!-- Submit Button -->
                 <div class="mt-6">
-                    <button type="submit" class="px-6 py-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600 transition">Update Department</button>
+                    <button type="submit"
+                        class="px-4 py-2 text-sm text-white bg-yellow-500 rounded-lg hover:bg-yellow-600 transition"">Update
+                        Department</button>
                 </div>
             </form>
         </div>

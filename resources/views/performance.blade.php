@@ -27,7 +27,13 @@
                     <tbody>
                         @foreach($performance as $rating)
                         <tr>
-                            <td class="px-4 py-2">{{ $rating->employee->employee_fname }} {{ $rating->employee->employee_lname }}</td>
+                            <td class="px-4 py-2">
+                                @if($rating->employee)
+                                    {{ $rating->employee->employee_fname }} {{ $rating->employee->employee_lname }}
+                                @else
+                                    <span class="text-gray-500">No Employee Data</span>
+                                @endif
+                            </td>
                             <td class="px-4 py-2">{{ $rating->review_date }}</td>
                             <td class="px-4 py-2">{{ $rating->review_score }}</td>
 

@@ -30,8 +30,13 @@
         @click="loading = true; setTimeout(() => loading = false, 1000)">
         <!-- Loading Spinner -->
         <div class="text-white text-xl">
-            <div class="loader border-t-4 border-b-4 border-white w-16 h-16 rounded-full animate-spin"></div>
-            <p class="mt-4">Loading...</p>
+            <div class="flex justify-center items-center h-screen">
+                <div class="flex flex-row gap-2">
+                    <div class="w-4 h-4 rounded-full bg-blue-700 animate-bounce"></div>
+                    <div class="w-4 h-4 rounded-full bg-blue-700 animate-bounce [animation-delay:-.3s]"></div>
+                    <div class="w-4 h-4 rounded-full bg-blue-700 animate-bounce [animation-delay:-.5s]"></div>
+                </div>
+            </div>
         </div>
     </div>
     <div class="min-h-screen bg-gray-100 dark:bg-gray-900 flex">
