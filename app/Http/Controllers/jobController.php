@@ -9,11 +9,24 @@ use Illuminate\Http\Request;
 class jobController extends Controller
 {
     // Display a list of jobs
-    public function index()
+    public function index(Request $request)
     {
-        $jobs = jobModel::with('salary')->get(); // Assuming there is a relationship with salary
+        $query = jobModel::with('salary');
+    
+        // Check if there's a search query
+        if ($request->filled('search')) {
+            $search = $request->input('search');
+            $query->where('job_title', 'like', "%$search%")
+                  ->orWhere('job_description', 'like', "%$search%");
+        }
+    
+        // Paginate the results
+        $jobs = $query->paginate(10);
+    
+        // Pass the jobs and search query to the view
         return view('job', compact('jobs'));
     }
+    
 
     // Show the form for creating a new job
     public function create()

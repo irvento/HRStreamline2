@@ -5,25 +5,88 @@
         </h2>
     </x-slot>
 
-    <form action="{{ isset($leave) ? route('leaves.update', $leave->leave_id) : route('leaves.store') }}" method="POST" class="mt-8">
-        @csrf
-        @if(isset($leave)) @method('PUT') @endif
+    <!-- Back Button -->
+    <div class="mb-4">
+        <a href="{{ url()->previous() }}"
+            class="inline-flex items-center px-4 py-2 bg-gray-600 text-white font-medium rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 dark:focus:ring-offset-gray-800">
+            Back
+        </a>
+    </div>
 
-        <label for="employee_id">Employee ID:</label>
-        <input type="text" name="employee_id" id="employee_id" value="{{ $leave->employee_id ?? '' }}" required>
+    <div class="max-w-4xl mx-auto bg-white dark:bg-gray-800 shadow-md rounded-lg p-6">
+        <form action="{{ isset($leave) ? route('leaves.update', $leave->leave_id) : route('leaves.store') }}" method="POST">
+            @csrf
+            @if(isset($leave)) @method('PUT') @endif
 
-        <label for="start_date">Start Date:</label>
-        <input type="date" name="start_date" id="start_date" value="{{ $leave->start_date ?? '' }}" required>
+            <!-- Employee ID -->
+            <div class="mb-4">
+                <label for="employee_id" class="block text-sm font-semibold text-gray-700 dark:text-gray-300">Employee ID</label>
+                <input type="text" name="employee_id" id="employee_id" 
+                    value="{{ old('employee_id', $leave->employee_id ?? '') }}" 
+                    class="mt-1 block w-full px-4 py-2 text-sm rounded-lg border border-gray-300 dark:border-gray-700 focus:ring focus:ring-primary-200 dark:bg-gray-700 dark:text-gray-300"
+                    required>
+                @error('employee_id')
+                    <span class="text-red-500 text-xs">{{ $message }}</span>
+                @enderror
+            </div>
 
-        <label for="end_date">End Date:</label>
-        <input type="date" name="end_date" id="end_date" value="{{ $leave->end_date ?? '' }}" required>
+            <!-- Start Date -->
+            <div class="mb-4">
+                <label for="start_date" class="block text-sm font-semibold text-gray-700 dark:text-gray-300">Start Date</label>
+                <input type="date" name="start_date" id="start_date" 
+                    value="{{ old('start_date', $leave->start_date ?? '') }}" 
+                    class="mt-1 block w-full px-4 py-2 text-sm rounded-lg border border-gray-300 dark:border-gray-700 focus:ring focus:ring-primary-200 dark:bg-gray-700 dark:text-gray-300"
+                    required>
+                @error('start_date')
+                    <span class="text-red-500 text-xs">{{ $message }}</span>
+                @enderror
+            </div>
 
-        <label for="leave_status">Leave Status:</label>
-        <input type="text" name="leave_status" id="leave_status" value="{{ $leave->leave_status ?? '' }}" required>
+            <!-- End Date -->
+            <div class="mb-4">
+                <label for="end_date" class="block text-sm font-semibold text-gray-700 dark:text-gray-300">End Date</label>
+                <input type="date" name="end_date" id="end_date" 
+                    value="{{ old('end_date', $leave->end_date ?? '') }}" 
+                    class="mt-1 block w-full px-4 py-2 text-sm rounded-lg border border-gray-300 dark:border-gray-700 focus:ring focus:ring-primary-200 dark:bg-gray-700 dark:text-gray-300"
+                    required>
+                @error('end_date')
+                    <span class="text-red-500 text-xs">{{ $message }}</span>
+                @enderror
+            </div>
 
-        <label for="remarks">Remarks:</label>
-        <textarea name="remarks" id="remarks">{{ $leave->remarks ?? '' }}</textarea>
+            <!-- Leave Status -->
+            <div class="mb-4">
+                <label for="leave_status" class="block text-sm font-semibold text-gray-700 dark:text-gray-300">Leave Status</label>
+                <select name="leave_status" id="leave_status" 
+                    class="mt-1 block w-full px-4 py-2 text-sm rounded-lg border border-gray-300 dark:border-gray-700 focus:ring focus:ring-primary-200 dark:bg-gray-700 dark:text-gray-300"
+                    required>
+                    <option value="Pending" {{ old('leave_status', $leave->leave_status ?? '') == 'Pending' ? 'selected' : '' }}>Pending</option>
+                    <option value="Approved" {{ old('leave_status', $leave->leave_status ?? '') == 'Approved' ? 'selected' : '' }}>Approved</option>
+                    <option value="Rejected" {{ old('leave_status', $leave->leave_status ?? '') == 'Rejected' ? 'selected' : '' }}>Rejected</option>
+                </select>
+                @error('leave_status')
+                    <span class="text-red-500 text-xs">{{ $message }}</span>
+                @enderror
+            </div>
 
-        <button type="submit" class="px-4 py-2 bg-primary-500 text-white rounded-lg">Save</button>
-    </form>
+            <!-- Remarks -->
+            <div class="mb-4">
+                <label for="remarks" class="block text-sm font-semibold text-gray-700 dark:text-gray-300">Remarks</label>
+                <textarea name="remarks" id="remarks" rows="4" 
+                    class="mt-1 block w-full px-4 py-2 text-sm rounded-lg border border-gray-300 dark:border-gray-700 focus:ring focus:ring-primary-200 dark:bg-gray-700 dark:text-gray-300"
+                    placeholder="Enter remarks (optional)">{{ old('remarks', $leave->remarks ?? '') }}</textarea>
+                @error('remarks')
+                    <span class="text-red-500 text-xs">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <!-- Submit Button -->
+            <div class="mt-6">
+                <button type="submit" 
+                    class="px-6 py-2 bg-primary-500 text-white font-medium rounded-lg hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-500 dark:focus:ring-offset-gray-800">
+                    {{ isset($leave) ? 'Update Leave' : 'Create Leave' }}
+                </button>
+            </div>
+        </form>
+    </div>
 </x-app-layout>

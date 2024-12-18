@@ -6,6 +6,13 @@
     </x-slot>
 
     <div class="py-12 bg-gradient-to-b from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900 min-h-screen">
+             <!-- Back Button -->
+     <div class="mb-4">
+        <a href="{{ url()->previous() }}"
+            class="inline-flex items-center px-4 py-2 bg-gray-600 text-white font-medium rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 dark:focus:ring-offset-gray-800">
+            Back
+        </a>
+    </div>   
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-8">
             <!-- Success Message -->
             @if (session('success'))

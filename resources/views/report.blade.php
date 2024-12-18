@@ -6,7 +6,7 @@
     </x-slot>
 
     <div x-data="{ selectedTab: 'attendance', showModal: false, showViewModal: false, deleteUrl: '', employee: {} }" class="w-full mt-8">
- 
+
         <!-- Tab Navigation -->
         <div class="flex gap-6 border-b-2 border-gray-200 dark:border-gray-700" role="tablist" aria-label="Employee Management Tabs">
             <button @click="selectedTab = 'attendance'" 
