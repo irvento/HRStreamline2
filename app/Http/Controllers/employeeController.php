@@ -42,7 +42,7 @@ class employeeController extends Controller
 
     $alreadySubmitted = employeeModel::where('user_id', $user->id)->exists();
     if ($alreadySubmitted) {
-        return redirect()->route('employees.index')->with('error', 'You have already submitted this form.');
+        return redirect()->route('dashboard')->with('error', 'You have already submitted this form.');
     }
 
     $validated = $request->validate([
@@ -72,6 +72,7 @@ class employeeController extends Controller
     $employee->employee_mname = $validated['employee_mname'] ?? null;
     $employee->employee_lname = $validated['employee_lname'] ?? null;
     $employee->user_id = $user->id; 
+    $employee->employee_email = $user->email; 
     $employee->birthdate = $validated['birthdate'] ?? null;
     $employee->gender = $validated['gender'] ?? null;
     $employee->image = $imagePath;
