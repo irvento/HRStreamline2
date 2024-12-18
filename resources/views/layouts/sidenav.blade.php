@@ -59,7 +59,7 @@
                 </x-nav-link>
             </li>
             <li>
-                <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                <x-nav-link :href="route('employee_info.index')" :active="request()->routeIs('employee_info.index')">
                     {{ __('Assign') }}
                 </x-nav-link>
             </li>
