@@ -24,16 +24,26 @@ class jobController extends Controller
 
     // Store a new job
     public function store(Request $request)
-    {
+{
+   
         $validated = $request->validate([
             'job_title' => 'required|string|max:255',
             'job_description' => 'nullable|string',
-            'salary_id' => 'required|exists:tbl_salary,salary_id', // Assuming salary is another table
+            'salary_id' => 'required|exists:tbl_salary,salary_id',
         ]);
 
-        jobModel::create($validated);
+        $jobtable = new jobModel();
+
+        $jobtable->job_title = $validated['job_title'];
+        $jobtable->job_description = $validated['job_description'];
+        $jobtable->salary_id = $validated['salary_id'];
+
+        $jobtable->save();
+        
         return redirect()->route('job.index')->with('success', 'Job added successfully.');
-    }
+    
+}
+
 
     // Show the form for editing a job
     public function edit($id)
