@@ -44,6 +44,11 @@
                 </x-nav-link>
             </li>
             <li>
+                <x-nav-link :href="route('job.index')" :active="request()->routeIs('job.index')">
+                    {{ __('Jobs') }}
+                </x-nav-link>
+            </li>
+            <li>
                 <x-nav-link :href="route('performance.index')" :active="request()->routeIs('performance.index')">
                     {{ __('Performance') }}
                 </x-nav-link>
@@ -51,6 +56,16 @@
             <li>
                 <x-nav-link :href="route('department.index')" :active="request()->routeIs('department.index')">
                     {{ __('Department') }}
+                </x-nav-link>
+            </li>
+            <li>
+                <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                    {{ __('Assign') }}
+                </x-nav-link>
+            </li>
+            <li>
+                <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                    {{ __('Reports') }}
                 </x-nav-link>
             </li>
         </ul>

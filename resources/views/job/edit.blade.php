@@ -1,0 +1,49 @@
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-300 leading-tight">
+            {{ __('Edit Job') }}
+        </h2>
+    </x-slot>
+
+    <div class="py-12 bg-gray-100 dark:bg-gray-900 min-h-screen">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-8">
+                <form action="{{ route('jobs.update', $job->job_id) }}" method="POST">
+                    @csrf
+                    @method('PUT')
+
+                    <!-- Job Title -->
+                    <div class="mb-6">
+                        <label for="job_title" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Job Title</label>
+                        <input type="text" name="job_title" id="job_title" value="{{ old('job_title', $job->job_title) }}" required class="mt-1 block w-full px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+
+                    <!-- Job Description -->
+                    <div class="mb-6">
+                        <label for="job_description" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Description</label>
+                        <textarea name="job_description" id="job_description" rows="4" class="mt-1 block w-full px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">{{ old('job_description', $job->job_description) }}</textarea>
+                    </div>
+
+                    <!-- Salary -->
+                    <div class="mb-6">
+                        <label for="salary_id" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Salary</label>
+                        <select name="salary_id" id="salary_id" required class="mt-1 block w-full px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            @foreach($salaries as $salary)
+                                <option value="{{ $salary->salary_id }}" {{ $salary->salary_id == old('salary_id', $job->salary_id) ? 'selected' : '' }}>
+                                    {{ $salary->salary_amount }} - {{ $salary->salary_grade }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="mt-8">
+                        <button type="submit" class="w-full py-2 px-4 bg-blue-600 text-white font-semibold rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            Update Job
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</x-app-layout>
