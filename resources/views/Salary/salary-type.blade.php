@@ -15,7 +15,13 @@
                     <td class="px-4 py-2 text-gray-800 dark:text-gray-300">{{ $salary->salary_id }}</td>
                     <td class="px-4 py-2 text-gray-800 dark:text-gray-300">{{ $salary->salary_grade }}</td>
                     <td class="px-4 py-2 text-gray-800 dark:text-gray-300">{{ $salary->salary_amount }}</td>
-                    <td class="px-4 py-2 text-gray-800 dark:text-gray-300">{{ $salary->paymentFrequency->payment_name }}</td>
+                    <td class="px-4 py-2 text-gray-800 dark:text-gray-300">
+                        @if($salary->paymentFrequency)
+                            {{ $salary->paymentFrequency->payment_name }}
+                        @else
+                            <span class="text-gray-400">No Payment Frequency</span>
+                        @endif
+                    </td>
                     <td class="px-4 py-2 text-gray-800 dark:text-gray-300">
                         <div class="flex items-center gap-4">
                             <!-- View Button -->
