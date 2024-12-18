@@ -6,7 +6,7 @@ use App\Http\Controllers\departmentController;
 use App\Http\Controllers\employee_user_viewController;
 use App\Http\Controllers\leavesController;
 use App\Http\Controllers\paymentFrequencyController;
-use App\Http\Controllers\SalaryController;
+use App\Http\Controllers\salaryController;
 use App\Http\Controllers\performanceController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -48,7 +48,7 @@ Route::middleware('auth')->group(function () {
     Route::put('/department/{id}', [departmentController::class, 'update'])->name('department.update');
     Route::delete('/department/{id}', [departmentController::class, 'destroy'])->name('department.destroy');
     Route::get('/department/{id}/delete', [departmentController::class, 'showDeleteConfirmation'])->name('department.delete_confirmation');
-    
+
 });
 
 Route::middleware(['auth'])->group(function () {
@@ -82,7 +82,7 @@ Route::get('/profile', [employee_user_viewController::class, 'index'])->name('pr
 // Secure the salaries route
 Route::get('/salaries', [salaryController::class, 'index'])->name('salary')->middleware('auth');
 Route::post('/salaries', [salaryController::class, 'store'])->name('salaries.store')->middleware('auth');
-Route::get('/payment-frequencies', [paymentFrequencyController::class, 'index']);
+
 // Route for viewing the salary details
 Route::get('/salary/{salary_id}', [SalaryController::class, 'show'])->name('salary.view');
 // Route for displaying the edit form for a salary
@@ -93,6 +93,15 @@ Route::put('/salary/{salary_id}', [SalaryController::class, 'update'])->name('sa
 Route::delete('/salaries/{salary_id}', [salaryController::class, 'destroy'])->name('salary.destroy');
 
 
+// PAYMENT FREQUENCY ROUTES
+Route::get('/payment-frequencies', [paymentFrequencyController::class, 'index'])->name('payment-frequency.index')->middleware('auth');
+Route::get('/payment-frequencies/create', [paymentFrequencyController::class, 'create'])->name('payment-frequency.create')->middleware('auth');
+Route::post('/payment-frequencies', [paymentFrequencyController::class, 'store'])->name('payment-frequency.store')->middleware('auth');
+Route::get('/payment-frequency/{payment_frequency_id}/edit', [paymentFrequencyController::class, 'edit'])->name('payment-frequency.edit')->middleware('auth');
+Route::put('/payment-frequency/{payment_frequency_id}', [paymentFrequencyController::class, 'update'])->name('payment-frequency.update')->middleware('auth');
+Route::delete('/payment-frequencies/{id}', [paymentFrequencyController::class, 'destroy'])->name('payment-frequency.destroy')->middleware('auth');
+Route::resource('payment-frequency', PaymentFrequencyController::class);
+Route::get('/payment-frequency/{payment_frequency_id}', [paymentFrequencyController::class, 'show'])->name('payment-frequency.show')->middleware('auth');  // ** Show Route**
 
 //ADMIN
 Route::middleware(['role:admin'])->group(function () {
