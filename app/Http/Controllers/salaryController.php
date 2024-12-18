@@ -95,6 +95,6 @@ class salaryController extends Controller
         $salary->save();
 
         // Redirect back to the salary index page with a success message
-        return redirect()->route('salary.index')->with('success', 'Salary updated successfully!');
+        return redirect()->route('salary')->with('success', 'Salary updated successfully!');
     }
 }
