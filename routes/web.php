@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\employee_infoController;
+use App\Http\Controllers\employeedetailController;
 use App\Http\Controllers\jobController;
 use App\Http\Controllers\employeeController;
 use App\Http\Controllers\attendanceController;
@@ -41,6 +42,9 @@ Route::middleware('auth')->group(function () {
     Route::put('/employees/{id}', [employeeController::class, 'update'])->name('employees.update');
     Route::delete('/employees/{id}', [employeeController::class, 'destroy'])->name('employees.destroy');
     Route::get('/employees/{id}', [EmployeeController::class, 'show'])->name('employees.show');
+
+    //employee view
+    Route::get('/employeedetails/{id}',[employeedetailController::class, 'index'])->name('employees.details');
 
 
     //DEPARTMENT ROUTES
@@ -116,7 +120,9 @@ Route::middleware('auth')->group(function () {
 
 
 
-
+Route::get('/reports', function () {
+    return view('report');
+});
 
 
 
