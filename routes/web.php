@@ -90,13 +90,13 @@ Route::middleware('auth')->group(function () {
     Route::delete('/jobs/{job}', [jobController::class, 'destroy'])->name('jobs.destroy');
     Route::get('/jobs/{job}', [jobController::class, 'show'])->name('jobs.show');
 
-        //ASSIGN ROUTES
-        Route::get('/employee-info', [employee_infoController::class, 'index'])->name('employee_info.index');
-        Route::get('/employee-info/create', [employee_infoController::class, 'create'])->name('employee_info.create');
-        Route::post('/employee-info', [employee_infoController::class, 'store'])->name('employee_info.store');
-        Route::get('/employee-info/{id}/edit', [employee_infoController::class, 'edit'])->name('employee_info.edit');
-        Route::put('/employee-info/{id}', [employee_infoController::class, 'update'])->name('employee_info.update');
-        Route::delete('/employee-info/{id}', [employee_infoController::class, 'destroy'])->name('employee_info.destroy');
+    //ASSIGN ROUTES
+    Route::get('/employee-info', [employee_infoController::class, 'index'])->name('employee_info.index');
+    Route::get('/employee-info/create', [employee_infoController::class, 'create'])->name('employee_info.create');
+    Route::post('/employee-info', [employee_infoController::class, 'store'])->name('employee_info.store');
+    Route::get('/employee-info/{id}/edit', [employee_infoController::class, 'edit'])->name('employee_info.edit');
+    Route::put('/employee-info/{id}', [employee_infoController::class, 'update'])->name('employee_info.update');
+    Route::delete('/employee-info/{id}', [employee_infoController::class, 'destroy'])->name('employee_info.destroy');
 
 
     //PROFILE ROUTES
