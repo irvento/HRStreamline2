@@ -82,7 +82,6 @@ Route::middleware('auth')->group(function () {
 
     //PROFILE ROUTES
     Route::get('/profile', [employee_user_viewController::class, 'index'])->name('profile-information');
-});
 
 
 
