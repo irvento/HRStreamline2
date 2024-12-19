@@ -9,7 +9,8 @@
         <!-- Tab Navigation -->
         <ul
             class="flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400">
-            <template x-for="tab in ['#Certificates', '#Education', '#Skills', '#Languages' , '#Languages_setup']" :key="tab">
+            <template x-for="tab in ['#Certificates', '#Education', '#Skills', '#Languages' , '#Languages_Setup']"
+                :key="tab">
                 <li class="me-2">
                     <a href="#" @click.prevent="activeTab = tab; window.location.hash = tab"
                         :aria-current="activeTab === tab ? 'page' : false"
@@ -60,9 +61,9 @@
 
         <!-- Languages Setup Tab Content -->
         <div class="mt-4">
-            <div x-show="activeTab === '#Languages_setup'" class="p-4 bg-white dark:bg-gray-800 rounded-lg shadow">
+            <div x-show="activeTab === '#Languages_Setup'" class="p-4 bg-white dark:bg-gray-800 rounded-lg shadow">
                 <!-- Table displaying languages data -->
-                @include('languages_setup.index') <!-- Include languages table here -->
+                @include('languageSetup.index') <!-- Include languages table here -->
             </div>
         </div>
 

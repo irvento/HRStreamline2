@@ -59,9 +59,8 @@ class certificatesController extends Controller
     {
         $certificate = certificateModel::findOrFail($certificate_id);
         $employees = employeeModel::all(); // Get all employees
-        $employeeInfo = $certificate->employee; // Get the employee associated with this certificate
 
-        return view('qualifications.certifications.edit', compact('certificate', 'employees', 'employeeInfo'));
+        return view('certificates.edit', compact('certificate', 'employees'));
     }
 
     public function update(Request $request, $certificate_id)

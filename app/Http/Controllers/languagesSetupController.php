@@ -8,31 +8,32 @@ use Illuminate\Http\Request;
 class languagesSetupController extends Controller
 {
     public function index()
-{
-    // Fetch all language setups
-    $languageSetups = languagesSetupModel::all();
-    
-    // Return the view for language setups (updated path)
-    return view('qualifications.languages_setup.index', compact('languageSetups'));
-}
+    {
+        // Fetch all language setups
+        $languageSetups = languagesSetupModel::all();
 
+        // Return the view for language setups
+        return view('languageSetup.index', compact('languageSetups'));
+    }
 
     public function store(Request $request)
     {
         // Validate the incoming request data
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'description' => 'required|string|max:500',
+            'description' => 'nullable|string|max:500',  // Description is optional
         ]);
 
         // Create and save the new language setup record
         $setup = new languagesSetupModel();
         $setup->name = $validated['name'];
-        $setup->description = $validated['description'];
+        $setup->description = $validated['description'] ?? null;  // Handle nullable description
         $setup->save();
 
-        return redirect()->route('languageSetup.index')->with('success', 'Language setup added successfully!');
+        // Redirect back with success message
+        return redirect()->to('/qualifications#Languages_Setup')->with('success', 'Language setup added successfully!');
     }
+
 
     public function destroy($languagesetup_id)
     {
@@ -40,7 +41,9 @@ class languagesSetupController extends Controller
         $setup = languagesSetupModel::findOrFail($languagesetup_id);
         $setup->delete();
 
-        return redirect()->route('languageSetup.index')->with('success', 'Language setup deleted successfully!');
+        // Redirect back to the qualifications page with the anchor for the Language Setup section
+        return redirect()->to('/qualifications#Languages_Setup')
+            ->with('success', 'Language setup deleted successfully!');
     }
 
     public function edit($languagesetup_id)
@@ -53,18 +56,19 @@ class languagesSetupController extends Controller
 
     public function update(Request $request, $languagesetup_id)
     {
-        // Validate the incoming request data
-        $validated = $request->validate([
+        // Find the language setup record by its ID
+        $setup = languagesSetupModel::findOrFail($languagesetup_id);
+
+        // Validate the input
+        $validatedData = $request->validate([
             'name' => 'required|string|max:255',
-            'description' => 'required|string|max:500',
+            'description' => 'nullable|string',
         ]);
 
-        // Find and update the language setup record
-        $setup = languagesSetupModel::findOrFail($languagesetup_id);
-        $setup->name = $validated['name'];
-        $setup->description = $validated['description'];
-        $setup->save();
+        // Update the setup record with the validated data
+        $setup->update($validatedData);
 
-        return redirect()->route('languageSetup.index')->with('success', 'Language setup updated successfully!');
+        return redirect()->to('/qualifications#Languages_Setup')
+            ->with('success', 'Language updated successfully!');
     }
 }

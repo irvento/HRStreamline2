@@ -7,25 +7,30 @@ use Illuminate\Database\Eloquent\Model;
 
 class languagesModel extends Model
 {
-    use HasFactory;
 
-    protected $table = 'tbl_languages'; // Specify the table name
+    // Define the table name (optional if it follows Laravel's default convention)
+    protected $table = 'tbl_languages';
 
-    protected $primaryKey = 'language_id'; // Primary key column
+    // Define the primary key column name (since it’s not the default 'id')
+    protected $primaryKey = 'language_id';
+
     public $timestamps = false;
 
+    // Other attributes as needed
     protected $fillable = [
-        'employee_id', 'languagesetup_id', 'proficiency_level'
+        'employee_id',
+        'languagesetup_id',
+        'proficiency_level',
     ];
 
-    // Define the relationship with the Employee model
+    // Relationships
     public function employee()
     {
-        return $this->belongsTo(EmployeeModel::class, 'employee_id');
+        return $this->belongsTo(employeeModel::class, 'employee_id');
     }
 
-    // Define the relationship with the LanguageSetupModel
-    public function languageSetup()
+    // Corrected method name to 'languagesSetup' (as used in your model)
+    public function languagesetup()
     {
         return $this->belongsTo(languagesSetupModel::class, 'languagesetup_id');
     }

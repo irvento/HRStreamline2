@@ -12,9 +12,10 @@ class skillsController extends Controller
     {
         // Fetch all skills
         $skills = skillsModel::all();
-        
+        $employees = EmployeeModel::all(); // Fetch employees for possible use in the view
+
         // Return the view for skills
-        return view('skills.index', compact('skills'));
+        return view('skills.index', compact('skills', 'employees'));
     }
 
     public function store(Request $request)
@@ -24,7 +25,6 @@ class skillsController extends Controller
             'employee_id' => 'required|exists:tbl_employee,employee_id',
             'skill_name' => 'required|string|max:255',
             'proficiency_level' => 'required|string|max:255',
-            'last_used_date' => 'nullable|date',
         ]);
 
         // Create and save the new skill record
@@ -32,10 +32,11 @@ class skillsController extends Controller
         $skill->employee_id = $validated['employee_id'];
         $skill->skill_name = $validated['skill_name'];
         $skill->proficiency_level = $validated['proficiency_level'];
-        $skill->last_used_date = $validated['last_used_date'];
         $skill->save();
 
-        return redirect()->route('skills.index')->with('success', 'Skill added successfully!');
+        // Redirect back to the qualifications page with the anchor for the Skills tab
+        return redirect()->to('/qualifications#Skills')
+            ->with('success', 'Skill added successfully!');
     }
 
     public function destroy($skill_id)
@@ -44,7 +45,9 @@ class skillsController extends Controller
         $skill = skillsModel::findOrFail($skill_id);
         $skill->delete();
 
-        return redirect()->route('skills.index')->with('success', 'Skill deleted successfully!');
+        // Redirect back to the qualifications page with the anchor for the Skills tab
+        return redirect()->to('/qualifications#Skills')
+            ->with('success', 'Skill deleted successfully!');
     }
 
     public function edit($skill_id)
@@ -63,7 +66,6 @@ class skillsController extends Controller
             'employee_id' => 'required|exists:tbl_employee,employee_id',
             'skill_name' => 'required|string|max:255',
             'proficiency_level' => 'required|string|max:255',
-            'last_used_date' => 'nullable|date',
         ]);
 
         // Find and update the skill record
@@ -71,9 +73,18 @@ class skillsController extends Controller
         $skill->employee_id = $validated['employee_id'];
         $skill->skill_name = $validated['skill_name'];
         $skill->proficiency_level = $validated['proficiency_level'];
-        $skill->last_used_date = $validated['last_used_date'];
         $skill->save();
 
-        return redirect()->route('skills.index')->with('success', 'Skill updated successfully!');
+        // Redirect back to the qualifications page with the anchor for the Skills tab
+        return redirect()->to('/qualifications#Skills')
+            ->with('success', 'Skill updated successfully!');
+    }
+
+    public function show($skill_id)
+    {
+        // Fetch the specific skill record and its associated employee
+        $skill = skillsModel::with('employee')->findOrFail($skill_id);
+
+        return view('skills.show', compact('skill'));
     }
 }

@@ -12,7 +12,7 @@ class skillsModel extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'employee_id', 'skill_name', 'proficiency_level', 'last_used_date'
+        'employee_id', 'skill_name', 'proficiency_level',
     ];
 
     // Define the relationship with the Employee model

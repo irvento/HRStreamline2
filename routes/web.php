@@ -166,6 +166,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/education', [educationController::class, 'index'])->name('education.index');
     Route::get('/education/create', [educationController::class, 'create'])->name('education.create');
     Route::post('/education', [educationController::class, 'store'])->name('education.store');
+    Route::get('/education/{education_id}', [educationController::class, 'show'])->name('education.show');
     Route::get('/education/{education_id}/edit', [educationController::class, 'edit'])->name('education.edit');
     Route::put('/education/{education_id}', [educationController::class, 'update'])->name('education.update');
     Route::delete('/education/{education_id}', [educationController::class, 'destroy'])->name('education.destroy');
@@ -188,7 +189,7 @@ Route::middleware('auth')->group(function () {
     // Language Setup Routes
     Route::get('/language_setup', [languagesSetupController::class, 'index'])->name('languageSetup.index');
     Route::get('/language_setup/create', [languagesSetupController::class, 'create'])->name('languageSetup.create'); // Fixed typo here
-    Route::post('/language-setup', [languagesSetupController::class, 'store'])->name('languageSetup.store');
+    Route::post('/language-setup', [languagesSetupController::class, 'store'])->name('languageSetup.store'); // Corrected route
     Route::get('/language-setup/{languagesetup_id}/edit', [languagesSetupController::class, 'edit'])->name('languageSetup.edit');
     Route::put('/language-setup/{languagesetup_id}', [languagesSetupController::class, 'update'])->name('languageSetup.update');
     Route::delete('/language-setup/{languagesetup_id}', [languagesSetupController::class, 'destroy'])->name('languageSetup.destroy');

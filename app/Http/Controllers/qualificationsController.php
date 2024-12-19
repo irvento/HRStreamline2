@@ -17,9 +17,10 @@ class qualificationsController extends Controller
         $educations = educationModel::all();
         $skills = skillsModel::all();
         $languages = languagesModel::all();
-        $languageSetupModel = languagesSetupModel::all();
+        $languageSetup = languagesSetupModel::all();
         $employees = employeeModel::all();
-        return view('qualifications.index', compact('certificates', 'educations', 'skills', 'languages', 'languageSetupModel'));  // Use $languageSetupModel
+
+        return view('qualifications.index', compact('certificates', 'educations', 'skills', 'languages', 'languageSetup', 'employees'));  // Use $languageSetupModel
     }
 
 }

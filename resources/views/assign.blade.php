@@ -23,7 +23,7 @@
                                 <th class="px-4 py-2 text-left text-gray-300 font-medium border-b border-gray-600">Employee</th>
                                 <th class="px-4 py-2 text-left text-gray-300 font-medium border-b border-gray-600">Department</th>
                                 <th class="px-4 py-2 text-left text-gray-300 font-medium border-b border-gray-600">Job</th>
-                                <th class="px-4 py-2 text-left text-gray-300 font-medium border-b border-gray-600">Performance</th>
+                                <!--<th class="px-4 py-2 text-left text-gray-300 font-medium border-b border-gray-600">Performance</th>-->
                                 <th class="px-4 py-2 text-left text-gray-300 font-medium border-b border-gray-600">Actions</th>
                             </tr>
                         </thead>
@@ -34,7 +34,7 @@
                                     <td class="px-4 py-2 border-b border-gray-600 text-gray-300">{{ $employeeInfo->employee->employee_fname }}</td>
                                     <td class="px-4 py-2 border-b border-gray-600 text-gray-300">{{ $employeeInfo->department->department_name}}</td>
                                     <td class="px-4 py-2 border-b border-gray-600 text-gray-300">{{ $employeeInfo->job->job_title }}</td>
-                                    <td class="px-4 py-2 border-b border-gray-600 text-gray-300">{{ $employeeInfo->performance->performance_id ?? 'N/A' }}</td>
+                                  <!-- <td class="px-4 py-2 border-b border-gray-600 text-gray-300">{{ $employeeInfo->performance->performance_id ?? 'N/A' }}</td> -->
                                     <td class="px-4 py-2 border-b border-gray-600">
                                         <a href="{{ route('employee_info.edit', $employeeInfo->info_id) }}" class="px-3 py-1 bg-yellow-500 text-gray-100 rounded-md hover:bg-yellow-600">
                                             Edit
