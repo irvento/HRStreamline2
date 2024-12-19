@@ -1,21 +1,23 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\certificateModel;
-use App\Models\EmployeeModel;
+use App\Models\employeeModel;
 use Illuminate\Http\Request;
 
-class certificateController extends Controller
+class certificatesController extends Controller
 {
     public function index()
     {
-        // Fetch all certificates
-        $certificates = certificateModel::all();
-        
-        // Return the view for certificates
-        return view('certificate.index', compact('certificates'));
+        // Fetch the certificates and employees
+        $certificates = certificateModel::all(); // Fetch certificates
+        $employees = employeeModel::all(); // Fetch employees
+
+        // Pass both to the view
+        return view('qualifications.certificates.index', compact('certificates', 'employees'));
     }
+
+
 
     public function store(Request $request)
     {
@@ -37,7 +39,9 @@ class certificateController extends Controller
         $certificate->expiry_date = $validated['expiry_date'];
         $certificate->save();
 
-        return redirect()->route('certificate.index')->with('success', 'Certificate added successfully!');
+        // Redirect back to the qualifications page with the anchor for the Certificates tab
+        return redirect()->to('/qualifications#Certificates')
+            ->with('success', 'Certificate added successfully!');
     }
 
     public function destroy($certificate_id)
@@ -46,16 +50,18 @@ class certificateController extends Controller
         $certificate = certificateModel::findOrFail($certificate_id);
         $certificate->delete();
 
-        return redirect()->route('certificate.index')->with('success', 'Certificate deleted successfully!');
+        // Redirect back to the qualifications page with the anchor for the Certificates tab
+        return redirect()->to('/qualifications#Certificates')
+            ->with('success', 'Certificate deleted successfully!');
     }
 
     public function edit($certificate_id)
     {
-        // Find the certificate record for editing
         $certificate = certificateModel::findOrFail($certificate_id);
-        $employees = EmployeeModel::all(); // Get all employees for the employee_id field
+        $employees = employeeModel::all(); // Get all employees
+        $employeeInfo = $certificate->employee; // Get the employee associated with this certificate
 
-        return view('certificate.edit', compact('certificate', 'employees'));
+        return view('qualifications.certifications.edit', compact('certificate', 'employees', 'employeeInfo'));
     }
 
     public function update(Request $request, $certificate_id)
@@ -78,6 +84,14 @@ class certificateController extends Controller
         $certificate->expiry_date = $validated['expiry_date'];
         $certificate->save();
 
-        return redirect()->route('certificate.index')->with('success', 'Certificate updated successfully!');
+        // Redirect back to the qualifications page with the anchor for the Certificates tab
+        return redirect()->to('/qualifications#Certificates')
+            ->with('success', 'Certificate updated successfully!');
+    }
+    public function show($id)
+    {
+        // Fetch the specific certificate and its associated employee  
+        $certificate = certificateModel::with('employee')->findOrFail($id);
+        return view('qualifications.certificates.show', compact('certificate'));  // Make sure the path is correct  
     }
 }

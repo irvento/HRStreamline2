@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\languagesModel;
-use App\Models\languageSetupModel;
+use App\Models\languagesSetupModel;  // Corrected model name
 use App\Models\EmployeeModel;
 use Illuminate\Http\Request;
 
@@ -50,7 +50,7 @@ class languagesController extends Controller
     {
         // Find the language record for editing
         $language = languagesModel::findOrFail($language_id);
-        $languagesetups = languageSetupModel::all(); // Get all language setups
+        $languagesetups = languagesSetupModel::all(); // Corrected reference to languagesSetupModel
         $employees = EmployeeModel::all(); // Get all employees for the employee_id field
 
         return view('languages.edit', compact('language', 'languagesetups', 'employees'));

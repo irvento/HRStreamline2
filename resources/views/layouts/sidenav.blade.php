@@ -27,7 +27,11 @@
                     </x-nav-link>
                 </li>
             @endif
-
+            <li>
+                <x-nav-link :href="route('qualifications.index')" :active="request()->routeIs('qualifications.index')">
+                    {{ __('Qualifications') }}
+                </x-nav-link>   
+            </li>
             <li>
                 <x-nav-link :href="route('salary')" :active="request()->routeIs('salary')">
                     {{ __('Salary') }}
