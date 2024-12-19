@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use App\Models\employeeModel;
 use App\Models\payrollModel;
 use Illuminate\Http\Request;
+
 
 class payrollController extends Controller
 {
@@ -13,20 +15,33 @@ class payrollController extends Controller
     {
         // Capture the search query
         $search = $request->input('search');
-    
-        // Perform the join and filter results based on the search query
+        $user = Auth::user();
+
+        // Query payrolls with optional search
         $payrolls = payrollModel::join('tbl_employee', 'tbl_payroll.employee_id', '=', 'tbl_employee.employee_id')
-        ->select('tbl_payroll.*', 'tbl_employee.employee_fname', 'tbl_employee.employee_lname', 'tbl_payroll.payroll_id') // Include payroll_id
-        ->when($search, function ($query, $search) {
-            $query->where('tbl_employee.employee_fname', 'like', "%{$search}%")
-                ->orWhere('tbl_employee.employee_lname', 'like', "%{$search}%")
-                ->orWhere('tbl_payroll.payroll_status', 'like', "%{$search}%")
-                ->orWhere('tbl_payroll.pay_period', 'like', "%{$search}%");
-        })
-        ->paginate(10);
-    
+            ->select('tbl_payroll.*', 'tbl_employee.employee_fname', 'tbl_employee.employee_lname')
+            ->when($search, function ($query, $search) {
+                $query->where('tbl_employee.employee_fname', 'like', "%{$search}%")
+                    ->orWhere('tbl_employee.employee_lname', 'like', "%{$search}%")
+                    ->orWhere('tbl_payroll.payroll_status', 'like', "%{$search}%")
+                    ->orWhere('tbl_payroll.pay_period', 'like', "%{$search}%");
+            })
+            ->paginate(10);
+
+        // Query payrolls for the logged-in user (if applicable)
+        $payrolluser = payrollModel::join('tbl_employee', 'tbl_payroll.employee_id', '=', 'tbl_employee.employee_id')
+            ->select('tbl_payroll.*', 'tbl_employee.employee_fname', 'tbl_employee.employee_lname')
+            ->when($search, function ($query, $search) {
+                $query->where('tbl_employee.employee_fname', 'like', "%{$search}%")
+                    ->orWhere('tbl_employee.employee_lname', 'like', "%{$search}%")
+                    ->orWhere('tbl_payroll.payroll_status', 'like', "%{$search}%")
+                    ->orWhere('tbl_payroll.pay_period', 'like', "%{$search}%");
+            })
+            ->where('tbl_employee.employee_id', $user->id) // Filter by the logged-in user's ID
+            ->get();
+
         // Return the view with payroll data
-        return view('Salary.payroll', compact('payrolls', 'search'));
+        return view('Salary.payroll', compact('payrolls', 'search', 'payrolluser'));
     }
 
     // Show the form to create a new payroll
