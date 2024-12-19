@@ -1,5 +1,5 @@
 <?php
-
+use App\Http\Controllers\payrollController;
 use App\Http\Controllers\employee_info_viewController;
 use App\Http\Controllers\employee_infoController;
 use App\Http\Controllers\employeedetailController;
@@ -62,6 +62,8 @@ Route::middleware('auth')->group(function () {
     Route::put('/department/{id}', [departmentController::class, 'update'])->name('department.update');
     Route::delete('/department/{id}', [departmentController::class, 'destroy'])->name('department.destroy');
     Route::get('/department/{id}/delete', [departmentController::class, 'showDeleteConfirmation'])->name('department.delete_confirmation');
+    Route::get('/department/{id}/view', [departmentController::class, 'view'])->name('department.view');
+
 
     //LEAVES ROUTES
     Route::get('/leaves', [leavesController::class, 'index'])->name('leaves.index');
@@ -94,6 +96,17 @@ Route::middleware('auth')->group(function () {
     Route::get('/salary/{salary_id}/edit', [SalaryController::class, 'edit'])->name('salary.edit');
     Route::put('/salary/{salary_id}', [SalaryController::class, 'update'])->name('salary.update');
     Route::delete('/salaries/{salary_id}', [salaryController::class, 'destroy'])->name('salary.destroy');
+
+    // PAYROLL
+    Route::get('/payroll', [payrollController::class, 'index'])->name('payroll.index');
+    Route::get('/payroll/create', [payrollController::class, 'create'])->name('payroll.create');
+    Route::post('/payroll/store', [payrollController::class, 'store'])->name('payroll.store');
+    Route::get('/payroll/{id}/edit', [payrollController::class, 'edit'])->name('payroll.edit');
+    Route::put('/payroll/{id}', [payrollController::class, 'update'])->name('payroll.update');
+    Route::delete('/payroll/{id}', [payrollController::class, 'delete'])->name('payroll.delete');
+
+    
+  
 
     // PAYMENT FREQUENCY ROUTES
     Route::get('/payment-frequencies', [paymentFrequencyController::class, 'index'])->name('payment-frequency.index')->middleware('auth');
@@ -134,6 +147,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/reports/performance', [employee_info_viewController::class, 'performance'])->name('rperformance');
     Route::get('/reports/salary-reports', [employee_info_viewController::class, 'salaryReports'])->name('rsalary.reports');
     Route::get('/reports/department-analysis', [employee_info_viewController::class, 'departmentAnalysis'])->name('rdepartment.analysis');
+
+    Route::get('/payroll/reports', [employee_info_viewController::class, 'payrollReports'])->name('payroll.reports');
+
 
     // QUALIFICATIONS ROUTES
     Route::get('/qualifications', [qualificationsController::class, 'index'])->name('qualifications.index');

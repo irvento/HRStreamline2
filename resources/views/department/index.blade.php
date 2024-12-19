@@ -4,14 +4,7 @@
             {{ __('Department Management') }}
         </h2>
     </x-slot>
-
-    <!-- Back Button -->
-    <div class="mb-6">
-        <a href="{{ url()->previous() }}" 
-            class="inline-flex items-center px-4 py-2 bg-gray-600 text-white font-medium rounded-lg hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 dark:focus:ring-offset-gray-800">
-            <i class="bi bi-arrow-left mr-2"></i> Back
-        </a>
-    </div>
+<br><br>
 
     <!-- Main Content -->
     <div x-data="{ showModal: false, deleteUrl: '', departmentName: '' }" class="w-full space-y-6">
@@ -56,12 +49,17 @@
                             class="px-4 py-2 text-sm text-white bg-yellow-500 rounded-lg hover:bg-yellow-600 transition">
                             <i class="bi bi-pencil"></i> Edit
                         </a>
+                        <a href="{{ route('department.view', $department->department_id) }}" 
+                            class="px-4 py-2 text-sm text-white bg-blue-500 rounded-lg hover:bg-blue-600 transition">
+                            <i class="bi bi-eye"></i> View
+                        </a>
                         <button 
                             @click="showModal = true; deleteUrl = '{{ route('department.destroy', $department->department_id) }}'; departmentName = '{{ $department->department_name }}';"
                             class="px-4 py-2 text-sm text-white bg-red-500 rounded-lg hover:bg-red-600 transition">
                             <i class="bi bi-trash"></i> Delete
                         </button>
                     </div>
+                    
                 </div>
                 @endforeach
             @else
