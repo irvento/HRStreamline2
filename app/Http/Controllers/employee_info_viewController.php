@@ -216,13 +216,5 @@ public function departmentAnalysis()
 }
 
 
-    public function customReports(Request $request)
-    {
-        // Example logic for fetching custom report data
-        $customReports = CustomReport::all();
-        return view('reports.custom_reports', compact('customReports'));
-    }
-    public function show()
-    {
-    }
+
 }

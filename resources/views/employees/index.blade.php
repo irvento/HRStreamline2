@@ -26,9 +26,7 @@
                 <!-- Header Section -->
                 <div class="p-8 bg-gray-50 dark:bg-gray-700 profile-header">
                     <div class="flex flex-col md:flex-row items-center gap-6">
-                        <img 
-                            src="{{ $employeess->image ?? asset('default-avatar.png') }}" 
-                            alt="{{ $employeess->employee_fname }} {{ $employeess->employee_lname }}" 
+                        <img src="{{ asset($employeess->image) }}" alt="Profile Image" class="w-16 h-16 rounded-full"
                             class="w-28 h-28 rounded-full object-cover border-4 border-gray-300 dark:border-gray-600 shadow-lg transform hover:scale-105 transition"
                         >
                         <div class="text-center md:text-left">

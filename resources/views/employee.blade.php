@@ -46,7 +46,7 @@
                         @foreach ($employees as $employee)
                             <div class="flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-gray-700">
                                 <div class="flex items-center gap-4">
-                                    <img src="{{ $employee->image }}" alt="Employee" class="w-12 h-12 rounded-full">
+                                    <img src="{{ asset($employee->image) }}"  alt="Employee" class="w-12 h-12 rounded-full">
                                     <div>
                                         <p class="text-lg font-semibold text-gray-800 dark:text-gray-200">{{ $employee->employee_fname }} {{ $employee->employee_lname }}</p>
                                         <p class="text-sm text-gray-500 dark:text-gray-400">{{ $employee->employee_email }}</p>
