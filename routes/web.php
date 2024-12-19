@@ -134,7 +134,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/reports/performance', [employee_info_viewController::class, 'performance'])->name('rperformance');
     Route::get('/reports/salary-reports', [employee_info_viewController::class, 'salaryReports'])->name('rsalary.reports');
     Route::get('/reports/department-analysis', [employee_info_viewController::class, 'departmentAnalysis'])->name('rdepartment.analysis');
-    
+
     // QUALIFICATIONS ROUTES
     Route::get('/qualifications', [qualificationsController::class, 'index'])->name('qualifications.index');
 
