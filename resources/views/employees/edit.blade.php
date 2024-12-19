@@ -8,13 +8,6 @@
     </x-slot>
 
     <div class="py-12 bg-gray-100 dark:bg-gray-900 min-h-screen">
-             <!-- Back Button -->
-     <div class="mb-4">
-        <a href="{{ url()->previous() }}"
-            class="inline-flex items-center px-4 py-2 bg-gray-600 text-white font-medium rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 dark:focus:ring-offset-gray-800">
-            Back
-        </a>
-    </div>   
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
             <form action="{{ route('employees.update', $employee->employee_id) }}" method="POST" enctype="multipart/form-data">
                 @csrf

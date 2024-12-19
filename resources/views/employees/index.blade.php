@@ -1,118 +1,56 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-3xl text-gray-700 dark:text-gray-200 leading-tight">
+        <h2 class="font-semibold text-2xl text-gray-800 dark:text-gray-200 leading-tight">
             {{ __('Employee Information') }}
         </h2>
     </x-slot>
 
-    <div class="py-12 bg-gradient-to-b from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900 min-h-screen">
-             <!-- Back Button -->
-     <div class="mb-4">
-        <a href="{{ url()->previous() }}"
-            class="inline-flex items-center px-4 py-2 bg-gray-600 text-white font-medium rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 dark:focus:ring-offset-gray-800">
-            Back
-        </a>
-    </div>   
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-8">
-            <!-- Success Message -->
+    <div class="py-12 bg-gray-100 dark:bg-gray-900 min-h-screen">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+
+            <!-- Display Success Message -->
             @if (session('success'))
-                <div class="bg-green-500 text-white px-6 py-4 rounded-lg shadow-lg text-center transition-transform transform hover:scale-105">
+                <div class="bg-green-500 text-white p-4 rounded-lg">
                     {{ session('success') }}
                 </div>
             @endif
 
-            <!-- Employee Profile Card -->
-            <div class="bg-white dark:bg-gray-800 shadow-xl rounded-lg overflow-hidden">
-                <!-- Header Section -->
-                <div class="p-8 bg-gray-50 dark:bg-gray-700">
-                    <div class="flex flex-col md:flex-row items-center gap-6">
-                        <img 
-                            src="{{ $employee->image ?? asset('default-avatar.png') }}" 
-                            alt="{{ $employee->employee_fname }} {{ $employee->employee_lname }}" 
-                            class="w-28 h-28 rounded-full object-cover border-4 border-gray-300 dark:border-gray-600 shadow-lg transform hover:scale-105 transition"
-                        >
-                        <div class="text-center md:text-left">
-                            <h3 class="text-3xl font-bold text-gray-800 dark:text-gray-100">
-                                {{ $employee->employee_fname }} {{ $employee->employee_lname }}
-                            </h3>
-                            <p class="text-lg text-gray-600 dark:text-gray-400">
-                                {{ $employee->job_title ?? 'Position not available' }}
-                            </p>
-                            <p class="text-sm text-gray-500 dark:text-gray-500">
-                                {{ $employee->department_name ?? 'No department assigned' }}
-                            </p>
-                        </div>
+            <!-- Employee Information Card -->
+            <div class="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6 space-y-4">
+                <!-- Employee Name -->
+                <div class="flex items-center gap-4">
+                    <img src="{{ $employee->image }}" alt="{{ $employee->employee_fname }} {{ $employee->employee_lname }}" class="w-16 h-16 rounded-full object-cover border-2 border-gray-300 dark:border-gray-700">
+                    <div>
+                        <h3 class="text-2xl font-semibold text-gray-800 dark:text-gray-200">{{ $employee->employee_fname }} {{ $employee->employee_lname }}</h3>
+                        <p class="text-gray-500 dark:text-gray-400 text-sm">{{ $employee->position ?? 'Position not available' }}</p>
                     </div>
                 </div>
 
-                <!-- Information Sections -->
-                <div class="p-8 space-y-8">
-                    <!-- General Information -->
-                    <div>
-                        <h4 class="flex items-center gap-2 text-lg font-semibold text-gray-700 dark:text-gray-200 border-b pb-2 mb-4">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-500" viewBox="0 0 20 20" fill="currentColor">
-                                <path d="M10 2a6 6 0 00-6 6v2a4 4 0 00-1 3v1h14v-1a4 4 0 00-1-3V8a6 6 0 00-6-6z" />
-                                <path d="M4 15a2 2 0 104 0H4z" />
-                            </svg>
-                            General Information
-                        </h4>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-600 dark:text-gray-400">
-                            <p><strong>User ID:</strong> {{ $employee->user_id }}</p>
-                            <p><strong>Employee ID:</strong> {{ $employee->employee_id }}</p>
-                            <p><strong>Full Name:</strong> {{ $employee->full_name }}</p>
-                            <p><strong>Department:</strong> {{ $employee->department_name ?? 'Not assigned' }}</p>
-                            <p><strong>Job Title:</strong> {{ $employee->job_title ?? 'Not available' }}</p>
-                        </div>
+                <!-- Contact Info -->
+                <div class="space-y-2">
+                    <h4 class="text-lg font-semibold text-gray-800 dark:text-gray-200">Contact Information</h4>
+                    <div class="flex items-center gap-2 text-gray-600 dark:text-gray-400">
+                        <i class="bi bi-telephone text-primary-500"></i>
+                        <p>{{ $employee->contact1 }}</p>
                     </div>
+                    <div class="flex items-center gap-2 text-gray-600 dark:text-gray-400">
+                        <i class="bi bi-envelope text-primary-500"></i>
+                        <p>{{ $employee->email ?? 'Email not available' }}</p>
+                    </div>
+                </div>
 
-                    <!-- Contact Information -->
-                    <div>
-                        <h4 class="flex items-center gap-2 text-lg font-semibold text-gray-700 dark:text-gray-200 border-b pb-2 mb-4">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500" viewBox="0 0 20 20" fill="currentColor">
-                                <path d="M2.003 5.884L10 9l7.997-3.116A2 2 0 0016 3H4a2 2 0 00-1.997 2.884z" />
-                                <path d="M18 8l-8 3-8-3v6a2 2 0 002 2h12a2 2 0 002-2V8z" />
-                            </svg>
-                            Contact Information
-                        </h4>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-600 dark:text-gray-400">
-                            <p><strong>Email:</strong> {{ $employee->employee_email ?? 'Email not available' }}</p>
-                            <p><strong>Phone:</strong> {{ $employee->contact1 ?? 'Phone number not available' }}</p>
-                        </div>
+                <!-- Address Info (Optional) -->
+                @if ($employee->address)
+                    <div class="space-y-2">
+                        <h4 class="text-lg font-semibold text-gray-800 dark:text-gray-200">Address</h4>
+                        <p class="text-gray-600 dark:text-gray-400">{{ $employee->address }}</p>
                     </div>
+                @endif
 
-                    <!-- Address Information -->
-                    <div>
-                        <h4 class="flex items-center gap-2 text-lg font-semibold text-gray-700 dark:text-gray-200 border-b pb-2 mb-4">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-500" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm-1-11a1 1 0 112 0v4a1 1 0 11-2 0V7zm1 6a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd" />
-                            </svg>
-                            Address
-                        </h4>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-600 dark:text-gray-400">
-                            <p><strong>Address Line 1:</strong> {{ $employee->address_line_1 ?? 'Not available' }}</p>
-                            <p><strong>Address Line 2:</strong> {{ $employee->address_line_2 ?? 'Not available' }}</p>
-                            <p><strong>City:</strong> {{ $employee->city ?? 'Not available' }}</p>
-                            <p><strong>State:</strong> {{ $employee->state ?? 'Not available' }}</p>
-                            <p><strong>Postal Code:</strong> {{ $employee->postal_code ?? 'Not available' }}</p>
-                            <p><strong>Country:</strong> {{ $employee->country ?? 'Not available' }}</p>
-                        </div>
-                    </div>
-
-                    <!-- Salary and Performance Information -->
-                    <div>
-                        <h4 class="flex items-center gap-2 text-lg font-semibold text-gray-700 dark:text-gray-200 border-b pb-2 mb-4">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-purple-500" viewBox="0 0 20 20" fill="currentColor">
-                                <path d="M10 2a8 8 0 100 16 8 8 0 000-16zm-1 11a1 1 0 11-2 0 1 1 0 012 0zm4 0a1 1 0 11-2 0 1 1 0 012 0zM9 8a1 1 0 011-1h4a1 1 0 110 2h-4a1 1 0 01-1-1z" />
-                            </svg>
-                            Salary and Performance
-                        </h4>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-600 dark:text-gray-400">
-                            <p><strong>Salary ID:</strong> {{ $employee->salary_id ?? 'Not available' }}</p>
-                            <p><strong>Performance Review Score:</strong> {{ $employee->review_score ?? 'Not available' }}</p>
-                            <p><strong>Review Date:</strong> {{ $employee->review_date ?? 'Not available' }}</p>
-                            <p><strong>Reviewer ID:</strong> {{ $employee->reviewer_id ?? 'Not available' }}</p>
-                        </div>
-                    </div>
+                <!-- Add More Fields As Necessary -->
+                <div class="space-y-2">
+                    <h4 class="text-lg font-semibold text-gray-800 dark:text-gray-200">Additional Info</h4>
+                    <p class="text-gray-600 dark:text-gray-400">{{ $employee->additional_info ?? 'No additional information available.' }}</p>
                 </div>
             </div>
         </div>

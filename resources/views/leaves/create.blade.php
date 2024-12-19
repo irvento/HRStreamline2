@@ -4,13 +4,7 @@
             {{ __('Create Leave') }}
         </h2>
     </x-slot>
-     <!-- Back Button -->
-     <div class="mb-4">
-        <a href="{{ url()->previous() }}"
-            class="inline-flex items-center px-4 py-2 bg-gray-600 text-white font-medium rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 dark:focus:ring-offset-gray-800">
-            Back
-        </a>
-    </div>   
+
     <div class="mt-8 max-w-3xl mx-auto">
         <form action="{{ route('leaves.store') }}" method="POST" class="space-y-6">
             @csrf

@@ -5,8 +5,8 @@
         </h2>
     </x-slot>
 
-
-        <div class="w-full mt-8">
+    <div class="py-12 bg-gray-100 dark:bg-gray-900 min-h-screen">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-gray-800 shadow-md rounded-lg p-6">
                 <div class="flex justify-between items-center mb-4">
                     <h3 class="text-lg font-medium text-gray-300">Employee Information List</h3>
@@ -19,7 +19,6 @@
                     <table class="min-w-full border border-gray-700 rounded-lg shadow-sm">
                         <thead class="bg-gray-700">
                             <tr>
-                                <th class="px-4 py-2 text-left text-gray-300 font-medium border-b border-gray-600">Employee ID</th>
                                 <th class="px-4 py-2 text-left text-gray-300 font-medium border-b border-gray-600">Employee</th>
                                 <th class="px-4 py-2 text-left text-gray-300 font-medium border-b border-gray-600">Department</th>
                                 <th class="px-4 py-2 text-left text-gray-300 font-medium border-b border-gray-600">Job</th>
@@ -30,7 +29,6 @@
                         <tbody>
                             @foreach($employeeInfos as $employeeInfo)
                                 <tr class="hover:bg-gray-700">
-                                    <td class="px-4 py-2 border-b border-gray-600 text-gray-300">{{ $employeeInfo->employee->employee_id }}</td>
                                     <td class="px-4 py-2 border-b border-gray-600 text-gray-300">{{ $employeeInfo->employee->employee_fname }}</td>
                                     <td class="px-4 py-2 border-b border-gray-600 text-gray-300">{{ $employeeInfo->department->department_name}}</td>
                                     <td class="px-4 py-2 border-b border-gray-600 text-gray-300">{{ $employeeInfo->job->job_title }}</td>
@@ -55,5 +53,5 @@
                 </div>
             </div>
         </div>
-
+    </div>
 </x-app-layout>

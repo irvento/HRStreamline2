@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\employee_infoController;
-use App\Http\Controllers\employeedetailController;
 use App\Http\Controllers\jobController;
 use App\Http\Controllers\employeeController;
 use App\Http\Controllers\attendanceController;
@@ -49,9 +48,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/employees/{id}', [employeeController::class, 'destroy'])->name('employees.destroy');
     Route::get('/employees/{id}', [EmployeeController::class, 'show'])->name('employees.show');
 
-    //employee view
-    Route::get('/employeedetails/{id}',[employeedetailController::class, 'index'])->name('employees.details');
-
 
     //DEPARTMENT ROUTES
     Route::get('/department', [departmentController::class, 'index'])->name('department.index');
@@ -81,9 +77,6 @@ Route::middleware('auth')->group(function () {
     Route::post('performance/store', [performanceController::class, 'store'])->name('performance.store');
     Route::get('performance', [performanceController::class, 'index'])->name('performance.index');
     Route::get('/performance/create', [performanceController::class, 'create'])->name('performance.create');
-    Route::get('performance/{id}/edit', [performanceController::class, 'edit'])->name('performance.edit'); // Show form to edit a rating
-    Route::put('performance/{id}', [performanceController::class, 'update'])->name('performance.update'); // Update an existing rating
-    Route::delete('performance/{id}', [performanceController::class, 'destroy'])->name('performance.destroy');
 
     //SALARIES ROUTES
     Route::get('/salaries', [salaryController::class, 'index'])->name('salary');
@@ -173,9 +166,7 @@ Route::middleware('auth')->group(function () {
 
 
 
-Route::get('/reports', function () {
-    return view('report');
-});
+
 
 
 
