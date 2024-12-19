@@ -17,9 +17,10 @@ class leavesController extends Controller
             $query->where('leave_status', 'LIKE', "%{$search}%")
                   ->orWhere('remarks', 'LIKE', "%{$search}%");
         }
-
+        $user = Auth::user(); 
+        $leavesuser = leavesModel::where('employee_id', $user->id)->get(); 
         $leaves = $query->paginate(10)->withQueryString();
-        return view('leaves', compact('leaves', 'search'));
+        return view('leaves', compact('leaves', 'search', 'leavesuser'));
     }
 
     public function create()

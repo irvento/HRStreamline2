@@ -25,10 +25,12 @@
                     <i class="bi bi-search"></i> Search
                 </button>
             </form>
+            @if (Auth::user()->role === 'admin')
             <a href="{{ route('department.create') }}" 
                 class="ml-6 px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition">
                 <i class="bi bi-plus-lg"></i> Add Department
             </a>
+            @endif
         </div>
 
         <!-- Department List -->
@@ -45,19 +47,23 @@
                         </div>
                     </div>
                     <div class="flex items-center gap-3">
+                        @if (Auth::user()->role === 'admin')
                         <a href="{{ route('department.edit', $department->department_id) }}" 
                             class="px-4 py-2 text-sm text-white bg-yellow-500 rounded-lg hover:bg-yellow-600 transition">
                             <i class="bi bi-pencil"></i> Edit
                         </a>
+                        @endif
                         <a href="{{ route('department.view', $department->department_id) }}" 
                             class="px-4 py-2 text-sm text-white bg-blue-500 rounded-lg hover:bg-blue-600 transition">
                             <i class="bi bi-eye"></i> View
                         </a>
+                        @if (Auth::user()->role === 'admin')
                         <button 
                             @click="showModal = true; deleteUrl = '{{ route('department.destroy', $department->department_id) }}'; departmentName = '{{ $department->department_name }}';"
                             class="px-4 py-2 text-sm text-white bg-red-500 rounded-lg hover:bg-red-600 transition">
                             <i class="bi bi-trash"></i> Delete
                         </button>
+                        @endif
                     </div>
                     
                 </div>

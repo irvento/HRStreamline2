@@ -14,17 +14,16 @@ class RoleMiddleWare
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next, $role = null)
-{
-    logger("Middleware invoked with role: " . $role);
-    if (!Auth::check()) {
-        return redirect()->route('login')->with('error', 'Please log in to access this page.');
-    }
+    public function handle(Request $request, Closure $next, $role)
+    {
+        if (!Auth::check()) {
+            return redirect()->route('login')->with('error', 'Please log in to access this page.');
+        }
 
-    if ($role && Auth::user()->role !== $role) {
-        return redirect()->route('home')->with('error', 'You do not have permission to access this page.');
-    }
+        if (Auth::user()->role !== $role) {
+            return response()->view('errors.401', [], 401);
+        }
 
-    return $next($request);
-}
+        return $next($request);
+    }
 }
