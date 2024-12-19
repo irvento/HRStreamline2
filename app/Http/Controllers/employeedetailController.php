@@ -11,7 +11,10 @@ class employeedetailController extends Controller
     {
 
         $employee = employee_info_viewModel::where('employee_id', $id)->first();
-        $employeess = employeeModel::where('employee_id', $id)->first();
+        $employeess = employeeModel::with(['certificates', 'skills', 'education', 'languages'])
+            ->where('employee_id', $id)
+            ->first();
+
         return view('employees.index', ['employee' => $employee, 'employeess' => $employeess]);
     }
 }

@@ -37,56 +37,56 @@ class employeeController extends Controller
     }
 
     public function store(Request $request)
-{
-    $user = Auth::user();
-    $alreadySubmitted = employeeModel::where('user_id', $user->id)->exists();
+    {
+        $user = Auth::user();
+        $alreadySubmitted = employeeModel::where('user_id', $user->id)->exists();
 
-    if ($alreadySubmitted) {
-        return redirect()->route('dashboard')->with('error', 'You have already submitted this form.');
+        if ($alreadySubmitted) {
+            return redirect()->route('dashboard')->with('error', 'You have already submitted this form.');
+        }
+
+        $validated = $request->validate([
+            'employee_fname' => 'required|string|max:255',
+            'employee_mname' => 'nullable|string|max:255',
+            'employee_lname' => 'nullable|string|max:255',
+            'birthdate' => 'nullable|date',
+            'gender' => 'nullable|string|max:10',
+            'image' => 'nullable|image|mimes:jpg,png,jpeg,webp|max:2048',
+            'address_line_1' => 'nullable|string|max:255',
+            'address_line_2' => 'nullable|string|max:255',
+            'city' => 'nullable|string|max:255',
+            'state' => 'nullable|string|max:255',
+            'postal_code' => 'nullable|string|max:20',
+            'country' => 'nullable|string|max:255',
+            'contact1' => 'nullable|string|max:20',
+            'department_id' => 'required|exists:tbl_department,department_id',
+            'job_id' => 'required|exists:tbl_job,job_id',
+        ]);
+
+        $imagePath = null;
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image');
+            $extension = $imagePath->getClientOriginalExtension();
+            $filename = time() . '.' . $extension;
+            $path = 'storage/app/public/employee_images/';
+            $imagePath->move($path, $filename);
+        }
+
+        $employee = new employeeModel();
+        $employee->fill($validated);
+        $employee->user_id = $user->id;
+        $employee->employee_email = $user->email;
+        $employee->image = $path . $filename; // Save image path in the database
+        $employee->save();
+
+        $employee_info = new employee_infoModel();
+        $employee_info->employee_id = $employee->employee_id;
+        $employee_info->job_id = $validated['job_id'];
+        $employee_info->department_id = $validated['department_id'];
+        $employee_info->save();
+
+        return redirect()->route('dashboard')->with('success', 'Employee created successfully!');
     }
-
-    $validated = $request->validate([
-        'employee_fname' => 'required|string|max:255',
-        'employee_mname' => 'nullable|string|max:255',
-        'employee_lname' => 'nullable|string|max:255',
-        'birthdate' => 'nullable|date',
-        'gender' => 'nullable|string|max:10',
-        'image' => 'nullable|image|mimes:jpg,png,jpeg,webp|max:2048',
-        'address_line_1' => 'nullable|string|max:255',
-        'address_line_2' => 'nullable|string|max:255',
-        'city' => 'nullable|string|max:255',
-        'state' => 'nullable|string|max:255',
-        'postal_code' => 'nullable|string|max:20',
-        'country' => 'nullable|string|max:255',
-        'contact1' => 'nullable|string|max:20',
-        'department_id' => 'required|exists:tbl_department,department_id',
-        'job_id' => 'required|exists:tbl_job,job_id',
-    ]);
-
-    $imagePath = null;
-    if ($request->hasFile('image')) {
-        $imagePath = $request->file('image');
-        $extension = $imagePath->getClientOriginalExtension();
-        $filename = time().'.'.$extension;
-        $path = 'storage/app/public/employee_images/';
-        $imagePath->move($path , $filename);
-    }
-
-    $employee = new employeeModel();
-    $employee->fill($validated);
-    $employee->user_id = $user->id;
-    $employee->employee_email = $user->email;
-    $employee->image = $path.$filename; // Save image path in the database
-    $employee->save();
-
-    $employee_info = new employee_infoModel();
-    $employee_info->employee_id = $employee->employee_id;
-    $employee_info->job_id = $validated['job_id'];
-    $employee_info->department_id = $validated['department_id'];
-    $employee_info->save();
-
-    return redirect()->route('dashboard')->with('success', 'Employee created successfully!');
-}
 
 
     public function edit($id)
@@ -138,4 +138,14 @@ class employeeController extends Controller
 
         return redirect()->route('employees')->with('success', 'Employee deleted successfully!');
     }
+
+    public function show($employee_id)
+    {
+        $employee = employeeModel::with(['certificates', 'skills', 'education', 'languages'])->findOrFail($employee_id);
+
+        return view('employee.show', compact('employee'));
+    }
+
+
+
 }
