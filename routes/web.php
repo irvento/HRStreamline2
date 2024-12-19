@@ -26,7 +26,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/test-middleware', function () {
     return 'Middleware is working!';
 })->middleware('check.user.role');
-
 Route::get('/', function () {
     return view('welcome');
 });
@@ -48,7 +47,7 @@ require __DIR__ . '/auth.php';
 Route::middleware('auth')->group(function () {
     //EMPLOYEEE ROUTES
     Route::get('/employees', [EmployeeController::class, 'index'])->name('employees.index');
-    Route::get('/employee', [employeeController::class, 'index'])->name('employees')->middleware('role:admin');
+    Route::get('/employee', [employeeController::class, 'index'])->name('employees');
     Route::get('/employees/create', [employeeController::class, 'create'])->name('employees.create');
     Route::post('/employees', action: [employeeController::class, 'store'])->name('employees.store');
     Route::get('/employees/{id}/edit', [employeeController::class, 'edit'])->name('employees.edit');
@@ -153,7 +152,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/reports/performance', [employee_info_viewController::class, 'performance'])->name('rperformance');
     Route::get('/reports/salary-reports', [employee_info_viewController::class, 'salaryReports'])->name('rsalary.reports');
     Route::get('/reports/department-analysis', [employee_info_viewController::class, 'departmentAnalysis'])->name('rdepartment.analysis');
-
     Route::get('/payroll/reports', [employee_info_viewController::class, 'payrollReports'])->name('payroll.reports');
 
 
