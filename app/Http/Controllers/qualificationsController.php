@@ -23,4 +23,19 @@ class qualificationsController extends Controller
         return view('qualifications.index', compact('certificates', 'educations', 'skills', 'languages', 'languageSetup', 'employees'));  // Use $languageSetupModel
     }
 
+
+    public function show($employee_id)
+    {
+        // Fetch the specific employee
+        $employee = employeeModel::findOrFail($employee_id);
+
+        // Fetch qualifications specific to this employee
+        $certificates = certificateModel::where('employee_id', $employee_id)->get();
+        $educations = educationModel::where('employee_id', $employee_id)->get();
+        $skills = skillsModel::where('employee_id', $employee_id)->get();
+        $languages = languagesModel::where('employee_id', $employee_id)->get();
+
+        return view('qualifications.show', compact('employee', 'certificates', 'educations', 'skills', 'languages'));
+    }
+
 }

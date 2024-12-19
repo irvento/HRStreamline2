@@ -153,6 +153,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/reports/performance', [employee_info_viewController::class, 'performance'])->name('rperformance');
     Route::get('/reports/salary-reports', [employee_info_viewController::class, 'salaryReports'])->name('rsalary.reports');
     Route::get('/reports/department-analysis', [employee_info_viewController::class, 'departmentAnalysis'])->name('rdepartment.analysis');
+
     Route::get('/payroll/reports', [employee_info_viewController::class, 'payrollReports'])->name('payroll.reports');
 
 
