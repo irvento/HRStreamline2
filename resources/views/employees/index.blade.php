@@ -6,13 +6,13 @@
     </x-slot>
 
     <div class="py-12 bg-gradient-to-b from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900 min-h-screen">
-             <!-- Back Button -->
-     <div class="mb-4">
-        <a href="{{ url()->previous() }}"
-            class="inline-flex items-center px-4 py-2 bg-gray-600 text-white font-medium rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 dark:focus:ring-offset-gray-800">
-            Back
-        </a>
-    </div>   
+        <!-- Back Button -->
+        <div class="mb-4">
+            <a href="{{ url()->previous() }}"
+                class="inline-flex items-center px-4 py-2 bg-gray-600 text-white font-medium rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 dark:focus:ring-offset-gray-800">
+                Back
+            </a>
+        </div>   
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-8">
             <!-- Success Message -->
             @if (session('success'))
@@ -24,21 +24,21 @@
             <!-- Employee Profile Card -->
             <div class="bg-white dark:bg-gray-800 shadow-xl rounded-lg overflow-hidden">
                 <!-- Header Section -->
-                <div class="p-8 bg-gray-50 dark:bg-gray-700">
+                <div class="p-8 bg-gray-50 dark:bg-gray-700 profile-header">
                     <div class="flex flex-col md:flex-row items-center gap-6">
                         <img 
-                            src="{{ $employee->image ?? asset('default-avatar.png') }}" 
-                            alt="{{ $employee->employee_fname }} {{ $employee->employee_lname }}" 
+                            src="{{ $employeess->image ?? asset('default-avatar.png') }}" 
+                            alt="{{ $employeess->employee_fname }} {{ $employeess->employee_lname }}" 
                             class="w-28 h-28 rounded-full object-cover border-4 border-gray-300 dark:border-gray-600 shadow-lg transform hover:scale-105 transition"
                         >
                         <div class="text-center md:text-left">
                             <h3 class="text-3xl font-bold text-gray-800 dark:text-gray-100">
-                                {{ $employee->employee_fname }} {{ $employee->employee_lname }}
+                                {{ $employeess->employee_fname }} {{ $employeess->employee_lname }}
                             </h3>
-                            <p class="text-lg text-gray-600 dark:text-gray-400">
+                            <p class="text-lg text-gray-800 dark:text-gray-100">
                                 {{ $employee->job_title ?? 'Position not available' }}
                             </p>
-                            <p class="text-sm text-gray-500 dark:text-gray-500">
+                            <p class="text-sm text-gray-800 dark:text-gray-300">
                                 {{ $employee->department_name ?? 'No department assigned' }}
                             </p>
                         </div>
@@ -57,9 +57,9 @@
                             General Information
                         </h4>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-600 dark:text-gray-400">
-                            <p><strong>User ID:</strong> {{ $employee->user_id }}</p>
-                            <p><strong>Employee ID:</strong> {{ $employee->employee_id }}</p>
-                            <p><strong>Full Name:</strong> {{ $employee->full_name }}</p>
+                            <p><strong>User ID:</strong> {{ $employeess->user_id }}</p>
+                            <p><strong>Employee ID:</strong> {{ $employeess->employee_id }}</p>
+                            <p><strong>Full Name:</strong> {{ $employee->full_name ?? 'Not assigned'}} </p>
                             <p><strong>Department:</strong> {{ $employee->department_name ?? 'Not assigned' }}</p>
                             <p><strong>Job Title:</strong> {{ $employee->job_title ?? 'Not available' }}</p>
                         </div>
@@ -75,8 +75,8 @@
                             Contact Information
                         </h4>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-600 dark:text-gray-400">
-                            <p><strong>Email:</strong> {{ $employee->employee_email ?? 'Email not available' }}</p>
-                            <p><strong>Phone:</strong> {{ $employee->contact1 ?? 'Phone number not available' }}</p>
+                            <p><strong>Email:</strong> {{ $employeess->employee_email ?? 'Email not available' }}</p>
+                            <p><strong>Phone:</strong> {{ $employeess->contact1 ?? 'Phone number not available' }}</p>
                         </div>
                     </div>
 
@@ -89,12 +89,12 @@
                             Address
                         </h4>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-600 dark:text-gray-400">
-                            <p><strong>Address Line 1:</strong> {{ $employee->address_line_1 ?? 'Not available' }}</p>
-                            <p><strong>Address Line 2:</strong> {{ $employee->address_line_2 ?? 'Not available' }}</p>
-                            <p><strong>City:</strong> {{ $employee->city ?? 'Not available' }}</p>
-                            <p><strong>State:</strong> {{ $employee->state ?? 'Not available' }}</p>
-                            <p><strong>Postal Code:</strong> {{ $employee->postal_code ?? 'Not available' }}</p>
-                            <p><strong>Country:</strong> {{ $employee->country ?? 'Not available' }}</p>
+                            <p><strong>Address Line 1:</strong> {{ $employeess->address_line_1 ?? 'Not available' }}</p>
+                            <p><strong>Address Line 2:</strong> {{ $employeess->address_line_2 ?? 'Not available' }}</p>
+                            <p><strong>City:</strong> {{ $employeess->city ?? 'Not available' }}</p>
+                            <p><strong>State:</strong> {{ $employeess->state ?? 'Not available' }}</p>
+                            <p><strong>Postal Code:</strong> {{ $employeess->postal_code ?? 'Not available' }}</p>
+                            <p><strong>Country:</strong> {{ $employeess->country ?? 'Not available' }}</p>
                         </div>
                     </div>
 
@@ -117,4 +117,35 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Function to generate a random very dark color
+            function getRandomVeryDarkColor() {
+                const r = Math.floor(Math.random() * 50); // Random value between 0 and 50 for a very dark color
+                const g = Math.floor(Math.random() * 50);
+                const b = Math.floor(Math.random() * 50);
+                return `rgb(${r}, ${g}, ${b})`;
+            }
+    
+            // Function to generate a random light color (lighter than the dark one)
+            function getRandomLightColor() {
+                const r = Math.floor(Math.random() * 155) + 100; // Random value between 100 and 255 for a light color
+                const g = Math.floor(Math.random() * 155) + 100;
+                const b = Math.floor(Math.random() * 155) + 100;
+                return `rgb(${r}, ${g}, ${b})`;
+            }
+    
+            // Generate one random very dark color for the left side
+            const randomDarkColor = getRandomVeryDarkColor();
+            // Generate one random light color for the right side
+            const randomLightColor = getRandomLightColor();
+    
+            // Apply the gradient background to the profile header
+            const profileHeader = document.querySelector('.profile-header');
+            if (profileHeader) {
+                profileHeader.style.background = `linear-gradient(to right, ${randomDarkColor}, ${randomLightColor})`;
+            }
+        });
+    </script>
 </x-app-layout>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\employee_info_viewController;
 use App\Http\Controllers\employee_infoController;
 use App\Http\Controllers\employeedetailController;
 use App\Http\Controllers\jobController;
@@ -50,7 +51,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/employees/{id}', [EmployeeController::class, 'show'])->name('employees.show');
 
     //employee view
-    Route::get('/employeedetails/{id}',[employeedetailController::class, 'index'])->name('employees.details');
+    Route::get('/employeedetails/{id}', [employeedetailController::class, 'index'])->name('employees.details');
 
 
     //DEPARTMENT ROUTES
@@ -125,6 +126,15 @@ Route::middleware('auth')->group(function () {
     //PROFILE ROUTES
     Route::get('/profile', [employee_user_viewController::class, 'index'])->name('profile-information');
 
+    //REPORTS
+    Route::get('/reports', [employee_info_viewController::class, 'index'])->name('report');//
+    Route::get('/reports/attendance', [employee_info_viewController::class, 'attendance'])->name('rattendance');//
+    Route::get('/reports/leaves', [employee_info_viewController::class, 'leaves'])->name('rleaves');
+    Route::get('/reports/employee-directory', [employee_info_viewController::class, 'employeeDirectory'])->name('remployee.directory');
+    Route::get('/reports/performance', [employee_info_viewController::class, 'performance'])->name('rperformance');
+    Route::get('/reports/salary-reports', [employee_info_viewController::class, 'salaryReports'])->name('rsalary.reports');
+    Route::get('/reports/department-analysis', [employee_info_viewController::class, 'departmentAnalysis'])->name('rdepartment.analysis');
+    Route::get('/reports/custom-reports', [employee_info_viewController::class, 'customReports'])->name('rcustom.reports');
     // QUALIFICATIONS ROUTES
     Route::get('/qualifications', [qualificationsController::class, 'index'])->name('qualifications.index');
 
@@ -136,7 +146,7 @@ Route::middleware('auth')->group(function () {
     Route::get('certificates/{certificate}/edit', [certificatesController::class, 'edit'])->name('certificates.edit');
     Route::put('certificates/{certificate}', [certificatesController::class, 'update'])->name('certificates.update');
     Route::delete('certificates/{certificate}', [certificatesController::class, 'destroy'])->name('certificates.destroy');
-   
+
     // Education Routes
     Route::get('/education', [educationController::class, 'index'])->name('education.index');
     Route::get('/education/create', [educationController::class, 'create'])->name('education.create');
@@ -169,14 +179,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/language-setup/{languagesetup_id}', [languagesSetupController::class, 'destroy'])->name('languageSetup.destroy');
 
 });
-
-
-
-
-Route::get('/reports', function () {
-    return view('report');
-});
-
 
 
 //ADMIN
