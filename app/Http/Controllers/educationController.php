@@ -11,10 +11,11 @@ class educationController extends Controller
     public function index()
     {
         // Fetch all education records
-        $education = educationModel::all();
-        
+        $educations = educationModel::all();
+        $employees = EmployeeModel::all(); // Fetch employees for possible use in the view
+
         // Return the view for education
-        return view('education.index', compact('education'));
+        return view('education.index', compact('educations', 'employees'));
     }
 
     public function store(Request $request)
@@ -39,7 +40,9 @@ class educationController extends Controller
         $education->end_date = $validated['end_date'];
         $education->save();
 
-        return redirect()->route('education.index')->with('success', 'Education added successfully!');
+        // Redirect back to the qualifications page with the anchor for the Education tab
+        return redirect()->to('/qualifications#Education')
+            ->with('success', 'Education added successfully!');
     }
 
     public function destroy($education_id)
@@ -48,7 +51,9 @@ class educationController extends Controller
         $education = educationModel::findOrFail($education_id);
         $education->delete();
 
-        return redirect()->route('education.index')->with('success', 'Education deleted successfully!');
+        // Redirect back to the qualifications page with the anchor for the Education tab
+        return redirect()->to('/qualifications#Education')
+            ->with('success', 'Education deleted successfully!');
     }
 
     public function edit($education_id)
@@ -82,6 +87,16 @@ class educationController extends Controller
         $education->end_date = $validated['end_date'];
         $education->save();
 
-        return redirect()->route('education.index')->with('success', 'Education updated successfully!');
+        // Redirect back to the qualifications page with the anchor for the Education tab
+        return redirect()->to('/qualifications#Education')
+            ->with('success', 'Education updated successfully!');
+    }
+
+    public function show($education_id)
+    {
+        // Fetch the specific education record and its associated employee
+        $education = educationModel::with('employee')->findOrFail($education_id);
+
+        return view('education.show', compact('education'));
     }
 }

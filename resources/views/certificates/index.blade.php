@@ -1,9 +1,4 @@
 <div class="">
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Certificates') }}
-        </h2>
-    </x-slot>
 
     <div x-data="{ showAddModal: false, showDeleteModal: false, deleteUrl: '' }" class="mb-40">
 
@@ -44,24 +39,46 @@
                     @csrf
 
 
+
                     <!-- Employee Selection -->
-                    <div>
-                        <label for="employee_id" class="block text-sm font-medium">Employee</label>
-                        <select name="employee_id" id="employee_id"
-                            class="mt-1 w-full rounded-lg border-gray-300 text-gray-500 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
-                            required>
-                            <option value="" disabled selected>Select Employee</option>
-                            @if (isset($employees) && $employees->isNotEmpty())
-                                <!-- Use $employees here -->
-                                @foreach ($employees as $employee)
-                                    <option value="{{ $employee->employee_id }}">{{ $employee->employee_fname }}
-                                        {{ $employee->employee_lname }}</option>
-                                @endforeach
-                            @else
-                                <option value="" disabled>No Employees Available</option>
-                            @endif
-                        </select>
+                    <div class="mb-6">
+                        <label for="employee_id" class="block text-sm font-medium text-gray-300">Employee</label>
+                        <div x-data="{
+                            search: '',
+                            open: false,
+                            items: @js($employees),
+                            get filteredItems() {
+                                return this.items.filter(i =>
+                                    `${i.employee_fname} ${i.employee_lname}`.toLowerCase().includes(this.search.toLowerCase())
+                                )
+                            }
+                        }" class="relative w-full">
+                            <input type="search" x-on:click="open = !open" x-model="search"
+                                placeholder="Search Employee..."
+                                class="mt-1 w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 placeholder-gray-400 text-black">
+
+                            <ul x-show="open" x-on:click.outside="open = false"
+                                x-transition:enter="transition ease-out duration-300"
+                                x-transition:enter-start="opacity-0 transform scale-95"
+                                x-transition:enter-end="opacity-100 transform scale-100"
+                                x-transition:leave="transition ease-in duration-300"
+                                x-transition:leave-start="opacity-100 transform scale-100"
+                                x-transition:leave-end="opacity-0 transform scale-95"
+                                class="absolute w-full mt-2 bg-white border rounded-lg shadow-lg max-h-60 overflow-auto z-10 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-300">
+                                <template x-for="item in filteredItems" :key="item.employee_id">
+                                    <li @click="search = `${item.employee_fname} ${item.employee_lname}`; open = false;"
+                                        class="cursor-pointer p-2 hover:bg-gray-200 dark:hover:bg-gray-700"
+                                        x-text="`${item.employee_fname} ${item.employee_lname}`"></li>
+                                </template>
+                            </ul>
+                            <input type="hidden" name="employee_id"
+                                :value="filteredItems[0] ? filteredItems[0].employee_id : ''">
+                        </div>
+                        @error('employee_id')
+                            <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
+                        @enderror
                     </div>
+
 
                     <!-- Certificate Name -->
                     <div>
@@ -132,7 +149,8 @@
                             {{ $certificate->employee->employee_fname ?? 'N/A' }}
                             {{ $certificate->employee_lname ?? '' }}
                         </td>
-                        <td class="px-4 py-2 text-gray-800 dark:text-gray-300">{{ $certificate->certificate_name }}</td>
+                        <td class="px-4 py-2 text-gray-800 dark:text-gray-300">{{ $certificate->certificate_name }}
+                        </td>
                         <td class="px-4 py-2 text-gray-800 dark:text-gray-300">{{ $certificate->issued_by }}</td>
                         <td class="px-4 py-2 text-gray-800 dark:text-gray-300">{{ $certificate->issue_date }}</td>
                         <td class="px-4 py-2 text-gray-800 dark:text-gray-300">{{ $certificate->expiry_date }}</td>

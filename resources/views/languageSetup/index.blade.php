@@ -1,14 +1,14 @@
 <div x-data="{ showAddModal: false, showDeleteModal: false, deleteUrl: '' }" class="mb-40">
 
-    <!-- Button to trigger "Add New Skill" modal -->
+    <!-- Button to trigger "Add New Language" modal -->
     <div class="flex justify-end mb-4">
         <button @click="showAddModal = true" type="button"
             class="cursor-pointer whitespace-nowrap rounded-md bg-black px-4 py-2 text-center text-sm font-medium tracking-wide text-neutral-100 transition hover:opacity-75 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black active:opacity-100 active:outline-offset-0 dark:bg-white dark:text-black dark:focus-visible:outline-white">
-            Add New Skill
+            Add New Language
         </button>
     </div>
 
-    <!-- Add New Skill Modal -->
+    <!-- Add New Language Modal -->
     <div x-cloak x-show="showAddModal" x-transition.opacity.duration.300ms x-trap.inert.noscroll="showAddModal"
         @keydown.esc.window="showAddModal = false" @click.self="showAddModal = false"
         class="fixed inset-0 z-40 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4" role="dialog"
@@ -21,7 +21,7 @@
 
             <!-- Modal Header -->
             <div class="flex items-center justify-between bg-gradient-to-r from-blue-500 to-blue-700 p-4 rounded-t-xl">
-                <h3 id="modalTitle" class="text-lg font-semibold text-white">Add New Skill</h3>
+                <h3 id="modalTitle" class="text-lg font-semibold text-white">Add New Language</h3>
                 <button @click="showAddModal = false" aria-label="close modal" class="text-white hover:text-gray-300">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                         stroke-width="1.5" class="w-6 h-6">
@@ -31,70 +31,23 @@
             </div>
 
             <!-- Modal Form -->
-            <form action="{{ route('skills.store') }}" method="POST" class="p-6 space-y-4">
+            <form action="{{ route('languageSetup.store') }}" method="POST" class="p-6 space-y-4">
                 @csrf
 
-                <!-- Employee Selection -->
-                <div class="mb-6">
-                    <label for="employee_id" class="block text-sm font-medium text-gray-300">Employee</label>
-                    <div x-data="{
-                        search: '',
-                        open: false,
-                        items: @js($employees),
-                        get filteredItems() {
-                            return this.items.filter(i =>
-                                `${i.employee_fname} ${i.employee_lname}`.toLowerCase().includes(this.search.toLowerCase())
-                            )
-                        }
-                    }" class="relative w-full">
-                        <input type="search" x-on:click="open = !open" x-model="search"
-                            placeholder="Search Employee..."
-                            class="mt-1 w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 placeholder-gray-400 text-black">
-
-                        <ul x-show="open" x-on:click.outside="open = false"
-                            x-transition:enter="transition ease-out duration-300"
-                            x-transition:enter-start="opacity-0 transform scale-95"
-                            x-transition:enter-end="opacity-100 transform scale-100"
-                            x-transition:leave="transition ease-in duration-300"
-                            x-transition:leave-start="opacity-100 transform scale-100"
-                            x-transition:leave-end="opacity-0 transform scale-95"
-                            class="absolute w-full mt-2 bg-white border rounded-lg shadow-lg max-h-60 overflow-auto z-10 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-300">
-                            <template x-for="item in filteredItems" :key="item.employee_id">
-                                <li @click="search = `${item.employee_fname} ${item.employee_lname}`; open = false;"
-                                    class="cursor-pointer p-2 hover:bg-gray-200 dark:hover:bg-gray-700"
-                                    x-text="`${item.employee_fname} ${item.employee_lname}`"></li>
-                            </template>
-                        </ul>
-                        <input type="hidden" name="employee_id"
-                            :value="filteredItems[0] ? filteredItems[0].employee_id : ''">
-                    </div>
-                    @error('employee_id')
-                        <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <!-- Skill Name -->
+                <!-- Language Name -->
                 <div>
-                    <label for="skill_name" class="block text-sm font-medium">Skill Name</label>
-                    <input type="text" name="skill_name" id="skill_name"
+                    <label for="name" class="block text-sm font-medium">Language Name</label>
+                    <input type="text" name="name" id="name"
                         class="mt-1 w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 placeholder-gray-400 text-black"
-                        placeholder="Enter skill name" required>
+                        placeholder="Enter language name" required>
                 </div>
 
-                <!-- Proficiency Level -->
+                <!-- Language Description -->
                 <div>
-                    <label for="proficiency_level" class="block text-sm font-medium">Proficiency Level</label>
-                    <select name="proficiency_level" id="proficiency_level"
-                        class="mt-1 w-full rounded-lg border-gray-300 text-gray-500 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
-                        required>
-                        <option value="" disabled selected>Select Proficiency Level</option>
-                        <option value="beginner">Beginner</option>
-                        <option value="intermediate">Intermediate</option>
-                        <option value="advanced">Advanced</option>
-                        <option value="expert">Expert</option>
-                    </select>
+                    <label for="description" class="block text-sm font-medium">Description (Optional)</label>
+                    <textarea name="description" id="description" rows="4"
+                        class="text-black mt-1 w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"></textarea>
                 </div>
-
 
                 <!-- Footer Buttons -->
                 <div class="flex justify-end gap-3 mt-6">
@@ -104,48 +57,44 @@
                     </button>
                     <button type="submit"
                         class="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-500">
-                        Add Skill
+                        Add Language
                     </button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- Table displaying Skill data -->
+    <!-- Table displaying Language data -->
     <table
         class="min-w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-md rounded-lg">
         <thead class="bg-gray-100 dark:bg-gray-700">
             <tr>
-                <th class="px-4 py-2 text-left text-gray-600 dark:text-gray-300">Skill ID</th>
-                <th class="px-4 py-2 text-left text-gray-600 dark:text-gray-300">Employee</th>
-                <th class="px-4 py-2 text-left text-gray-600 dark:text-gray-300">Skill Name</th>
-                <th class="px-4 py-2 text-left text-gray-600 dark:text-gray-300">Proficiency Level</th>
+                <th class="px-4 py-2 text-left text-gray-600 dark:text-gray-300">Language ID</th>
+                <th class="px-4 py-2 text-left text-gray-600 dark:text-gray-300">Language Name</th>
+                <th class="px-4 py-2 text-left text-gray-600 dark:text-gray-300">Description</th>
                 <th class="px-4 py-2 text-left text-gray-600 dark:text-gray-300">Actions</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($skills as $skill)
+            @foreach ($languageSetup as $language)
                 <tr class="border-b border-gray-200 dark:border-gray-700">
-                    <td class="px-4 py-2 text-gray-800 dark:text-gray-300">{{ $skill->skill_id }}</td>
-                    <td class="px-4 py-2 text-gray-800 dark:text-gray-300">
-                        {{ $skill->employee->employee_fname ?? 'N/A' }} {{ $skill->employee_lname ?? '' }}
-                    </td>
-                    <td class="px-4 py-2 text-gray-800 dark:text-gray-300">{{ $skill->skill_name }}</td>
-                    <td class="px-4 py-2 text-gray-800 dark:text-gray-300">{{ $skill->proficiency_level }}</td>
+                    <td class="px-4 py-2 text-gray-800 dark:text-gray-300">{{ $language->languagesetup_id }}</td>
+                    <td class="px-4 py-2 text-gray-800 dark:text-gray-300">{{ $language->name }}</td>
+                    <td class="px-4 py-2 text-gray-800 dark:text-gray-300">{{ $language->description }}</td>
                     <td class="px-4 py-2 text-gray-800 dark:text-gray-300">
                         <div class="flex items-center gap-4">
                             <!-- Edit Button -->
-                            <a href="{{ route('skills.edit', $skill->skill_id) }}"
+                            <a href="{{ route('languageSetup.edit', $language->languagesetup_id) }}"
                                 class="px-4 py-2 text-sm text-white bg-green-500 rounded-lg hover:bg-green-600 transition"
-                                aria-label="Edit skill">
+                                aria-label="Edit language">
                                 <i class="bi bi-pencil"></i> Edit
                             </a>
 
                             <!-- Delete Button -->
                             <button
-                                @click="showDeleteModal = true; deleteUrl = '{{ route('skills.destroy', $skill->skill_id) }}'"
+                                @click="showDeleteModal = true; deleteUrl = '{{ route('languageSetup.destroy', $language->languagesetup_id) }}'"
                                 class="px-4 py-2 text-sm text-white bg-red-500 rounded-lg hover:bg-red-600 transition"
-                                aria-label="Delete skill">
+                                aria-label="Delete language">
                                 <i class="bi bi-trash"></i> Delete
                             </button>
                         </div>
@@ -154,6 +103,8 @@
             @endforeach
         </tbody>
     </table>
+
+
 
     <!-- Delete Confirmation Modal -->
     <div x-show="showDeleteModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"

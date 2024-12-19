@@ -50,7 +50,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/employees/{id}', [EmployeeController::class, 'show'])->name('employees.show');
 
     //employee view
-    Route::get('/employeedetails/{id}',[employeedetailController::class, 'index'])->name('employees.details');
+    Route::get('/employeedetails/{id}', [employeedetailController::class, 'index'])->name('employees.details');
 
 
     //DEPARTMENT ROUTES
@@ -136,11 +136,12 @@ Route::middleware('auth')->group(function () {
     Route::get('certificates/{certificate}/edit', [certificatesController::class, 'edit'])->name('certificates.edit');
     Route::put('certificates/{certificate}', [certificatesController::class, 'update'])->name('certificates.update');
     Route::delete('certificates/{certificate}', [certificatesController::class, 'destroy'])->name('certificates.destroy');
-   
+
     // Education Routes
     Route::get('/education', [educationController::class, 'index'])->name('education.index');
     Route::get('/education/create', [educationController::class, 'create'])->name('education.create');
     Route::post('/education', [educationController::class, 'store'])->name('education.store');
+    Route::get('/education/{education_id}', [educationController::class, 'show'])->name('education.show');
     Route::get('/education/{education_id}/edit', [educationController::class, 'edit'])->name('education.edit');
     Route::put('/education/{education_id}', [educationController::class, 'update'])->name('education.update');
     Route::delete('/education/{education_id}', [educationController::class, 'destroy'])->name('education.destroy');
@@ -163,7 +164,7 @@ Route::middleware('auth')->group(function () {
     // Language Setup Routes
     Route::get('/language_setup', [languagesSetupController::class, 'index'])->name('languageSetup.index');
     Route::get('/language_setup/create', [languagesSetupController::class, 'create'])->name('languageSetup.create'); // Fixed typo here
-    Route::post('/language-setup', [languagesSetupController::class, 'store'])->name('languageSetup.store');
+    Route::post('/language-setup', [languagesSetupController::class, 'store'])->name('languageSetup.store'); // Corrected route
     Route::get('/language-setup/{languagesetup_id}/edit', [languagesSetupController::class, 'edit'])->name('languageSetup.edit');
     Route::put('/language-setup/{languagesetup_id}', [languagesSetupController::class, 'update'])->name('languageSetup.update');
     Route::delete('/language-setup/{languagesetup_id}', [languagesSetupController::class, 'destroy'])->name('languageSetup.destroy');
