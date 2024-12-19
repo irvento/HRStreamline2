@@ -4,72 +4,82 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\departmentModel;
+use App\Models\employeeModel;
 
 class departmentController extends Controller
 {
     // Display a listing of departments
     public function index(Request $request)
-    {
-        $search = $request->input('search');
-        $query = departmentModel::query();
+{
+    $search = $request->input('search');
 
-        if ($search) {
-            $query->where('department_name', 'LIKE', "%{$search}%");
-        }
+    $departments = departmentModel::query()
+        ->when($search, function ($query, $search) {
+            return $query->where('department_name', 'like', '%' . $search . '%');
+        })
+        ->leftJoin('tbl_employee', 'tbl_department.department_head', '=', 'tbl_employee.employee_id')
+        ->select('tbl_department.*', 'tbl_employee.employee_fname as department_head_fname', 'tbl_employee.employee_lname as department_head_lname')
+        ->paginate(10);
 
-        $departments = $query->paginate(10)->withQueryString();
+    return view('department.index', compact('departments', 'search'));
+}
 
-        return view('department.index', ['departments' => $departments, 'search' => $search]);
-    }
 
     // Show the form for creating a new department
     public function create()
     {
-        return view('department.create');
+        $employees = employeeModel::select('employee_id', 'employee_fname', 'employee_lname')->get(); // Fetch employee ID and name
+        return view('department.create', compact('employees'));
     }
+    
     
 
     public function store(Request $request)
-    {
-        $department = new departmentModel();
-    
-        $alreadyExists = departmentModel::where('department_name', $request->department_name)->exists();
-    
-        if ($alreadyExists) {
-            return redirect()->route('department.index')->with('error', 'Department already exists.');
-        }
-    
-        $validated = $request->validate([
-            'department_name' => 'required|string|max:50',
-        ]);
-    
-        $department->department_name = $validated['department_name'];
-    
-        $department->save();
-    
-        return redirect()->route('department.index')->with('success', 'Department created successfully!');
+{
+    $alreadyExists = departmentModel::where('department_name', $request->department_name)->exists();
+
+    if ($alreadyExists) {
+        return redirect()->route('department.index')->with('error', 'Department already exists.');
     }
+
+    $validated = $request->validate([
+        'department_name' => 'required|string|max:50',
+        'department_head' => 'required|exists:tbl_employee,employee_id', // Ensure the selected head exists in the employee table
+    ]);
+
+    $department = new departmentModel();
+    $department->department_name = $validated['department_name'];
+    $department->department_head = $validated['department_head']; // Save the department head
+    $department->save();
+
+    return redirect()->route('department.index')->with('success', 'Department created successfully!');
+}
+
 
     // Show the form for editing the specified department
     public function edit($id)
-{
-    $department = departmentModel::where('department_id', $id)->firstOrFail();
-    return view('department.edit', compact('department'));
-}
+    {
+        $department = departmentModel::where('department_id', $id)->firstOrFail();
+        $employees = employeeModel::select('employee_id', 'employee_fname', 'employee_lname')->get();
+        return view('department.edit', compact('department', 'employees'));
+    }
+    
 
-public function update(Request $request, $id)
-{
-    $request->validate([
-        'department_name' => 'required|string|max:255',
-    ]);
-
-    $department = departmentModel::findOrFail($id);
-    $department->department_name = $request->input('department_name'); // Corrected field name
-
-    $department->save();
-
-    return redirect()->route('department.index')->with('success', 'Department updated successfully.');
-}
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'department_name' => 'required|string|max:255',
+            'department_head' => 'required|exists:tbl_employee,employee_id', // Ensure the selected head exists in the employee table
+        ]);
+    
+        $department = departmentModel::findOrFail($id);
+        $department->department_name = $request->input('department_name');
+        $department->department_head = $request->input('department_head'); // Update the department head
+        $department->save();
+    
+        return redirect()->route('department.index')->with('success', 'Department updated successfully.');
+    }
+    
 
     // Remove the specified department from storage
     public function destroy($id)

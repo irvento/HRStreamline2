@@ -2,16 +2,15 @@
 
 namespace App\Http\Controllers;
 
-
 use Illuminate\Support\Facades\Auth;
-
-use App\Models\employee_user_viewModel;
+use App\Models\employee_infoModel;
+use App\Models\jobModel;
+use App\Models\departmentModel;
 use App\Models\employeeModel;
 use Illuminate\Http\Request;
 
 class employeeController extends Controller
 {
-    // Display a listing of the employees
     public function index(Request $request)
     {
         $search = $request->input('search');
@@ -23,26 +22,27 @@ class employeeController extends Controller
                 ->orWhere('contact1', 'LIKE', "%{$search}%");
         }
 
-        $employees = $query->paginate(10)->withQueryString(); // Paginate with query strings
-
-        return view('employee', ['employees' => $employees, 'search' => $search]); // Pass search term to the view
+        $employees = $query->paginate(10)->withQueryString();
+        return view('employee', ['employees' => $employees, 'search' => $search]);
     }
 
     public function create()
     {
         $user = Auth::user();
         $alreadySubmitted = employeeModel::where('user_id', $user->id)->exists();
+        $departments = departmentModel::all();
+        $jobs = jobModel::all();
 
-        return view('employees.create', compact('alreadySubmitted'));
+        return view('employees.create', compact('alreadySubmitted', 'departments', 'jobs'));
     }
 
     public function store(Request $request)
     {
         $user = Auth::user();
-
         $alreadySubmitted = employeeModel::where('user_id', $user->id)->exists();
+
         if ($alreadySubmitted) {
-            return redirect()->route('employees.index')->with('error', 'You have already submitted this form.');
+            return redirect()->route('dashboard')->with('error', 'You have already submitted this form.');
         }
 
         $validated = $request->validate([
@@ -59,6 +59,8 @@ class employeeController extends Controller
             'postal_code' => 'nullable|string|max:20',
             'country' => 'nullable|string|max:255',
             'contact1' => 'nullable|string|max:20',
+            'department_id' => 'required|exists:tbl_department,department_id',
+            'job_id' => 'required|exists:tbl_job,job_id',
         ]);
 
         $imagePath = null;
@@ -66,39 +68,35 @@ class employeeController extends Controller
             $imagePath = $request->file('imagePath')->store('employee_images', 'public');
         }
 
+        $employee_info = new employee_infoModel();
         $employee = new employeeModel();
-
-        $employee->employee_fname = $validated['employee_fname'];
-        $employee->employee_mname = $validated['employee_mname'] ?? null;
-        $employee->employee_lname = $validated['employee_lname'] ?? null;
+        $employee->fill($validated);
         $employee->user_id = $user->id;
         $employee->employee_email = $user->email;
-        $employee->birthdate = $validated['birthdate'] ?? null;
-        $employee->gender = $validated['gender'] ?? null;
         $employee->image = $imagePath;
-        $employee->address_line_1 = $validated['address_line_1'] ?? null;
-        $employee->address_line_2 = $validated['address_line_2'] ?? null;
-        $employee->city = $validated['city'] ?? null;
-        $employee->state = $validated['state'] ?? null;
-        $employee->postal_code = $validated['postal_code'] ?? null;
-        $employee->country = $validated['country'] ?? null;
-        $employee->contact1 = $validated['contact1'] ?? null;
+        
 
         $employee->save();
+
+        $employee_info->employee_id = $employee->employee_id;
+        $employee_info->job_id = $validated['job_id'];
+        $employee_info->department_id = $validated['department_id'];
+        $employee_info -> save();
 
         return redirect()->route('dashboard')->with('success', 'Employee created successfully!');
     }
 
-
     public function edit($id)
     {
         $employee = employeeModel::findOrFail($id);
-        return view('employees.edit', compact('employee'));
+        $departments = departmentModel::all();
+        $jobs = jobModel::all();
+
+        return view('employees.edit', compact('employee', 'departments', 'jobs'));
     }
 
     public function update(Request $request, $id)
     {
-        // Validate incoming data
         $validated = $request->validate([
             'employee_fname' => 'required|string|max:255',
             'employee_mname' => 'nullable|string|max:255',
@@ -115,42 +113,22 @@ class employeeController extends Controller
             'contact1' => 'nullable|string|max:20',
         ]);
 
-        // Find the employee by ID
         $employee = employeeModel::findOrFail($id);
 
-        // Handle image upload if exists
         if ($request->hasFile('imagePath')) {
-            $imagePath = $request->file('imagePath')->store('employee_images', 'public');
-            $validated['image'] = $imagePath;  // Store the image path if uploaded
+            $validated['image'] = $request->file('imagePath')->store('employee_images', 'public');
         }
 
-        // Update the employee record
         $employee->update($validated);
 
-
-        // Redirect back to the employee listing with success message
         return redirect()->route('employees')->with('success', 'Employee updated successfully!');
     }
-
-
 
     public function destroy($id)
     {
         $employee = employeeModel::findOrFail($id);
         $employee->delete();
 
-
         return redirect()->route('employees')->with('success', 'Employee deleted successfully!');
-    }
-
-
-    public function show($id)
-    {
-        // Fetch the employee by their primary key (employee_id)
-        $employees = employeeModel::findOrFail($id);
-        // $employeeuser = employee_user_viewModel::
-
-        // Return the 'details' view and pass the employee data
-        return view('employees.index', ['employee' => $employees]);
     }
 }
