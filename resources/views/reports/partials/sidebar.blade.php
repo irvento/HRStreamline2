@@ -61,5 +61,16 @@
                 <span class="font-medium">Department Analysis</span>
             </a>
         </li>
+
+        <!-- New Payroll Tab -->
+        <li>
+            <a href="{{ route('payroll.reports') }}" 
+               class="flex items-center space-x-4 text-gray-800 dark:text-gray-200 hover:text-indigo-500 dark:hover:text-indigo-400 transition-colors 
+                      {{ request()->routeIs('payroll.reports') ? 'bg-gray-200 dark:bg-gray-700' : '' }} 
+               px-4 py-3 rounded-md">
+                <i class="fas fa-money-check-alt text-indigo-500 text-xl {{ request()->routeIs('payroll.reports') ? 'text-indigo-700' : '' }}"></i>
+                <span class="font-medium">Payroll</span>
+            </a>
+        </li>
     </ul>
 </nav>

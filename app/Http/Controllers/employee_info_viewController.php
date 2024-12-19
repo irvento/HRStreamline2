@@ -14,7 +14,7 @@ use App\Models\employeeModel;
 use App\Models\Salary;
 use App\Models\attendanceModel;
 use App\Models\leavesModel;
-use App\Models\jobModel;
+use App\Models\payrollModel;
 use App\Models\performanceModel;
 
 
@@ -214,6 +214,26 @@ public function departmentAnalysis()
     // Return the view with department data
     return view('reports.department_analysis', compact('departmentInfo'));
 }
+
+// PAYROLL REPORTS
+public function payrollReports(Request $request)
+{
+    $searchQuery = $request->input('search');
+    
+    // Fetch payroll reports with search functionality
+    $payrollReports = payrollModel::query()
+        ->when($searchQuery, function ($query) use ($searchQuery) {
+            return $query->where('employee_id', 'like', "%{$searchQuery}%")
+                         ->orWhere('payroll_status', 'like', "%{$searchQuery}%")
+                         ->orWhere('pay_period', 'like', "%{$searchQuery}%")
+                         ->orWhere('payment_date', 'like', "%{$searchQuery}%");
+        })
+        ->get();
+
+    // Return the view with payroll data
+    return view('reports.payroll_reports', compact('payrollReports'));
+}
+
 
 
 

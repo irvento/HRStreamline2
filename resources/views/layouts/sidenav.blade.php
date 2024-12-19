@@ -31,6 +31,17 @@
         </li>
         @endif
 
+        <!-- Payroll Link -->
+        <li>
+            <a href="{{ route('payroll.index') }}" 
+               class="flex items-center space-x-4 text-gray-800 dark:text-gray-200 hover:text-teal-500 dark:hover:text-teal-400 transition-colors 
+                      {{ request()->routeIs('payroll.index') ? 'bg-gray-200 dark:bg-gray-700' : '' }} 
+               px-4 py-3 rounded-md">
+                <i class="fas fa-money-bill-wave text-teal-500 text-xl {{ request()->routeIs('payroll.index') ? 'text-teal-700' : '' }}"></i>
+                <span class="font-medium">Payroll</span>
+            </a>
+        </li>
+
         <!-- Other Links -->
         @foreach([
             ['route' => 'qualifications.index', 'label' => 'Qualifications', 'icon' => 'fas fa-certificate', 'color' => 'blue'],
