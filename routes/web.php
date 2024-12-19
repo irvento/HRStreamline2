@@ -19,7 +19,13 @@ use App\Http\Controllers\skillsController;
 use App\Http\Controllers\SalaryController;
 use App\Http\Controllers\performanceController;
 use App\Http\Controllers\ProfileController;
+
 use Illuminate\Support\Facades\Route;
+
+
+Route::get('/test-middleware', function () {
+    return 'Middleware is working!';
+})->middleware('check.user.role');
 
 Route::get('/', function () {
     return view('welcome');
@@ -42,7 +48,7 @@ require __DIR__ . '/auth.php';
 Route::middleware('auth')->group(function () {
     //EMPLOYEEE ROUTES
     Route::get('/employees', [EmployeeController::class, 'index'])->name('employees.index');
-    Route::get('/employee', [employeeController::class, 'index'])->name('employees');
+    Route::get('/employee', [employeeController::class, 'index'])->name('employees')->middleware('role:admin');
     Route::get('/employees/create', [employeeController::class, 'create'])->name('employees.create');
     Route::post('/employees', action: [employeeController::class, 'store'])->name('employees.store');
     Route::get('/employees/{id}/edit', [employeeController::class, 'edit'])->name('employees.edit');
@@ -199,10 +205,9 @@ Route::middleware('auth')->group(function () {
 
 
 //ADMIN
-Route::middleware(['role:admin'])->group(function () {
-    // Define your admin routes here
+Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/dashboard', function () {
-        return view('dashboard');
+        return view('admin.dashboard');
     });
 });
 //MANAGER
