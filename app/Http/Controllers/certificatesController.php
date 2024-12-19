@@ -14,7 +14,7 @@ class certificatesController extends Controller
         $employees = employeeModel::all(); // Fetch employees
 
         // Pass both to the view
-        return view('qualifications.certificates.index', compact('certificates', 'employees'));
+        return view('certificates.index', compact('certificates', 'employees'));
     }
 
 
@@ -92,6 +92,6 @@ class certificatesController extends Controller
     {
         // Fetch the specific certificate and its associated employee  
         $certificate = certificateModel::with('employee')->findOrFail($id);
-        return view('qualifications.certificates.show', compact('certificate'));  // Make sure the path is correct  
+        return view('certificates.show', compact('certificate'));  // Make sure the path is correct  
     }
 }

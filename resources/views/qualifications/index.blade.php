@@ -30,7 +30,7 @@
         <div class="mt-4">
             <div x-show="activeTab === '#Certificates'" class="p-4 bg-white dark:bg-gray-800 rounded-lg shadow">
                 <!-- Table displaying certificate data -->
-                @include('qualifications.certificates.index') <!-- This should contain the table of certificates -->
+                @include('certificates.index') <!-- This should contain the table of certificates -->
             </div>
         </div>
 
@@ -38,7 +38,7 @@
         <div class="mt-4">
             <div x-show="activeTab === '#Education'" class="p-4 bg-white dark:bg-gray-800 rounded-lg shadow">
                 <!-- Table displaying education data -->
-                @include('qualifications.education.index') <!-- Include education table here -->
+                @include('education.index') <!-- Include education table here -->
             </div>
         </div>
 
@@ -46,7 +46,7 @@
         <div class="mt-4">
             <div x-show="activeTab === '#Skills'" class="p-4 bg-white dark:bg-gray-800 rounded-lg shadow">
                 <!-- Table displaying skills data -->
-                @include('qualifications.skills.index') <!-- Include skills table here -->
+                @include('skills.index') <!-- Include skills table here -->
             </div>
         </div>
 
@@ -54,7 +54,7 @@
         <div class="mt-4">
             <div x-show="activeTab === '#Languages'" class="p-4 bg-white dark:bg-gray-800 rounded-lg shadow">
                 <!-- Table displaying languages data -->
-                @include('qualifications.languages.index') <!-- Include languages table here -->
+                @include('languages.index') <!-- Include languages table here -->
             </div>
         </div>
 
@@ -62,7 +62,7 @@
         <div class="mt-4">
             <div x-show="activeTab === '#Languages_setup'" class="p-4 bg-white dark:bg-gray-800 rounded-lg shadow">
                 <!-- Table displaying languages data -->
-                @include('qualifications.languages_setup.index') <!-- Include languages table here -->
+                @include('languages_setup.index') <!-- Include languages table here -->
             </div>
         </div>
 
