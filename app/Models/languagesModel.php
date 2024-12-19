@@ -27,6 +27,6 @@ class languagesModel extends Model
     // Define the relationship with the LanguageSetupModel
     public function languageSetup()
     {
-        return $this->belongsTo(languageSetupModel::class, 'languagesetup_id');
+        return $this->belongsTo(languagesSetupModel::class, 'languagesetup_id');
     }
 }

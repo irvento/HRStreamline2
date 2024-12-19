@@ -2,19 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\languageSetupModel;
+use App\Models\languagesSetupModel;
 use Illuminate\Http\Request;
 
 class languagesSetupController extends Controller
 {
     public function index()
-    {
-        // Fetch all language setups
-        $languageSetups = languageSetupModel::all();
-        
-        // Return the view for language setups
-        return view('languageSetup.index', compact('languageSetups'));
-    }
+{
+    // Fetch all language setups
+    $languageSetups = languagesSetupModel::all();
+    
+    // Return the view for language setups (updated path)
+    return view('qualifications.languages_setup.index', compact('languageSetups'));
+}
+
 
     public function store(Request $request)
     {
@@ -25,7 +26,7 @@ class languagesSetupController extends Controller
         ]);
 
         // Create and save the new language setup record
-        $setup = new languageSetupModel();
+        $setup = new languagesSetupModel();
         $setup->name = $validated['name'];
         $setup->description = $validated['description'];
         $setup->save();
@@ -36,7 +37,7 @@ class languagesSetupController extends Controller
     public function destroy($languagesetup_id)
     {
         // Find and delete the language setup record
-        $setup = languageSetupModel::findOrFail($languagesetup_id);
+        $setup = languagesSetupModel::findOrFail($languagesetup_id);
         $setup->delete();
 
         return redirect()->route('languageSetup.index')->with('success', 'Language setup deleted successfully!');
@@ -45,7 +46,7 @@ class languagesSetupController extends Controller
     public function edit($languagesetup_id)
     {
         // Find the language setup record for editing
-        $setup = languageSetupModel::findOrFail($languagesetup_id);
+        $setup = languagesSetupModel::findOrFail($languagesetup_id);
 
         return view('languageSetup.edit', compact('setup'));
     }
@@ -59,7 +60,7 @@ class languagesSetupController extends Controller
         ]);
 
         // Find and update the language setup record
-        $setup = languageSetupModel::findOrFail($languagesetup_id);
+        $setup = languagesSetupModel::findOrFail($languagesetup_id);
         $setup->name = $validated['name'];
         $setup->description = $validated['description'];
         $setup->save();

@@ -27,7 +27,11 @@ class="rounded-r-[20px] sticky top-0 z-10 flex flex-col bg-white dark:bg-gray-80
                     </x-nav-link>
                 </li>
             @endif
-
+            <li>
+                <x-nav-link :href="route('qualifications.index')" :active="request()->routeIs('qualifications.index')">
+                    {{ __('Qualifications') }}
+                </x-nav-link>   
+            </li>
             <li>
                 <x-nav-link :href="route('salary')" :active="request()->routeIs('salary')">
                     {{ __('Salary') }}

@@ -10,6 +10,12 @@ use App\Http\Controllers\departmentController;
 use App\Http\Controllers\employee_user_viewController;
 use App\Http\Controllers\leavesController;
 use App\Http\Controllers\paymentFrequencyController;
+use App\Http\Controllers\qualificationsController;
+use App\Http\Controllers\languagesController;
+use App\Http\Controllers\languagesSetupController;
+use App\Http\Controllers\certificatesController;
+use App\Http\Controllers\educationController;
+use App\Http\Controllers\skillsController;
 use App\Http\Controllers\SalaryController;
 use App\Http\Controllers\performanceController;
 use App\Http\Controllers\ProfileController;
@@ -122,6 +128,48 @@ Route::middleware('auth')->group(function () {
 
     //REPORTS
     Route::get('/report', [employee_info_viewController::class, 'index'])->name('report');
+    // QUALIFICATIONS ROUTES
+    Route::get('/qualifications', [qualificationsController::class, 'index'])->name('qualifications.index');
+
+    // Certificates Routes
+    Route::get('/certificates', [certificatesController::class, 'index'])->name('certificates.index');
+    Route::get('certificates/create', [certificatesController::class, 'create'])->name('certificates.create');
+    Route::post('certificates', [certificatesController::class, 'store'])->name('certificates.store');
+    Route::get('certificates/{certificate}', [certificatesController::class, 'show'])->name('certificates.show');
+    Route::get('certificates/{certificate}/edit', [certificatesController::class, 'edit'])->name('certificates.edit');
+    Route::put('certificates/{certificate}', [certificatesController::class, 'update'])->name('certificates.update');
+    Route::delete('certificates/{certificate}', [certificatesController::class, 'destroy'])->name('certificates.destroy');
+   
+    // Education Routes
+    Route::get('/education', [educationController::class, 'index'])->name('education.index');
+    Route::get('/education/create', [educationController::class, 'create'])->name('education.create');
+    Route::post('/education', [educationController::class, 'store'])->name('education.store');
+    Route::get('/education/{education_id}/edit', [educationController::class, 'edit'])->name('education.edit');
+    Route::put('/education/{education_id}', [educationController::class, 'update'])->name('education.update');
+    Route::delete('/education/{education_id}', [educationController::class, 'destroy'])->name('education.destroy');
+
+    // Skills Routes
+    Route::get('/skills', [skillsController::class, 'index'])->name('skills.index');
+    Route::get('/skills/create', [skillsController::class, 'create'])->name('skills.create');
+    Route::post('/skills', [skillsController::class, 'store'])->name('skills.store');
+    Route::get('/skills/{skill_id}/edit', [skillsController::class, 'edit'])->name('skills.edit');
+    Route::put('/skills/{skill_id}', [skillsController::class, 'update'])->name('skills.update');
+    Route::delete('/skills/{skill_id}', [skillsController::class, 'destroy'])->name('skills.destroy');
+
+    // Languages Routes
+    Route::get('/languages', [languagesController::class, 'index'])->name('languages.index');
+    Route::post('/languages', [languagesController::class, 'store'])->name('languages.store');
+    Route::delete('/languages/{language_id}', [languagesController::class, 'destroy'])->name('languages.destroy');
+    Route::get('/languages/{language_id}/edit', [languagesController::class, 'edit'])->name('languages.edit');
+    Route::put('/languages/{language_id}', [languagesController::class, 'update'])->name('languages.update');
+
+    // Language Setup Routes
+    Route::get('/language_setup', [languagesSetupController::class, 'index'])->name('languageSetup.index');
+    Route::get('/language_setup/create', [languagesSetupController::class, 'create'])->name('languageSetup.create'); // Fixed typo here
+    Route::post('/language-setup', [languagesSetupController::class, 'store'])->name('languageSetup.store');
+    Route::get('/language-setup/{languagesetup_id}/edit', [languagesSetupController::class, 'edit'])->name('languageSetup.edit');
+    Route::put('/language-setup/{languagesetup_id}', [languagesSetupController::class, 'update'])->name('languageSetup.update');
+    Route::delete('/language-setup/{languagesetup_id}', [languagesSetupController::class, 'destroy'])->name('languageSetup.destroy');
 
 });
 
