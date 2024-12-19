@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\departmentModel;
 use App\Models\employeeModel;
+use App\Models\employee_info_viewModel;
 
 class departmentController extends Controller
 {
@@ -102,4 +103,32 @@ class departmentController extends Controller
 
         return redirect()->route('department.index');
     }
+    public function view($id)
+{
+    // Fetch the department details using a LEFT JOIN to include department head information
+    $department = departmentModel::leftJoin('tbl_employee', 'tbl_department.department_head', '=', 'tbl_employee.employee_id')
+        ->where('tbl_department.department_id', $id)
+        ->select(
+            'tbl_department.*',
+            'tbl_employee.employee_fname as department_head_fname',
+            'tbl_employee.employee_lname as department_head_lname'
+        )
+        ->firstOrFail();
+
+    // Count the number of employees in this department
+    $employeeCount = employee_info_viewModel::where('department_id', $id)->count();
+
+    // Fetch employees in the department by joining the employee_info_viewModel and tbl_employee
+    $employees = employee_info_viewModel::where('employee_info_view.department_id', $id)
+        ->join('tbl_employee', 'tbl_employee.employee_id', '=', 'employee_info_view.employee_id')
+        ->select('tbl_employee.employee_fname', 'tbl_employee.employee_lname')
+        ->get();
+
+    // Return the view with the department details, employee count, and employee list
+    return view('department.view', compact('department', 'employeeCount', 'employees'));
+}
+
+
+    
+
 }

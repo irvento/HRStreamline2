@@ -62,6 +62,8 @@ Route::middleware('auth')->group(function () {
     Route::put('/department/{id}', [departmentController::class, 'update'])->name('department.update');
     Route::delete('/department/{id}', [departmentController::class, 'destroy'])->name('department.destroy');
     Route::get('/department/{id}/delete', [departmentController::class, 'showDeleteConfirmation'])->name('department.delete_confirmation');
+    Route::get('/department/{id}/view', [departmentController::class, 'view'])->name('department.view');
+
 
     //LEAVES ROUTES
     Route::get('/leaves', [leavesController::class, 'index'])->name('leaves.index');
