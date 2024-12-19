@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\employee_info_viewController;
 use App\Http\Controllers\employee_infoController;
 use App\Http\Controllers\employeedetailController;
 use App\Http\Controllers\jobController;
@@ -118,15 +119,11 @@ Route::middleware('auth')->group(function () {
 
     //PROFILE ROUTES
     Route::get('/profile', [employee_user_viewController::class, 'index'])->name('profile-information');
+
+    //REPORTS
+    Route::get('/report', [employee_info_viewController::class, 'index'])->name('report');
+
 });
-
-
-
-
-Route::get('/reports', function () {
-    return view('report');
-});
-
 
 
 //ADMIN
