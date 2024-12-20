@@ -16,8 +16,8 @@ class payrollController extends Controller
         // Capture the search query
         $search = $request->input('search');
         $user = Auth::user();
-
-        // Query payrolls with optional search
+    
+        // Query payrolls with optional search for admins
         $payrolls = payrollModel::join('tbl_employee', 'tbl_payroll.employee_id', '=', 'tbl_employee.employee_id')
             ->select('tbl_payroll.*', 'tbl_employee.employee_fname', 'tbl_employee.employee_lname')
             ->when($search, function ($query, $search) {
@@ -27,9 +27,8 @@ class payrollController extends Controller
                     ->orWhere('tbl_payroll.pay_period', 'like', "%{$search}%");
             })
             ->paginate(10);
-
-        // Query payrolls for the logged-in user (if applicable)
-        $payrolluser = payrollModel::join('tbl_employee', 'tbl_payroll.employee_id', '=', 'tbl_employee.employee_id')
+    
+            $payrollusers = payrollModel::join('tbl_employee', 'tbl_payroll.employee_id', '=', 'tbl_employee.employee_id')
             ->select('tbl_payroll.*', 'tbl_employee.employee_fname', 'tbl_employee.employee_lname')
             ->when($search, function ($query, $search) {
                 $query->where('tbl_employee.employee_fname', 'like', "%{$search}%")
@@ -37,11 +36,11 @@ class payrollController extends Controller
                     ->orWhere('tbl_payroll.payroll_status', 'like', "%{$search}%")
                     ->orWhere('tbl_payroll.pay_period', 'like', "%{$search}%");
             })
-            ->where('tbl_employee.employee_id', $user->id) // Filter by the logged-in user's ID
-            ->get();
-
+            ->where('tbl_employee.employee_id', $user->id)
+            ->paginate(10);
+    
         // Return the view with payroll data
-        return view('Salary.payroll', compact('payrolls', 'search', 'payrolluser'));
+        return view('Salary.payroll', compact('payrolls', 'search', 'payrollusers'));
     }
 
     // Show the form to create a new payroll

@@ -83,7 +83,14 @@
     <div class="py-8">
         <!-- Actions Section -->
         <div class="flex justify-between items-center mb-6">
-
+            <div class="flex justify-between items-center mb-6">
+                <!-- Add Leave Button -->
+                <a href="{{ route('leaves.create') }}" 
+                    class="inline-flex items-center px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-offset-gray-800">
+                    + Add Leave
+                </a>
+            </div>
+    
 
         <!-- Leave Table -->
         <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
