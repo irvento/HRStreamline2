@@ -81,10 +81,8 @@
                             </div>
                         </div>
                     </a>
-                @endif
 
-                <!-- Other Buttons -->
-                <a href="{{ route('payroll.index') }}"
+                    <a href="{{ route('payroll.index') }}"
                     class="p-12 bg-white rounded-lg shadow-md hover:shadow-xl transition-transform transform hover:scale-105">
                     <div class="flex flex-col items-center">
                         <div class="flex items-center justify-center w-20 h-20 rounded-full bg-amber-50 text-amber-400">
@@ -132,6 +130,60 @@
                         </div>
                     </div>
                 </a>
+
+                @endif
+
+        @if (Auth::user()->role === 'user')
+        <a href="{{ route('payrolluser.index') }}"
+                    class="p-12 bg-white rounded-lg shadow-md hover:shadow-xl transition-transform transform hover:scale-105">
+                    <div class="flex flex-col items-center">
+                        <div class="flex items-center justify-center w-20 h-20 rounded-full bg-amber-50 text-amber-400">
+                            <i class="fas fa-money-bill-wave text-4xl"></i>
+                        </div>
+                        <div class="mt-4 text-center">
+                            <div class="text-lg font-semibold text-black">Payroll</div>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="{{ route('attendance.index') }}"
+                    class="p-12 bg-white rounded-lg shadow-md hover:shadow-xl transition-transform transform hover:scale-105">
+                    <div class="flex flex-col items-center">
+                        <div class="flex items-center justify-center w-20 h-20 rounded-full bg-teal-50 text-teal-400">
+                            <i class="fas fa-calendar-check text-4xl"></i>
+                        </div>
+                        <div class="mt-4 text-center">
+                            <div class="text-lg font-semibold text-black">Attendance</div>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="{{ route('departmentuser.index') }}"
+                    class="p-12 bg-white rounded-lg shadow-md hover:shadow-xl transition-transform transform hover:scale-105">
+                    <div class="flex flex-col items-center">
+                        <div
+                            class="flex items-center justify-center w-20 h-20 rounded-full bg-indigo-50 text-indigo-400">
+                            <i class="fas fa-sitemap text-4xl"></i>
+                        </div>
+                        <div class="mt-4 text-center">
+                            <div class="text-lg font-semibold text-black">Department</div>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="{{ route('leavesuser.index') }}"
+                    class="p-12 bg-white rounded-lg shadow-md hover:shadow-xl transition-transform transform hover:scale-105">
+                    <div class="flex flex-col items-center">
+                        <div class="flex items-center justify-center w-20 h-20 rounded-full bg-green-50 text-green-400">
+                            <i class="fas fa-leaf text-4xl"></i>
+                        </div>
+                        <div class="mt-4 text-center">
+                            <div class="text-lg font-semibold text-black">Leaves</div>
+                        </div>
+                    </div>
+                </a>
+            
+        @endif
 
             </div>
         </div>

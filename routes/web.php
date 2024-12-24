@@ -20,6 +20,12 @@ use App\Http\Controllers\SalaryController;
 use App\Http\Controllers\performanceController;
 use App\Http\Controllers\ProfileController;
 
+use App\Http\Controllers\UserControllers\payrolluserController;
+use App\Http\Controllers\UserControllers\leavesuserController;
+use App\Http\Controllers\UserControllers\departmentuserController;
+
+
+
 use Illuminate\Support\Facades\Route;
 
 
@@ -43,7 +49,7 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__ . '/auth.php';
 
-
+//PUBLIC
 Route::middleware('auth')->group(function () {
     
 
@@ -80,6 +86,38 @@ Route::middleware('auth')->group(function () {
     Route::delete('/payroll/{id}', [payrollController::class, 'delete'])->name('payroll.delete');
 
     //DEPARTMENT ROUTES
+    Route::get('/department/{id}/view', [departmentController::class, 'view'])->name('department.view');
+
+
+    //PROFILE ROUTE
+    Route::get('/profile', [employee_user_viewController::class, 'index'])->name('profile-information');
+    //EMPLOYEE EXTENSION
+    Route::get('/employees/create', [employeeController::class, 'create'])->name('employees.create');
+    Route::post('/employees', action: [employeeController::class, 'store'])->name('employees.store');
+
+});
+
+
+
+
+
+
+//ADMIN
+Route::middleware(['auth', 'role:admin'])->group(function () {
+
+    //EMPLOYEEE ROUTES
+    Route::get('/employees', [EmployeeController::class, 'index'])->name('employees.index');
+    Route::get('/employee', [employeeController::class, 'index'])->name('employees');
+    Route::get('/employees/{id}/edit', [employeeController::class, 'edit'])->name('employees.edit');
+    Route::put('/employees/{id}', [employeeController::class, 'update'])->name('employees.update');
+    Route::delete('/employees/{id}', [employeeController::class, 'destroy'])->name('employees.destroy');
+    Route::get('/employees/{id}', [EmployeeController::class, 'show'])->name('employees.show');
+
+
+    //employee view button from index
+    Route::get('/employeedetails/{id}', [employeedetailController::class, 'index'])->name('employees.details');
+
+    //DEPARTMENT ROUTES
     Route::get('/department', [departmentController::class, 'index'])->name('department.index');
     Route::get('/department/create', [departmentController::class, 'create'])->name('department.create');
     Route::post('/department', [departmentController::class, 'store'])->name('department.store');
@@ -87,32 +125,6 @@ Route::middleware('auth')->group(function () {
     Route::put('/department/{id}', [departmentController::class, 'update'])->name('department.update');
     Route::delete('/department/{id}', [departmentController::class, 'destroy'])->name('department.destroy');
     Route::get('/department/{id}/delete', [departmentController::class, 'showDeleteConfirmation'])->name('department.delete_confirmation');
-    Route::get('/department/{id}/view', [departmentController::class, 'view'])->name('department.view');
-
-
-
-
-
-
-    //PROFILE ROUTE
-    Route::get('/profile', [employee_user_viewController::class, 'index'])->name('profile-information');
-});
-
-
-//ADMIN
-Route::middleware(['auth', 'role:admin'])->group(function () {
-//EMPLOYEEE ROUTES
-    Route::get('/employees', [EmployeeController::class, 'index'])->name('employees.index');
-    Route::get('/employee', [employeeController::class, 'index'])->name('employees');
-    Route::get('/employees/create', [employeeController::class, 'create'])->name('employees.create');
-    Route::post('/employees', action: [employeeController::class, 'store'])->name('employees.store');
-    Route::get('/employees/{id}/edit', [employeeController::class, 'edit'])->name('employees.edit');
-    Route::put('/employees/{id}', [employeeController::class, 'update'])->name('employees.update');
-    Route::delete('/employees/{id}', [employeeController::class, 'destroy'])->name('employees.destroy');
-    Route::get('/employees/{id}', [EmployeeController::class, 'show'])->name('employees.show');
-
-    //employee view
-    Route::get('/employeedetails/{id}', [employeedetailController::class, 'index'])->name('employees.details');
 
 
     // Certificates Routes
@@ -206,15 +218,33 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     // QUALIFICATIONS ROUTES
     Route::get('/qualifications', [qualificationsController::class, 'index'])->name('qualifications.index');
 });
-//MANAGER
+
+
+
+
+
+
+
+
 
 //USER
 Route::middleware(['role:user'])->group(function () {
-    // Define your user routes here
-    Route::get('/user/dashboard', function () {
-        return view('dashboard');
-    });
+    //USER PAYROLL
+    Route::get('payroll/user', [payrolluserController::class, 'index'])->name('payrolluser.index');
+
+    //USER LEAVES
+    Route::get('leaves/user',[leavesuserController::class, 'index'])->name('leavesuser.index');
+
+    //USER DEPARTMENT
+    Route::get('department/user',[departmentuserController::class, 'index'])->name('departmentuser.index');
 });
+
+
+
+
+
+
+
 
 
 //DASHBOARD ROUTES
