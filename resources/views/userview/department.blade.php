@@ -10,7 +10,7 @@
     <div x-data="{ showModal: false, deleteUrl: '', departmentName: '' }" class="w-full space-y-6">
         <!-- Search and Add Section -->
         <div class="flex justify-between items-center">
-            <form method="GET" action="{{ route('department.index') }}" class="flex w-full max-w-md">
+            <form method="GET" action="{{ route('departmentuser.index') }}" class="flex w-full max-w-md">
                 <input 
                     type="text" 
                     name="search" 

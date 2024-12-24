@@ -142,22 +142,22 @@
             
         <!-- Payroll Link -->
         <li>
-            <a href="{{ route('payroll.index') }}"
+            <a href="{{ route('payrolluser.index') }}"
                 class="flex items-center space-x-4 text-gray-800 dark:text-gray-200 hover:text-teal-500 dark:hover:text-teal-400 transition-colors 
-                              {{ request()->routeIs('payroll.index') ? 'bg-gray-200 dark:bg-gray-700' : '' }} 
+                              {{ request()->routeIs('payrolluser.index') ? 'bg-gray-200 dark:bg-gray-700' : '' }} 
                        px-4 py-3 rounded-md">
                 <i
-                    class="fas fa-money-bill-wave text-teal-500 text-xl {{ request()->routeIs('payroll.index') ? 'text-teal-700' : '' }}"></i>
+                    class="fas fa-money-bill-wave text-teal-500 text-xl {{ request()->routeIs('payrolluser.index') ? 'text-teal-700' : '' }}"></i>
                 <span class="font-medium">Payroll</span>
             </a>
         </li>
         <li>
-            <a href="{{ route('leaves.index') }}"
+            <a href="{{ route('leavesuser.index') }}"
                 class="flex items-center space-x-4 text-gray-800 dark:text-gray-200 hover:text-green-500 dark:hover:text-green-400 transition-colors 
-                      {{ request()->routeIs('leaves.index') ? 'bg-gray-200 dark:bg-gray-700' : '' }} 
+                      {{ request()->routeIs('leavesuser.index') ? 'bg-gray-200 dark:bg-gray-700' : '' }} 
                px-4 py-3 rounded-md">
                 <i
-                    class="fas fa-leaf text-green-500 text-xl {{ request()->routeIs('leaves.index') ? 'text-green-700' : '' }}"></i>
+                    class="fas fa-leaf text-green-500 text-xl {{ request()->routeIs('leavesuser.index') ? 'text-green-700' : '' }}"></i>
                 <span class="font-medium">Leaves</span>
             </a>
         </li>
@@ -172,12 +172,12 @@
             </a>
         </li>
         <li>
-            <a href="{{ route('department.index') }}"
+            <a href="{{ route('departmentuser.index') }}"
                 class="flex items-center space-x-4 text-gray-800 dark:text-gray-200 hover:text-indigo-500 dark:hover:text-indigo-400 transition-colors 
-                      {{ request()->routeIs('department.index') ? 'bg-gray-200 dark:bg-gray-700' : '' }} 
+                      {{ request()->routeIs('departmentuser.index') ? 'bg-gray-200 dark:bg-gray-700' : '' }} 
                px-4 py-3 rounded-md">
                 <i
-                    class="fas fa-sitemap text-indigo-500 text-xl {{ request()->routeIs('department.index') ? 'text-indigo-700' : '' }}"></i>
+                    class="fas fa-sitemap text-indigo-500 text-xl {{ request()->routeIs('departmentuser.index') ? 'text-indigo-700' : '' }}"></i>
                 <span class="font-medium">Department</span>
             </a>
         </li>
