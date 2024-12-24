@@ -45,30 +45,7 @@ require __DIR__ . '/auth.php';
 
 
 Route::middleware('auth')->group(function () {
-    //EMPLOYEEE ROUTES
-    Route::get('/employees', [EmployeeController::class, 'index'])->name('employees.index');
-    Route::get('/employee', [employeeController::class, 'index'])->name('employees');
-    Route::get('/employees/create', [employeeController::class, 'create'])->name('employees.create');
-    Route::post('/employees', action: [employeeController::class, 'store'])->name('employees.store');
-    Route::get('/employees/{id}/edit', [employeeController::class, 'edit'])->name('employees.edit');
-    Route::put('/employees/{id}', [employeeController::class, 'update'])->name('employees.update');
-    Route::delete('/employees/{id}', [employeeController::class, 'destroy'])->name('employees.destroy');
-    Route::get('/employees/{id}', [EmployeeController::class, 'show'])->name('employees.show');
-
-    //employee view
-    Route::get('/employeedetails/{id}', [employeedetailController::class, 'index'])->name('employees.details');
-
-
-    //DEPARTMENT ROUTES
-    Route::get('/department', [departmentController::class, 'index'])->name('department.index');
-    Route::get('/department/create', [departmentController::class, 'create'])->name('department.create');
-    Route::post('/department', [departmentController::class, 'store'])->name('department.store');
-    Route::get('/department/{id}/edit', [departmentController::class, 'edit'])->name('department.edit');
-    Route::put('/department/{id}', [departmentController::class, 'update'])->name('department.update');
-    Route::delete('/department/{id}', [departmentController::class, 'destroy'])->name('department.destroy');
-    Route::get('/department/{id}/delete', [departmentController::class, 'showDeleteConfirmation'])->name('department.delete_confirmation');
-    Route::get('/department/{id}/view', [departmentController::class, 'view'])->name('department.view');
-
+    
 
     //LEAVES ROUTES
     Route::get('/leaves', [leavesController::class, 'index'])->name('leaves.index');
@@ -84,14 +61,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/attendance/login', [attendanceController::class, 'login'])->name('attendance.login');
     Route::post('/attendance/logout', [attendanceController::class, 'logout'])->name('attendance.logout');
     Route::get('/attendance/history', [attendanceController::class, 'showAttendance'])->name('attendance.history');
-
-    //PERFORMANCE ROUTES
-    Route::post('performance/store', [performanceController::class, 'store'])->name('performance.store');
-    Route::get('performance', [performanceController::class, 'index'])->name('performance.index');
-    Route::get('/performance/create', [performanceController::class, 'create'])->name('performance.create');
-    Route::get('performance/{id}/edit', [performanceController::class, 'edit'])->name('performance.edit'); // Show form to edit a rating
-    Route::put('performance/{id}', [performanceController::class, 'update'])->name('performance.update'); // Update an existing rating
-    Route::delete('performance/{id}', [performanceController::class, 'destroy'])->name('performance.destroy');
 
     //SALARIES ROUTES
     Route::get('/salaries', [salaryController::class, 'index'])->name('salary');
@@ -110,53 +79,41 @@ Route::middleware('auth')->group(function () {
     Route::put('/payroll/{id}', [payrollController::class, 'update'])->name('payroll.update');
     Route::delete('/payroll/{id}', [payrollController::class, 'delete'])->name('payroll.delete');
 
-    
-  
-
-    // PAYMENT FREQUENCY ROUTES
-    Route::get('/payment-frequencies', [paymentFrequencyController::class, 'index'])->name('payment-frequency.index')->middleware('auth');
-    Route::get('/payment-frequencies/create', [paymentFrequencyController::class, 'create'])->name('payment-frequency.create')->middleware('auth');
-    Route::post('/payment-frequencies', [paymentFrequencyController::class, 'store'])->name('payment-frequency.store')->middleware('auth');
-    Route::get('/payment-frequency/{payment_frequency_id}/edit', [paymentFrequencyController::class, 'edit'])->name('payment-frequency.edit')->middleware('auth');
-    Route::put('/payment-frequency/{payment_frequency_id}', [paymentFrequencyController::class, 'update'])->name('payment-frequency.update')->middleware('auth');
-    Route::delete('/payment-frequencies/{id}', [paymentFrequencyController::class, 'destroy'])->name('payment-frequency.destroy')->middleware('auth');
-    Route::resource('payment-frequency', PaymentFrequencyController::class);
-    Route::get('/payment-frequency/{payment_frequency_id}', [paymentFrequencyController::class, 'show'])->name('payment-frequency.show')->middleware('auth');
-
-    //JOB ROUTES
-    Route::get('/jobs', [jobController::class, 'index'])->name('job.index');
-    Route::get('/jobs/create', [jobController::class, 'create'])->name('jobs.create');
-    Route::post('/jobs', [jobController::class, 'store'])->name('jobs.store');
-    Route::get('/jobs/{job}/edit', [jobController::class, 'edit'])->name('jobs.edit');
-    Route::put('/jobs/{job}', [jobController::class, 'update'])->name('jobs.update');
-    Route::delete('/jobs/{job}', [jobController::class, 'destroy'])->name('jobs.destroy');
-    Route::get('/jobs/{job}', [jobController::class, 'show'])->name('jobs.show');
-
-    //ASSIGN ROUTES
-    Route::get('/employee-info', [employee_infoController::class, 'index'])->name('employee_info.index');
-    Route::get('/employee-info/create', [employee_infoController::class, 'create'])->name('employee_info.create');
-    Route::post('/employee-info', [employee_infoController::class, 'store'])->name('employee_info.store');
-    Route::get('/employee-info/{id}/edit', [employee_infoController::class, 'edit'])->name('employee_info.edit');
-    Route::put('/employee-info/{id}', [employee_infoController::class, 'update'])->name('employee_info.update');
-    Route::delete('/employee-info/{id}', [employee_infoController::class, 'destroy'])->name('employee_info.destroy');
+    //DEPARTMENT ROUTES
+    Route::get('/department', [departmentController::class, 'index'])->name('department.index');
+    Route::get('/department/create', [departmentController::class, 'create'])->name('department.create');
+    Route::post('/department', [departmentController::class, 'store'])->name('department.store');
+    Route::get('/department/{id}/edit', [departmentController::class, 'edit'])->name('department.edit');
+    Route::put('/department/{id}', [departmentController::class, 'update'])->name('department.update');
+    Route::delete('/department/{id}', [departmentController::class, 'destroy'])->name('department.destroy');
+    Route::get('/department/{id}/delete', [departmentController::class, 'showDeleteConfirmation'])->name('department.delete_confirmation');
+    Route::get('/department/{id}/view', [departmentController::class, 'view'])->name('department.view');
 
 
-    //PROFILE ROUTES
+
+
+
+
+    //PROFILE ROUTE
     Route::get('/profile', [employee_user_viewController::class, 'index'])->name('profile-information');
-
-    //REPORTS
-    Route::get('/reports', [employee_info_viewController::class, 'index'])->name('report');//
-    Route::get('/reports/attendance', [employee_info_viewController::class, 'attendance'])->name('rattendance');//
-    Route::get('/reports/leaves', [employee_info_viewController::class, 'leaves'])->name('rleaves');
-    Route::get('/reports/employee-directory', [employee_info_viewController::class, 'employeeDirectory'])->name('remployee.directory');
-    Route::get('/reports/performance', [employee_info_viewController::class, 'performance'])->name('rperformance');
-    Route::get('/reports/salary-reports', [employee_info_viewController::class, 'salaryReports'])->name('rsalary.reports');
-    Route::get('/reports/department-analysis', [employee_info_viewController::class, 'departmentAnalysis'])->name('rdepartment.analysis');
-    Route::get('/payroll/reports', [employee_info_viewController::class, 'payrollReports'])->name('payroll.reports');
+});
 
 
-    // QUALIFICATIONS ROUTES
-    Route::get('/qualifications', [qualificationsController::class, 'index'])->name('qualifications.index');
+//ADMIN
+Route::middleware(['auth', 'role:admin'])->group(function () {
+//EMPLOYEEE ROUTES
+    Route::get('/employees', [EmployeeController::class, 'index'])->name('employees.index');
+    Route::get('/employee', [employeeController::class, 'index'])->name('employees');
+    Route::get('/employees/create', [employeeController::class, 'create'])->name('employees.create');
+    Route::post('/employees', action: [employeeController::class, 'store'])->name('employees.store');
+    Route::get('/employees/{id}/edit', [employeeController::class, 'edit'])->name('employees.edit');
+    Route::put('/employees/{id}', [employeeController::class, 'update'])->name('employees.update');
+    Route::delete('/employees/{id}', [employeeController::class, 'destroy'])->name('employees.destroy');
+    Route::get('/employees/{id}', [EmployeeController::class, 'show'])->name('employees.show');
+
+    //employee view
+    Route::get('/employeedetails/{id}', [employeedetailController::class, 'index'])->name('employees.details');
+
 
     // Certificates Routes
     Route::get('/certificates', [certificatesController::class, 'index'])->name('certificates.index');
@@ -199,22 +156,58 @@ Route::middleware('auth')->group(function () {
     Route::put('/language-setup/{languagesetup_id}', [languagesSetupController::class, 'update'])->name('languageSetup.update');
     Route::delete('/language-setup/{languagesetup_id}', [languagesSetupController::class, 'destroy'])->name('languageSetup.destroy');
 
-});
+    //PERFORMANCE ROUTES
+    Route::post('performance/store', [performanceController::class, 'store'])->name('performance.store');
+    Route::get('performance', [performanceController::class, 'index'])->name('performance.index');
+    Route::get('/performance/create', [performanceController::class, 'create'])->name('performance.create');
+    Route::get('performance/{id}/edit', [performanceController::class, 'edit'])->name('performance.edit'); // Show form to edit a rating
+    Route::put('performance/{id}', [performanceController::class, 'update'])->name('performance.update'); // Update an existing rating
+    Route::delete('performance/{id}', [performanceController::class, 'destroy'])->name('performance.destroy');
 
 
-//ADMIN
-Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::get('/admin/dashboard', function () {
-        return view('admin.dashboard');
-    });
+    // PAYMENT FREQUENCY ROUTES
+    Route::get('/payment-frequencies', [paymentFrequencyController::class, 'index'])->name('payment-frequency.index')->middleware('auth');
+    Route::get('/payment-frequencies/create', [paymentFrequencyController::class, 'create'])->name('payment-frequency.create')->middleware('auth');
+    Route::post('/payment-frequencies', [paymentFrequencyController::class, 'store'])->name('payment-frequency.store')->middleware('auth');
+    Route::get('/payment-frequency/{payment_frequency_id}/edit', [paymentFrequencyController::class, 'edit'])->name('payment-frequency.edit')->middleware('auth');
+    Route::put('/payment-frequency/{payment_frequency_id}', [paymentFrequencyController::class, 'update'])->name('payment-frequency.update')->middleware('auth');
+    Route::delete('/payment-frequencies/{id}', [paymentFrequencyController::class, 'destroy'])->name('payment-frequency.destroy')->middleware('auth');
+    Route::resource('payment-frequency', PaymentFrequencyController::class);
+    Route::get('/payment-frequency/{payment_frequency_id}', [paymentFrequencyController::class, 'show'])->name('payment-frequency.show')->middleware('auth');
+
+    //JOB ROUTES
+    Route::get('/jobs', [jobController::class, 'index'])->name('job.index');
+    Route::get('/jobs/create', [jobController::class, 'create'])->name('jobs.create');
+    Route::post('/jobs', [jobController::class, 'store'])->name('jobs.store');
+    Route::get('/jobs/{job}/edit', [jobController::class, 'edit'])->name('jobs.edit');
+    Route::put('/jobs/{job}', [jobController::class, 'update'])->name('jobs.update');
+    Route::delete('/jobs/{job}', [jobController::class, 'destroy'])->name('jobs.destroy');
+    Route::get('/jobs/{job}', [jobController::class, 'show'])->name('jobs.show');
+
+    //ASSIGN ROUTES
+    Route::get('/employee-info', [employee_infoController::class, 'index'])->name('employee_info.index');
+    Route::get('/employee-info/create', [employee_infoController::class, 'create'])->name('employee_info.create');
+    Route::post('/employee-info', [employee_infoController::class, 'store'])->name('employee_info.store');
+    Route::get('/employee-info/{id}/edit', [employee_infoController::class, 'edit'])->name('employee_info.edit');
+    Route::put('/employee-info/{id}', [employee_infoController::class, 'update'])->name('employee_info.update');
+    Route::delete('/employee-info/{id}', [employee_infoController::class, 'destroy'])->name('employee_info.destroy');
+
+    //REPORTS
+    Route::get('/reports', [employee_info_viewController::class, 'index'])->name('report');//
+    Route::get('/reports/attendance', [employee_info_viewController::class, 'attendance'])->name('rattendance');//
+    Route::get('/reports/leaves', [employee_info_viewController::class, 'leaves'])->name('rleaves');
+    Route::get('/reports/employee-directory', [employee_info_viewController::class, 'employeeDirectory'])->name('remployee.directory');
+    Route::get('/reports/performance', [employee_info_viewController::class, 'performance'])->name('rperformance');
+    Route::get('/reports/salary-reports', [employee_info_viewController::class, 'salaryReports'])->name('rsalary.reports');
+    Route::get('/reports/department-analysis', [employee_info_viewController::class, 'departmentAnalysis'])->name('rdepartment.analysis');
+    Route::get('/payroll/reports', [employee_info_viewController::class, 'payrollReports'])->name('payroll.reports');
+
+
+    // QUALIFICATIONS ROUTES
+    Route::get('/qualifications', [qualificationsController::class, 'index'])->name('qualifications.index');
 });
 //MANAGER
-Route::middleware(['role:manager'])->group(function () {
-    // Define your manager routes here
-    Route::get('/manager/dashboard', function () {
-        return view('dashboard');
-    });
-});
+
 //USER
 Route::middleware(['role:user'])->group(function () {
     // Define your user routes here
