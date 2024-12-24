@@ -1,21 +1,20 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Leaves') }}
+            {{ __('Leave Management') }}
         </h2>
     </x-slot>
-
-    @if (Auth::user()->role === 'admin')
-
+    
     <div class="py-8">
         <!-- Actions Section -->
         <div class="flex justify-between items-center mb-6">
-            <!-- Add Leave Button -->
-            <a href="{{ route('leaves.create') }}" 
-                class="inline-flex items-center px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-offset-gray-800">
-                + Add Leave
-            </a>
-        </div>
+                <!-- Add Leave Button -->
+                <a href="{{ route('leaves.create') }}" 
+                    class="inline-flex items-center px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-offset-gray-800">
+                    + Add Leave
+                </a>
+            </div>
+    
 
         <!-- Leave Table -->
         <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
@@ -32,7 +31,7 @@
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
-                        @foreach ($leaves as $leave)
+                        @foreach ($leavesuser as $leave)
                             <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
                                 <td class="px-6 py-4">{{ $leave->leave_id }}</td>
                                 <td class="px-6 py-4">{{ $leave->employee_id }}</td>
@@ -77,6 +76,5 @@
             {{ $leaves->links('pagination::tailwind') }}
         </div>
     </div>
-    @endif
 
 </x-app-layout>
