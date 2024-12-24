@@ -1,3 +1,8 @@
+ <!-- 
+    VIEW FILE NI KIBALI
+    just recycled an index file
+-->
+
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-3xl text-gray-700 dark:text-gray-200 leading-tight">
@@ -119,8 +124,8 @@
                         </h4>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-600 dark:text-gray-400">
                             <p><strong>Salary ID:</strong> {{ $employee->salary_id ?? 'Not available' }}</p>
-                            <p><strong>Performance Review Score:</strong>
-                                {{ $employee->review_score ?? 'Not available' }}</p>
+                            <p><strong>Latest Performance Review Score:</strong>
+                                {{ $employee->review_score ?? 'Not yet available' }}</p>
                             <p><strong>Review Date:</strong> {{ $employee->review_date ?? 'Not available' }}</p>
                             <p><strong>Reviewer ID:</strong> {{ $employee->reviewer_id ?? 'Not available' }}</p>
                         </div>
