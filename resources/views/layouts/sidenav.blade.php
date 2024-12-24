@@ -20,17 +20,7 @@
             </a>
         </li>
 
-        <!-- Payroll Link -->
-        <li>
-            <a href="{{ route('payroll.index') }}"
-                class="flex items-center space-x-4 text-gray-800 dark:text-gray-200 hover:text-teal-500 dark:hover:text-teal-400 transition-colors 
-                              {{ request()->routeIs('payroll.index') ? 'bg-gray-200 dark:bg-gray-700' : '' }} 
-                       px-4 py-3 rounded-md">
-                <i
-                    class="fas fa-money-bill-wave text-teal-500 text-xl {{ request()->routeIs('payroll.index') ? 'text-teal-700' : '' }}"></i>
-                <span class="font-medium">Payroll</span>
-            </a>
-        </li>
+
 
         <!-- Conditional Admin/Manager Link -->
         @if (Auth::user()->role === 'admin')
@@ -44,8 +34,6 @@
                     <span class="font-medium">Employees</span>
                 </a>
             </li>
-
-            <!-- Other Admin Links -->
             <li>
                 <a href="{{ route('qualifications.index') }}"
                     class="flex items-center space-x-4 text-gray-800 dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 transition-colors 
@@ -54,6 +42,17 @@
                     <i
                         class="fas fa-certificate text-blue-500 text-xl {{ request()->routeIs('qualifications.index') ? 'text-blue-700' : '' }}"></i>
                     <span class="font-medium">Qualifications</span>
+                </a>
+            </li>
+            <!-- Payroll Link -->
+            <li>
+                <a href="{{ route('payroll.index') }}"
+                    class="flex items-center space-x-4 text-gray-800 dark:text-gray-200 hover:text-teal-500 dark:hover:text-teal-400 transition-colors 
+                              {{ request()->routeIs('payroll.index') ? 'bg-gray-200 dark:bg-gray-700' : '' }} 
+                       px-4 py-3 rounded-md">
+                    <i
+                        class="fas fa-money-bill-wave text-teal-500 text-xl {{ request()->routeIs('payroll.index') ? 'text-teal-700' : '' }}"></i>
+                    <span class="font-medium">Payroll</span>
                 </a>
             </li>
             <li>
@@ -106,9 +105,52 @@
                     <span class="font-medium">Reports</span>
                 </a>
             </li>
+            <li>
+                <a href="{{ route('leaves.index') }}"
+                    class="flex items-center space-x-4 text-gray-800 dark:text-gray-200 hover:text-green-500 dark:hover:text-green-400 transition-colors 
+                          {{ request()->routeIs('leaves.index') ? 'bg-gray-200 dark:bg-gray-700' : '' }} 
+                   px-4 py-3 rounded-md">
+                    <i
+                        class="fas fa-leaf text-green-500 text-xl {{ request()->routeIs('leaves.index') ? 'text-green-700' : '' }}"></i>
+                    <span class="font-medium">Leaves</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('attendance.index') }}"
+                    class="flex items-center space-x-4 text-gray-800 dark:text-gray-200 hover:text-teal-500 dark:hover:text-teal-400 transition-colors 
+                          {{ request()->routeIs('attendance.index') ? 'bg-gray-200 dark:bg-gray-700' : '' }} 
+                   px-4 py-3 rounded-md">
+                    <i
+                        class="fas fa-calendar-check text-teal-500 text-xl {{ request()->routeIs('attendance.index') ? 'text-teal-700' : '' }}"></i>
+                    <span class="font-medium">Attendance</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('department.index') }}"
+                    class="flex items-center space-x-4 text-gray-800 dark:text-gray-200 hover:text-indigo-500 dark:hover:text-indigo-400 transition-colors 
+                          {{ request()->routeIs('department.index') ? 'bg-gray-200 dark:bg-gray-700' : '' }} 
+                   px-4 py-3 rounded-md">
+                    <i
+                        class="fas fa-sitemap text-indigo-500 text-xl {{ request()->routeIs('department.index') ? 'text-indigo-700' : '' }}"></i>
+                    <span class="font-medium">Department</span>
+                </a>
+            </li>
         @endif
 
-        <!-- Common Links for All Roles -->
+            @if (Auth::user()->role === 'user')
+                
+            
+        <!-- Payroll Link -->
+        <li>
+            <a href="{{ route('payroll.index') }}"
+                class="flex items-center space-x-4 text-gray-800 dark:text-gray-200 hover:text-teal-500 dark:hover:text-teal-400 transition-colors 
+                              {{ request()->routeIs('payroll.index') ? 'bg-gray-200 dark:bg-gray-700' : '' }} 
+                       px-4 py-3 rounded-md">
+                <i
+                    class="fas fa-money-bill-wave text-teal-500 text-xl {{ request()->routeIs('payroll.index') ? 'text-teal-700' : '' }}"></i>
+                <span class="font-medium">Payroll</span>
+            </a>
+        </li>
         <li>
             <a href="{{ route('leaves.index') }}"
                 class="flex items-center space-x-4 text-gray-800 dark:text-gray-200 hover:text-green-500 dark:hover:text-green-400 transition-colors 
@@ -139,6 +181,7 @@
                 <span class="font-medium">Department</span>
             </a>
         </li>
+        @endif
     </ul>
 </nav>
 
