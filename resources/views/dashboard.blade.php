@@ -3,18 +3,6 @@
         <div class="container max-w-7xl px-6 mx-auto my-20">
             <div class="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
                 <!-- Employee-only Links -->
-                <a href="{{ route('dashboard') }}"
-                    class="p-12 bg-white rounded-lg shadow-md hover:shadow-xl transition-transform transform hover:scale-105">
-                    <div class="flex flex-col items-center">
-                        <div
-                            class="flex items-center justify-center w-20 h-20 rounded-full bg-fuchsia-50 text-fuchsia-400">
-                            <i class="fas fa-tachometer-alt text-4xl"></i>
-                        </div>
-                        <div class="mt-4 text-center">
-                            <div class="text-lg font-semibold text-black">Dashboard</div>
-                        </div>
-                    </div>
-                </a>
 
                 @if (Auth::user()->role === 'admin')
                     <a href="{{ route('qualifications.index') }}"
