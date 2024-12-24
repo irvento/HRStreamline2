@@ -30,7 +30,7 @@
                         </div>
                     </a>
 
-                    <a href="{{ route('salary.index') }}"
+                    <a href="{{ route('salary') }}"
                         class="p-12 bg-white rounded-lg shadow-md hover:shadow-xl transition-transform transform hover:scale-105">
                         <div class="flex flex-col items-center">
                             <div
@@ -43,7 +43,7 @@
                         </div>
                     </a>
 
-                    <a href="{{ route('jobs.index') }}"
+                    <a href="{{ route('job.index') }}"
                         class="p-12 bg-white rounded-lg shadow-md hover:shadow-xl transition-transform transform hover:scale-105">
                         <div class="flex flex-col items-center">
                             <div class="flex items-center justify-center w-20 h-20 rounded-full bg-red-50 text-red-400">
@@ -68,7 +68,7 @@
                         </div>
                     </a>
 
-                    <a href="{{ route('assign.index') }}"
+                    <a href="{{ route('employee_info.index') }}"
                         class="p-12 bg-white rounded-lg shadow-md hover:shadow-xl transition-transform transform hover:scale-105">
                         <div class="flex flex-col items-center">
                             <div
@@ -81,7 +81,7 @@
                         </div>
                     </a>
 
-                    <a href="{{ route('reports.index') }}"
+                    <a href="{{ route('report') }}"
                         class="p-12 bg-white rounded-lg shadow-md hover:shadow-xl transition-transform transform hover:scale-105">
                         <div class="flex flex-col items-center">
                             <div
