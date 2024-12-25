@@ -152,16 +152,6 @@
             </a>
         </li>
         <li>
-            <a href="{{ route('leavesuser.index') }}"
-                class="flex items-center space-x-4 text-gray-800 dark:text-gray-200 hover:text-green-500 dark:hover:text-green-400 transition-colors 
-                      {{ request()->routeIs('leavesuser.index') ? 'bg-gray-200 dark:bg-gray-700' : '' }} 
-               px-4 py-3 rounded-md">
-                <i
-                    class="fas fa-leaf text-green-500 text-xl {{ request()->routeIs('leavesuser.index') ? 'text-green-700' : '' }}"></i>
-                <span class="font-medium">Leaves</span>
-            </a>
-        </li>
-        <li>
             <a href="{{ route('attendance.index') }}"
                 class="flex items-center space-x-4 text-gray-800 dark:text-gray-200 hover:text-teal-500 dark:hover:text-teal-400 transition-colors 
                       {{ request()->routeIs('attendance.index') ? 'bg-gray-200 dark:bg-gray-700' : '' }} 
@@ -169,6 +159,16 @@
                 <i
                     class="fas fa-calendar-check text-teal-500 text-xl {{ request()->routeIs('attendance.index') ? 'text-teal-700' : '' }}"></i>
                 <span class="font-medium">Attendance</span>
+            </a>
+        </li>
+        <li>
+            <a href="{{ route('leaveuser.index') }}"
+                class="flex items-center space-x-4 text-gray-800 dark:text-gray-200 hover:text-green-500 dark:hover:text-green-400 transition-colors 
+                      {{ request()->routeIs('leaveuser.index') ? 'bg-gray-200 dark:bg-gray-700' : '' }} 
+               px-4 py-3 rounded-md">
+                <i
+                    class="fas fa-leaf text-green-500 text-xl {{ request()->routeIs('leaveuser.index') ? 'text-green-700' : '' }}"></i>
+                <span class="font-medium">Leaves</span>
             </a>
         </li>
         <li>

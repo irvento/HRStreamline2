@@ -171,7 +171,7 @@
                     </div>
                 </a>
 
-                <a href="{{ route('leavesuser.index') }}"
+                <a href="{{ route('leaveuser.index') }}"
                     class="p-12 bg-white rounded-lg shadow-md hover:shadow-xl transition-transform transform hover:scale-105">
                     <div class="flex flex-col items-center">
                         <div class="flex items-center justify-center w-20 h-20 rounded-full bg-green-50 text-green-400">

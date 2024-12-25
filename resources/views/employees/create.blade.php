@@ -41,7 +41,7 @@
                                 <label for="employee_mname"
                                     class="block text-sm font-medium text-gray-700 dark:text-gray-300">Middle
                                     Name</label>
-                                <input type="text" name="employee_mname" id="employee_mname"
+                                <input type="text" name="employee_mname" id="employee_mname" value="{{ ('') ?? 'no middle name' }}"
                                     class="mt-1 block w-full rounded-md border-gray-300 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 shadow-sm">
                             </div>
                         </div>

@@ -20,6 +20,7 @@ class leavesController extends Controller
         $user = Auth::user(); 
         $leavesuser = leavesModel::where('employee_id', $user->id)->get(); 
         $leaves = $query->paginate(10)->withQueryString();
+        
         return view('leaves', compact('leaves', 'search', 'leavesuser'));
     }
 
@@ -28,6 +29,21 @@ class leavesController extends Controller
         return view('leaves.create');
     }
 
+    public function update(Request $request, $id)
+    {
+        $leave = leavesModel::findOrFail($id);
+
+        $validated = $request->validate([
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
+            'leave_status' => 'required|string|max:20',
+            'remarks' => 'nullable|string',
+        ]);
+
+        $leave->update($validated);
+
+        return redirect()->route('leaves.index')->with('success', 'Leave updated successfully!');
+    }
     public function store(Request $request)
     {
         $user = Auth::user(); // Get the authenticated user
@@ -69,21 +85,7 @@ class leavesController extends Controller
         return view('leaves.edit', compact('leave'));
     }
 
-    public function update(Request $request, $id)
-    {
-        $leave = leavesModel::findOrFail($id);
-
-        $validated = $request->validate([
-            'start_date' => 'required|date',
-            'end_date' => 'required|date|after_or_equal:start_date',
-            'leave_status' => 'required|string|max:20',
-            'remarks' => 'nullable|string',
-        ]);
-
-        $leave->update($validated);
-
-        return redirect()->route('leaves.index')->with('success', 'Leave updated successfully!');
-    }
+    
 
     public function destroy($id)
     {
