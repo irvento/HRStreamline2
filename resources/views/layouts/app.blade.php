@@ -21,16 +21,26 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/alpinejs" defer></script>
-
-
 </head>
 
 <body class="font-sans antialiased">
+
+    <!-- Notification Popup -->
+    <div x-data="{ show: false, message: '' }" x-init="@if (session('success')) show = true; message = '{{ session('success') }}'; setTimeout(() => show = false, 3000); @endif" x-show="show"
+        x-transition:enter="transition ease-out duration-300"
+        x-transition:enter-start="opacity-0 transform translate-y-2"
+        x-transition:enter-end="opacity-100 transform translate-y-0"
+        x-transition:leave="transition ease-in duration-300"
+        x-transition:leave-start="opacity-100 transform translate-y-0"
+        x-transition:leave-end="opacity-0 transform translate-y-2"
+        class="fixed top-4 left-1/2 transform -translate-x-1/2 bg-green-500 text-white py-2 px-4 rounded shadow-lg z-50">
+        <span x-text="message"></span>
+    </div>
+
+    <!-- Loading Overlay -->
     <div x-data="{ loading: false }" x-show="loading" x-transition:enter="transition ease-out duration-500"
         x-transition:leave="transition ease-out duration-1000"
-        class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-75 z-50"
-        @click="loading = true; setTimeout(() => loading = false, 1000)">
-        <!-- Loading Spinner -->
+        class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-75 z-50">
         <div class="text-white text-xl">
             <div class="flex justify-center items-center h-screen">
                 <div class="flex flex-row gap-2">
@@ -41,6 +51,7 @@
             </div>
         </div>
     </div>
+
     <div class="min-h-screen bg-gray-100 dark:bg-gray-900 flex">
         @include('layouts.sidenav') <!-- Side Navigation -->
 
@@ -61,7 +72,6 @@
                 <main>
                     <div class="container-fluid">
                         <div class="column">
-
                             <!-- Main Content -->
                             <div class="col-md-9 col-lg-10 ms-sm-auto px-md-4 py-4">
                                 {{ $slot }}
@@ -77,6 +87,8 @@
                     </div>
                 </footer>
             </div>
+        </div>
+    </div>
 </body>
 
 </html>

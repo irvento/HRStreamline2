@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use App\Models\employee_infoModel;
+use Illuminate\Support\Facades\DB;
 use App\Models\jobModel;
 use App\Models\departmentModel;
 use App\Models\employeeModel;
@@ -11,6 +12,16 @@ use Illuminate\Http\Request;
 
 class employeeController extends Controller
 {
+
+    public function checkEmployeeRegistration($employee_id)
+    {
+        // Check if an entry exists for the employee in the employee_info_view
+        $isRegistered = DB::table('employee_info_view') // Change to the correct table or view name
+            ->where('employee_id', $employee_id)
+            ->exists();
+
+        return $isRegistered;
+    }
     public function index(Request $request)
     {
         $search = $request->input('search');
@@ -22,9 +33,18 @@ class employeeController extends Controller
                 ->orWhere('contact1', 'LIKE', "%{$search}%");
         }
 
+        // Fetch the employees and map them to add the 'is_registered' flag
         $employees = $query->paginate(10)->withQueryString();
+
+        // Add the registration status for each employee
+        $employees->getCollection()->transform(function ($employee) {
+            $employee->is_registered = $this->checkEmployeeRegistration($employee->employee_id);
+            return $employee;
+        });
+
         return view('employee', ['employees' => $employees, 'search' => $search]);
     }
+
 
     public function create()
     {

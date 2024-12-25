@@ -28,7 +28,18 @@
                             <img src="{{ asset($employee->image) }}" alt="Employee" class="w-12 h-12 rounded-full">
                             <div>
                                 <p class="text-lg font-semibold text-gray-800 dark:text-gray-200">
-                                    {{ $employee->employee_fname }} {{ $employee->employee_lname }}</p>
+                                    {{ $employee->employee_fname }} {{ $employee->employee_lname }}
+                                    <!-- Display Registration Status Indicator -->
+                                    @if ($employee->is_registered)
+                                        <span class="ml-2 text-xs text-yellow-600 bg-yellow-100 px-2 py-1 rounded-full">
+                                            Registered
+                                        </span>
+                                    @else
+                                        <span class="ml-2 text-xs text-gray-400 bg-gray-200 px-2 py-1 rounded-full">
+                                            Not Registered
+                                        </span>
+                                    @endif
+                                </p>
                                 <p class="text-sm text-gray-500 dark:text-gray-400">{{ $employee->employee_email }}</p>
                             </div>
                         </div>
