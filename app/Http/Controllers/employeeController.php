@@ -85,11 +85,16 @@ class employeeController extends Controller
 
         $imagePath = null;
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image');
-            $extension = $imagePath->getClientOriginalExtension();
-            $filename = time() . '.' . $extension;
+            $image = $request->file('image');
+            $filename = time() . '.' . $image->getClientOriginalExtension();
             $path = 'storage/app/public/employee_images/';
-            $imagePath->move($path, $filename);
+            $image->move($path, $filename);
+            $imagePath = $path . $filename;
+        } else {
+            // Assign a default image based on gender
+            $imagePath = $validated['gender'] === 'Female'
+                ? 'storage/app/public/employee_images/female_icon.png'
+                : 'storage/app/public/employee_images/male_icon.png';
         }
 
         $employee = new employeeModel();

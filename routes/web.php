@@ -20,9 +20,9 @@ use App\Http\Controllers\SalaryController;
 use App\Http\Controllers\performanceController;
 use App\Http\Controllers\ProfileController;
 
-use App\Http\Controllers\UserControllers\payrolluserController;
-use App\Http\Controllers\UserControllers\leavesuserController;
-use App\Http\Controllers\UserControllers\departmentuserController;
+use App\Http\Controllers\payrolluserController;
+use App\Http\Controllers\leavesuserController;
+use App\Http\Controllers\departmentuserController;
 
 
 
@@ -51,16 +51,10 @@ require __DIR__ . '/auth.php';
 
 //PUBLIC
 Route::middleware('auth')->group(function () {
-    
 
-    //LEAVES ROUTES
-    Route::get('/leaves', [leavesController::class, 'index'])->name('leaves.index');
+    //leave route
     Route::get('/leaves/create', [leavesController::class, 'create'])->name('leaves.create');
-    Route::post('/leaves', [leavesController::class, 'store'])->name('leaves.store');
-    Route::get('/leaves/{leave}/edit', [leavesController::class, 'edit'])->name('leaves.edit');
-    Route::put('/leaves/{leave}', [leavesController::class, 'update'])->name('leaves.update');
-    Route::delete('/leaves/{leave}', [leavesController::class, 'destroy'])->name('leaves.destroy');
-    Route::get('/leaves/{leave}', [leavesController::class, 'show'])->name('leaves.show');
+
 
     //ATTENDANCE ROUTES
     Route::get('/attendance', [attendanceController::class, 'index'])->name('attendance.index');
@@ -116,6 +110,14 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
     //employee view button from index
     Route::get('/employeedetails/{id}', [employeedetailController::class, 'index'])->name('employees.details');
+
+    //LEAVES ROUTES
+    Route::get('/leaves', [leavesController::class, 'index'])->name('leaves.index');
+    Route::post('/leaves', [leavesController::class, 'store'])->name('leaves.store');
+    Route::get('/leaves/{leave}/edit', [leavesController::class, 'edit'])->name('leaves.edit');
+    Route::put('/leaves/{leave}', [leavesController::class, 'update'])->name('leaves.update');
+    Route::delete('/leaves/{leave}', [leavesController::class, 'destroy'])->name('leaves.destroy');
+    Route::get('/leaves/{leave}', [leavesController::class, 'show'])->name('leaves.show');
 
     //DEPARTMENT ROUTES
     Route::get('/department', [departmentController::class, 'index'])->name('department.index');
@@ -229,14 +231,22 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
 //USER
 Route::middleware(['role:user'])->group(function () {
+
     //USER PAYROLL
-    Route::get('payroll/user', [payrolluserController::class, 'index'])->name('payrolluser.index');
+    Route::get('/payroll/user', [payrolluserController::class, 'index'])->name('payrolluser.index');
 
     //USER LEAVES
-    Route::get('leaves/user',[leavesuserController::class, 'index'])->name('leavesuser.index');
+    Route::get('/leave/user', [leavesuserController::class, 'index'])->name('leaveuser.index');
+    Route::get('/leave/user/{id}/{employee_id}/edit', [leavesuserController::class, 'edit'])->name('leaveuser.edit');
+    Route::put('/leave/user/{id}/update', [leavesuserController::class, 'update'])->name('leaveuser.update');
+    Route::post('/leave/user', [leavesuserController::class, 'store'])->name('leaveuser.store');
+    Route::delete('/leaveuser/{id}/{employee_id}', [leavesuserController::class, 'destroy'])->name('leaveuser.destroy');
+
+
+
 
     //USER DEPARTMENT
-    Route::get('department/user',[departmentuserController::class, 'index'])->name('departmentuser.index');
+    Route::get('/department/user', [departmentuserController::class, 'index'])->name('departmentuser.index');
 });
 
 

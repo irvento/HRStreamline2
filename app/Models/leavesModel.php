@@ -11,4 +11,8 @@ protected $primaryKey = 'leave_id';
 protected $fillable = ['employee_id', 'start_date', 'end_date', 'leave_status', 'remarks'];
 public $timestamps = false;
 
+public function employee()
+{
+    return $this->belongsTo(employeeModel::class, 'employee_id', 'employee_id');
+}
 }

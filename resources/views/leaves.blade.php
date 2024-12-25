@@ -28,6 +28,7 @@
                             <th class="px-6 py-4 font-medium">Start Date</th>
                             <th class="px-6 py-4 font-medium">End Date</th>
                             <th class="px-6 py-4 font-medium">Status</th>
+                            <th class="px-6 py-4 font-medium">Remarks</th>
                             <th class="px-6 py-4 text-center font-medium">Actions</th>
                         </tr>
                     </thead>
@@ -44,6 +45,7 @@
                                         {{ $leave->leave_status }}
                                     </span>
                                 </td>
+                                <td class="px-6 py-4">{{ $leave->remarks }}</td>
                                 <td class="px-6 py-4 text-center">
                                     <div class="flex justify-center space-x-4">
                                         <a href="{{ route('leaves.edit', $leave->leave_id) }}" 
