@@ -28,6 +28,7 @@
                         <thead class="bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">
                             <tr>
                                 <th class="px-6 py-4 font-medium">Payroll ID</th>
+                                <th class="px-6 py-4 font-medium">Employee ID</th>
                                 <th class="px-6 py-4 font-medium">Employee Name</th>
                                 <th class="px-6 py-4 font-medium">Payroll Status</th>
                                 <th class="px-6 py-4 font-medium">Pay Period</th>
@@ -39,6 +40,7 @@
                             @foreach ($payrolls as $payroll)
                                 <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
                                     <td class="px-6 py-4">{{ $payroll->payroll_id }}</td>
+                                    <td class="px-6 py-4">{{ $payroll->employee_id }}</td>
                                     <td class="px-6 py-4">{{ $payroll->employee_fname }} {{ $payroll->employee_lname }}</td>
                                     <td class="px-6 py-4">{{ $payroll->payroll_status }}</td>
                                     <td class="px-6 py-4">{{ $payroll->pay_period }}</td>
