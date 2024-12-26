@@ -78,9 +78,14 @@ class employeeController extends Controller
             'state' => 'nullable|string|max:255',
             'postal_code' => 'nullable|string|max:20',
             'country' => 'nullable|string|max:255',
-            'contact1' => 'nullable|string|max:20',
+            'contact1' => 'required|string|max:20',
             'department_id' => 'required|exists:tbl_department,department_id',
             'job_id' => 'required|exists:tbl_job,job_id',
+        ], [
+            'employee_fname.required' => 'Please complete the first name.',
+            'contact1.required' => 'Please provide a contact number.',
+            'department_id.required' => 'Please select a department.',
+            'job_id.required' => 'Please select a job.',
         ]);
 
         $imagePath = null;

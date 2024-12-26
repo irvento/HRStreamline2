@@ -17,17 +17,24 @@
                         </legend>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
                             <div>
-                                <label for="name"
-                                    class="block text-sm font-medium text-gray-700 dark:text-gray-300">Name</label>
-                                <input type="text" name="name" id="name" required
-                                    class="mt-1 block w-full rounded-md border-gray-300 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 shadow-sm">
-                            </div>
-                            <div>
                                 <label for="employee_fname"
                                     class="block text-sm font-medium text-gray-700 dark:text-gray-300">First
                                     Name</label>
                                 <input type="text" name="employee_fname" id="employee_fname" required
                                     class="mt-1 block w-full rounded-md border-gray-300 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 shadow-sm">
+                                @error('employee_fname')
+                                    <span class="text-red-500 text-sm">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div>
+                                <label for="employee_mname"
+                                    class="block text-sm font-medium text-gray-700 dark:text-gray-300">Middle
+                                    Name</label>
+                                <input type="text" name="employee_mname" id="employee_mname"
+                                    class="mt-1 block w-full rounded-md border-gray-300 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 shadow-sm">
+                                @error('employee_mname')
+                                    <span class="text-red-500 text-sm">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
@@ -36,44 +43,48 @@
                                     class="block text-sm font-medium text-gray-700 dark:text-gray-300">Last Name</label>
                                 <input type="text" name="employee_lname" id="employee_lname"
                                     class="mt-1 block w-full rounded-md border-gray-300 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 shadow-sm">
+                                @error('employee_lname')
+                                    <span class="text-red-500 text-sm">{{ $message }}</span>
+                                @enderror
                             </div>
-                            <div>
-                                <label for="employee_mname"
-                                    class="block text-sm font-medium text-gray-700 dark:text-gray-300">Middle
-                                    Name</label>
-                                <input type="text" name="employee_mname" id="employee_mname" value="{{ ('') ?? 'no middle name' }}"
-                                    class="mt-1 block w-full rounded-md border-gray-300 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 shadow-sm">
-                            </div>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
                             <div>
                                 <label for="birthdate"
                                     class="block text-sm font-medium text-gray-700 dark:text-gray-300">Birthdate</label>
                                 <input type="date" name="birthdate" id="birthdate"
                                     class="mt-1 block w-full rounded-md border-gray-300 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 shadow-sm">
+                                @error('birthdate')
+                                    <span class="text-red-500 text-sm">{{ $message }}</span>
+                                @enderror
                             </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
                             <div>
                                 <label for="gender"
                                     class="block text-sm font-medium text-gray-700 dark:text-gray-300">Gender</label>
                                 <select name="gender" id="gender"
                                     class="mt-1 block w-full rounded-md border-gray-300 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 shadow-sm">
                                     <option value="">Select Gender</option>
-                                    <option value="Male">Male</option>
-                                    <option value="Female">Female</option>
-                                    <option value="Other">Other</option>
+                                    <option value="Male" {{ old('gender') == 'Male' ? 'selected' : '' }}>Male</option>
+                                    <option value="Female" {{ old('gender') == 'Female' ? 'selected' : '' }}>Female
+                                    </option>
+                                    <option value="Other" {{ old('gender') == 'Other' ? 'selected' : '' }}>Other
+                                    </option>
                                 </select>
+                                @error('gender')
+                                    <span class="text-red-500 text-sm">{{ $message }}</span>
+                                @enderror
                             </div>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
                             <div>
                                 <label for="contact1"
-                                    class="block text-sm font-medium text-gray-700 dark:text-gray-300">Contact 1</label>
-                                <input type="text" name="contact1" id="contact1"
+                                    class="block text-sm font-medium text-gray-700 dark:text-gray-300">Contact</label>
+                                <input type="text" name="contact1" id="contact1" value="{{ old('contact1') }}"
                                     class="mt-1 block w-full rounded-md border-gray-300 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 shadow-sm">
+                                @error('contact1')
+                                    <span class="text-red-500 text-sm">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
                     </fieldset>
-
 
                     <!-- Address -->
                     <fieldset class="border border-gray-300 dark:border-gray-600 rounded-md p-4 mt-6">
@@ -83,41 +94,62 @@
                                 class="block text-sm font-medium text-gray-700 dark:text-gray-300">Address Line
                                 1</label>
                             <input type="text" name="address_line_1" id="address_line_1"
+                                value="{{ old('address_line_1') }}"
                                 class="mt-1 block w-full rounded-md border-gray-300 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 shadow-sm">
+                            @error('address_line_1')
+                                <span class="text-red-500 text-sm">{{ $message }}</span>
+                            @enderror
                         </div>
                         <div class="mt-4">
                             <label for="address_line_2"
                                 class="block text-sm font-medium text-gray-700 dark:text-gray-300">Address Line
                                 2</label>
                             <input type="text" name="address_line_2" id="address_line_2"
+                                value="{{ old('address_line_2') }}"
                                 class="mt-1 block w-full rounded-md border-gray-300 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 shadow-sm">
+                            @error('address_line_2')
+                                <span class="text-red-500 text-sm">{{ $message }}</span>
+                            @enderror
                         </div>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-4">
                             <div>
                                 <label for="city"
                                     class="block text-sm font-medium text-gray-700 dark:text-gray-300">City</label>
-                                <input type="text" name="city" id="city"
+                                <input type="text" name="city" id="city" value="{{ old('city') }}"
                                     class="mt-1 block w-full rounded-md border-gray-300 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 shadow-sm">
+                                @error('city')
+                                    <span class="text-red-500 text-sm">{{ $message }}</span>
+                                @enderror
                             </div>
                             <div>
                                 <label for="state"
                                     class="block text-sm font-medium text-gray-700 dark:text-gray-300">State</label>
-                                <input type="text" name="state" id="state"
+                                <input type="text" name="state" id="state" value="{{ old('state') }}"
                                     class="mt-1 block w-full rounded-md border-gray-300 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 shadow-sm">
+                                @error('state')
+                                    <span class="text-red-500 text-sm">{{ $message }}</span>
+                                @enderror
                             </div>
                             <div>
                                 <label for="postal_code"
                                     class="block text-sm font-medium text-gray-700 dark:text-gray-300">Postal
                                     Code</label>
                                 <input type="text" name="postal_code" id="postal_code"
+                                    value="{{ old('postal_code') }}"
                                     class="mt-1 block w-full rounded-md border-gray-300 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 shadow-sm">
+                                @error('postal_code')
+                                    <span class="text-red-500 text-sm">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
                         <div class="mt-4">
                             <label for="country"
                                 class="block text-sm font-medium text-gray-700 dark:text-gray-300">Country</label>
-                            <input type="text" name="country" id="country"
+                            <input type="text" name="country" id="country" value="{{ old('country') }}"
                                 class="mt-1 block w-full rounded-md border-gray-300 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 shadow-sm">
+                            @error('country')
+                                <span class="text-red-500 text-sm">{{ $message }}</span>
+                            @enderror
                         </div>
                     </fieldset>
 
@@ -137,10 +169,14 @@
                                         </option>
                                     @endforeach
                                 </select>
+                                @error('department_id')
+                                    <span class="text-red-500 text-sm">{{ $message }}</span>
+                                @enderror
                             </div>
                             <div>
                                 <label for="job_id"
-                                    class="block text-sm font-medium text-gray-700 dark:text-gray-300">Job</label>
+                                    class="block text-sm font-medium text-gray-700 dark:text-gray-300">Job
+                                    Title</label>
                                 <select name="job_id" id="job_id"
                                     class="mt-1 block w-full rounded-md border-gray-300 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 shadow-sm">
                                     @foreach ($jobs as $job)
@@ -150,16 +186,23 @@
                                         </option>
                                     @endforeach
                                 </select>
+                                @error('job_id')
+                                    <span class="text-red-500 text-sm">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
-                        <div class="mt-4">
-                            <label for="image"
-                                class="block text-sm font-medium text-gray-700 dark:text-gray-300">Profile
-                                Image</label>
-                            <input type="file" name="image" id="image"
-                                class="mt-1 block w-full rounded-md border-gray-300 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 shadow-sm">
-                        </div>
                     </fieldset>
+
+                    <!-- Image Upload -->
+                    <div class="mt-6">
+                        <label for="image"
+                            class="block text-sm font-medium text-gray-700 dark:text-gray-300">Profile Image</label>
+                        <input type="file" name="image" id="image"
+                            class="mt-1 block w-full rounded-md border-gray-300 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 shadow-sm">
+                        @error('image')
+                            <span class="text-red-500 text-sm">{{ $message }}</span>
+                        @enderror
+                    </div>
 
                     <!-- Submit Button -->
                     <div class="mt-6">

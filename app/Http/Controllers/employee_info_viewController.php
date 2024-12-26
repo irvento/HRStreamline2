@@ -110,56 +110,56 @@ class employee_info_viewController extends Controller
 
 
     //EMPLOYEE DIRECTORY REPORTS
-public function employeeDirectory(Request $request)
-{
-    $searchQuery = $request->input('search');
+    public function employeeDirectory(Request $request)
+    {
+        $searchQuery = $request->input('search');
 
-    $employees = employee_info_viewModel::query()
-    ->when($searchQuery, function ($query) use ($searchQuery) {
-        return $query->where('employee_id', 'like', "%{$searchQuery}%", );
-    })
-    ->orWhere('employee_id', 'like', "%{$searchQuery}%")
-    ->orWhere('full_name', 'like', "%{$searchQuery}%")
-    ->orWhere('full_adress', 'like', "%{$searchQuery}%")
-    ->orWhere('contact1', 'like', "%{$searchQuery}%")
-    ->orWhere('employee_email', 'like', "%{$searchQuery}%")
-    ->orWhere('department_id', 'like', "%{$searchQuery}%")
-    ->orWhere('department_name', 'like', "%{$searchQuery}%")
-    ->orWhere('job_id', 'like', "%{$searchQuery}%")
-    ->orWhere('job_title', 'like', "%{$searchQuery}%")
-    ->orWhere('salary_id', 'like', "%{$searchQuery}%")
-        ->get();
+        $employees = employee_info_viewModel::query()
+            ->when($searchQuery, function ($query) use ($searchQuery) {
+                return $query->where('employee_id', 'like', "%{$searchQuery}%", );
+            })
+            ->orWhere('employee_id', 'like', "%{$searchQuery}%")
+            ->orWhere('full_name', 'like', "%{$searchQuery}%")
+            ->orWhere('full_address', 'like', "%{$searchQuery}%")
+            ->orWhere('contact1', 'like', "%{$searchQuery}%")
+            ->orWhere('employee_email', 'like', "%{$searchQuery}%")
+            ->orWhere('department_id', 'like', "%{$searchQuery}%")
+            ->orWhere('department_name', 'like', "%{$searchQuery}%")
+            ->orWhere('job_id', 'like', "%{$searchQuery}%")
+            ->orWhere('job_title', 'like', "%{$searchQuery}%")
+            ->orWhere('salary_id', 'like', "%{$searchQuery}%")
+            ->get();
 
-    return view('reports.employee_directory', compact('employees'));
-}
+        return view('reports.employee_directory', compact('employees'));
+    }
 
 
     //PERFORMANCE REPORTS
     public function performance(Request $request)
     {
         $searchQuery = $request->input('search');
-    
+
         $performance = performanceModel::query()
             ->when($searchQuery, function ($query) use ($searchQuery) {
                 // Prioritize 'performance_id' and 'employee_id' first
                 $query->where(function ($q) use ($searchQuery) {
                     $q->where('performance_id', 'like', "%{$searchQuery}%")
-                      ->orWhere('employee_id', 'like', "%{$searchQuery}%");
+                        ->orWhere('employee_id', 'like', "%{$searchQuery}%");
                 });
-    
+
                 // Then apply other filters
                 $query->orWhere('total_days_present', 'like', "%{$searchQuery}%")
-                      ->orWhere('total_days_absent', 'like', "%{$searchQuery}%")
-                      ->orWhere('leave_days_taken', 'like', "%{$searchQuery}%")
-                      ->orWhere('review_date', 'like', "%{$searchQuery}%")
-                      ->orWhere('review_score', 'like', "%{$searchQuery}%")
-                      ->orWhere('reviewer_id', 'like', "%{$searchQuery}%");
+                    ->orWhere('total_days_absent', 'like', "%{$searchQuery}%")
+                    ->orWhere('leave_days_taken', 'like', "%{$searchQuery}%")
+                    ->orWhere('review_date', 'like', "%{$searchQuery}%")
+                    ->orWhere('review_score', 'like', "%{$searchQuery}%")
+                    ->orWhere('reviewer_id', 'like', "%{$searchQuery}%");
             })
             ->get();
-    
+
         return view('reports.performance', compact('performance'));
     }
-    
+
 
 
     //SALARY REPORTS
@@ -167,72 +167,71 @@ public function employeeDirectory(Request $request)
     public function salaryReports(Request $request)
     {
         $searchQuery = $request->input('search');
-    
+
         // Fetch salary reports with search functionality
         $salaryReports = Salary::query()
-        ->when($searchQuery, function ($query) use ($searchQuery) {
-            return $query->where('salary_id', 'like', "%{$searchQuery}%", );
-        })
-        ->orWhere('salary_grade', 'like', "%{$searchQuery}%")
+            ->when($searchQuery, function ($query) use ($searchQuery) {
+                return $query->where('salary_id', 'like', "%{$searchQuery}%", );
+            })
+            ->orWhere('salary_grade', 'like', "%{$searchQuery}%")
             ->get();
 
-    
+
         return view('reports.salary_reports', compact('salaryReports'));
     }
-    
 
 
-//DEAPRTMENT REPORTS
-public function departmentAnalysis()
 
-{
+    //DEAPRTMENT REPORTS
+    public function departmentAnalysis()
+    {
         // Fetch all departments
         $departments = departmentModel::all();
-    // Count the number of employees in each department
-    $employeeCounts = employee_info_viewModel::select('department_id', departmentModel::raw('count(employee_id) as employee_count'))
-        ->groupBy('department_id')
-        ->get();
+        // Count the number of employees in each department
+        $employeeCounts = employee_info_viewModel::select('department_id', departmentModel::raw('count(employee_id) as employee_count'))
+            ->groupBy('department_id')
+            ->get();
 
 
 
-    // Prepare the data for the view
-    $departmentInfo = [];
-    foreach ($departments as $department) {
-        // Get the employee count for the current department
-        $employeeCount = $employeeCounts->firstWhere('department_id', $department->department_id);
+        // Prepare the data for the view
+        $departmentInfo = [];
+        foreach ($departments as $department) {
+            // Get the employee count for the current department
+            $employeeCount = $employeeCounts->firstWhere('department_id', $department->department_id);
 
-        // Get the department head (assuming `department_head_id` is the field in `departmentModel`)
-        $department_heads = employee_info_viewModel::where('employee_id', $department->department_head)->first();
+            // Get the department head (assuming `department_head_id` is the field in `departmentModel`)
+            $department_heads = employee_info_viewModel::where('employee_id', $department->department_head)->first();
 
-        $departmentInfo[] = [
-            'department' => $department,
-            'employee_count' => $employeeCount ? $employeeCount->employee_count : 0,
-            'department_head' => $department_heads ? $department_heads->full_name : 'N/A' // Default to 'N/A' if no head
-        ];
+            $departmentInfo[] = [
+                'department' => $department,
+                'employee_count' => $employeeCount ? $employeeCount->employee_count : 0,
+                'department_head' => $department_heads ? $department_heads->full_name : 'N/A' // Default to 'N/A' if no head
+            ];
+        }
+
+        // Return the view with department data
+        return view('reports.department_analysis', compact('departmentInfo'));
     }
 
-    // Return the view with department data
-    return view('reports.department_analysis', compact('departmentInfo'));
-}
+    // PAYROLL REPORTS
+    public function payrollReports(Request $request)
+    {
+        $searchQuery = $request->input('search');
 
-// PAYROLL REPORTS
-public function payrollReports(Request $request)
-{
-    $searchQuery = $request->input('search');
-    
-    // Fetch payroll reports with search functionality
-    $payrollReports = payrollModel::query()
-        ->when($searchQuery, function ($query) use ($searchQuery) {
-            return $query->where('employee_id', 'like', "%{$searchQuery}%")
-                         ->orWhere('payroll_status', 'like', "%{$searchQuery}%")
-                         ->orWhere('pay_period', 'like', "%{$searchQuery}%")
-                         ->orWhere('payment_date', 'like', "%{$searchQuery}%");
-        })
-        ->get();
+        // Fetch payroll reports with search functionality
+        $payrollReports = payrollModel::query()
+            ->when($searchQuery, function ($query) use ($searchQuery) {
+                return $query->where('employee_id', 'like', "%{$searchQuery}%")
+                    ->orWhere('payroll_status', 'like', "%{$searchQuery}%")
+                    ->orWhere('pay_period', 'like', "%{$searchQuery}%")
+                    ->orWhere('payment_date', 'like', "%{$searchQuery}%");
+            })
+            ->get();
 
-    // Return the view with payroll data
-    return view('reports.payroll_reports', compact('payrollReports'));
-}
+        // Return the view with payroll data
+        return view('reports.payroll_reports', compact('payrollReports'));
+    }
 
 
 

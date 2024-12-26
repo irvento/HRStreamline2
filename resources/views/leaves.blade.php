@@ -5,13 +5,12 @@
         </h2>
     </x-slot>
 
-    @if (Auth::user()->role === 'admin')
 
     <div class="py-8">
         <!-- Actions Section -->
         <div class="flex justify-between items-center mb-6">
             <!-- Add Leave Button -->
-            <a href="{{ route('leaves.create') }}" 
+            <a href="{{ route('leaves.create') }}"
                 class="inline-flex items-center px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-offset-gray-800">
                 + Add Leave
             </a>
@@ -24,7 +23,7 @@
                     <thead class="bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">
                         <tr>
                             <th class="px-6 py-4 font-medium">Leave ID</th>
-                            <th class="px-6 py-4 font-medium">Employee ID</th>
+                            <th class="px-6 py-4 font-medium">Employee</th>
                             <th class="px-6 py-4 font-medium">Start Date</th>
                             <th class="px-6 py-4 font-medium">End Date</th>
                             <th class="px-6 py-4 font-medium">Status</th>
@@ -36,11 +35,12 @@
                         @foreach ($leaves as $leave)
                             <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
                                 <td class="px-6 py-4">{{ $leave->leave_id }}</td>
-                                <td class="px-6 py-4">{{ $leave->employee_id }}</td>
+                                <td class="px-6 py-4">{{ $leave->employee->name }}</td>
                                 <td class="px-6 py-4">{{ $leave->start_date }}</td>
                                 <td class="px-6 py-4">{{ $leave->end_date }}</td>
                                 <td class="px-6 py-4">
-                                    <span class="inline-block px-3 py-1 rounded-full text-sm font-medium text-white 
+                                    <span
+                                        class="inline-block px-3 py-1 rounded-full text-sm font-medium text-white 
                                         {{ $leave->leave_status == 'Approved' ? 'bg-green-500' : ($leave->leave_status == 'Pending' ? 'bg-yellow-500' : 'bg-red-500') }}">
                                         {{ $leave->leave_status }}
                                     </span>
@@ -48,15 +48,15 @@
                                 <td class="px-6 py-4">{{ $leave->remarks }}</td>
                                 <td class="px-6 py-4 text-center">
                                     <div class="flex justify-center space-x-4">
-                                        <a href="{{ route('leaves.edit', $leave->leave_id) }}" 
+                                        <a href="{{ route('leaves.edit', $leave->leave_id) }}"
                                             class="text-yellow-500 hover:text-yellow-600">
                                             Edit
                                         </a>
-                                        <form action="{{ route('leaves.destroy', $leave->leave_id) }}" method="POST" class="inline">
+                                        <form action="{{ route('leaves.destroy', $leave->leave_id) }}" method="POST"
+                                            class="inline">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" 
-                                                class="text-red-500 hover:text-red-600"
+                                            <button type="submit" class="text-red-500 hover:text-red-600"
                                                 onclick="return confirm('Are you sure you want to delete this leave?')">
                                                 Delete
                                             </button>
@@ -79,6 +79,6 @@
             {{ $leaves->links('pagination::tailwind') }}
         </div>
     </div>
-    @endif
+
 
 </x-app-layout>

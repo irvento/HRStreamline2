@@ -17,6 +17,7 @@
     <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script src="https://cdn.tailwindcss.com"></script>
@@ -26,7 +27,16 @@
 <body class="font-sans antialiased">
 
     <!-- Notification Popup -->
-    <div x-data="{ show: false, message: '' }" x-init="@if (session('success')) show = true; message = '{{ session('success') }}'; setTimeout(() => show = false, 3000); @endif" x-show="show"
+    <div x-data="{ show: false, message: '' }" x-init="() => {
+        if ({{ session('success') ? 'true' : 'false' }}) {
+            window.addEventListener('load', () => {
+                setTimeout(() => { show = true;
+                    message = '{{ session('success') }}'; }, 500);
+                setTimeout(() => { show = false;
+                    message = ''; }, 3000);
+            });
+        }
+    }" x-show="message !== ''" x-text="message"
         x-transition:enter="transition ease-out duration-300"
         x-transition:enter-start="opacity-0 transform translate-y-2"
         x-transition:enter-end="opacity-100 transform translate-y-0"
@@ -34,7 +44,6 @@
         x-transition:leave-start="opacity-100 transform translate-y-0"
         x-transition:leave-end="opacity-0 transform translate-y-2"
         class="fixed top-4 left-1/2 transform -translate-x-1/2 bg-green-500 text-white py-2 px-4 rounded shadow-lg z-50">
-        <span x-text="message"></span>
     </div>
 
     <!-- Loading Overlay -->
