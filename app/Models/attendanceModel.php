@@ -22,7 +22,7 @@ class attendanceModel extends Model
     // Relationship to employee
     public function employee()
     {
-        return $this->belongsTo(EmployeeModel::class, 'employee_id', 'employee_id');
+        return $this->belongsTo(employeeModel::class, 'employee_id');
     }
 
 }
