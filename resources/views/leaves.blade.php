@@ -15,7 +15,22 @@
                 class="inline-flex items-center px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-offset-gray-800">
                 + Add Leave
             </a>
+             <!-- Search Bar -->
+             <form method="GET" action="{{ route('leaveuser.index') }}" class="flex items-center space-x-2">
+                <input 
+                    type="text" 
+                    name="search" 
+                    value="{{ request('search') }}" 
+                    placeholder="Search by Employee ID, Leave ID, Status..." 
+                    class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                />
+                <button type="submit" 
+                    class="px-4 py-2 bg-blue-600 text-white font-medium rounded-lg shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-offset-gray-800">
+                    Search
+                </button>
+            </form>
         </div>
+        
 
         <!-- Leave Table -->
         <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
