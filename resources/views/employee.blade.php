@@ -25,7 +25,7 @@
                     <div
                         class="flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-gray-700">
                         <div class="flex items-center gap-4">
-                            <img src="{{ asset($employee->image) }}" alt="Employee" class="w-12 h-12 rounded-full">
+                            <img src="{{ asset($employee->image) }}" alt="Employee" class="w-12 h-12 rounded-full object-cover">
                             <div>
                                 <p class="text-lg font-semibold text-gray-800 dark:text-gray-200">
                                     {{ $employee->employee_fname }} {{ $employee->employee_lname }}
@@ -46,7 +46,7 @@
                         <div class="flex items-center gap-4">
                             <!-- View Button -->
                             <a href="{{ route('employees.details', $employee->employee_id) }}"
-                                class="px-4 py-2 text-sm text-white bg-yellow-500 rounded-lg hover:bg-yellow-600 transition">
+                                class="px-4 py-2 text-sm text-white bg-green-500 rounded-lg hover:bg-green-600 transition">
                                 <i class="bi bi-pencil"></i> View
                             </a>
                             <!-- Edit Button -->

@@ -49,7 +49,7 @@
                                 <!-- <td class="px-4 py-2 border-b border-gray-600 text-gray-300">{{ $employeeInfo->performance->performance_id ?? 'N/A' }}</td> -->
                                 <td class="px-4 py-2 border-b border-gray-600">
                                     <a href="{{ route('employee_info.edit', $employeeInfo->info_id) }}"
-                                        class="px-3 py-1 bg-yellow-500 text-gray-100 rounded-md hover:bg-yellow-600">
+                                        class="ml-2 px-3 py-1 bg-yellow-500 text-gray-100 rounded-md hover:bg-yellow-600">
                                         Edit
                                     </a>
                                     <form action="{{ route('employee_info.destroy', $employeeInfo->info_id) }}"
@@ -57,7 +57,7 @@
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit"
-                                            class="px-3 py-1 bg-red-600 text-gray-100 rounded-md hover:bg-red-700">
+                                            class="ml-3 px-3 py-1 bg-red-600 text-gray-100 rounded-md hover:bg-red-700">
                                             Delete
                                         </button>
                                     </form>
