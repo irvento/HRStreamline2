@@ -51,7 +51,7 @@ class attendanceController extends Controller
     {
         $user = Auth::user();
 
- 
+
         $employee = employeeModel::where('user_id', $user->id)->first();
 
         if (!$employee) {
@@ -91,7 +91,9 @@ class attendanceController extends Controller
         }
 
         // Get all attendance records for the employee
-        $attendances = attendanceModel::where('employee_id', $employee->employee_id)->get();
+        $attendances = attendanceModel::where('employee_id', $employee->employee_id)
+            ->with('employee') // Eager load the employee relation
+            ->get();
 
         return view('attendance.history', compact('attendances'));
     }
