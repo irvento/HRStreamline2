@@ -43,5 +43,21 @@
     @endforeach
 
 </div>
+<style>
+    @media print {
+        body * {
+            visibility: hidden;
+        }
+        table, table * {
+            visibility: visible;
+        }
+        table {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+        }
+    }
+</style>
 
 @endsection

@@ -68,24 +68,34 @@ class employee_info_viewController extends Controller
         $startDate = $request->input('start_date');
         $endDate = $request->input('end_date');
         $searchQuery = $request->input('search');
-
-        $attendance = attendanceModel::query()  // Ensure this is the correct model name (it may be `Attendance` or `attendanceModel`)
-            ->when($startDate && $endDate, function ($query) use ($startDate, $endDate) {
-                return $query->whereBetween('attendance_date', [$startDate, $endDate]);
-            })
-            ->when($searchQuery, function ($query) use ($searchQuery) {
-                return $query->where('attendance_id', 'like', "%{$searchQuery}%");
-            })
-            ->orWhere('employee_id', 'like', "%{$searchQuery}%")
-            ->orWhere('attendance_date', 'like', "%{$searchQuery}%")
-            ->orWhere('time_in', 'like', "%{$searchQuery}%")
-            ->orWhere('time_out', 'like', "%{$searchQuery}%")
-
-            ->get();
-
+    
+        // Initialize the query
+        $attendance = attendanceModel::query();
+    
+        // Apply date range filter if start and end dates are provided
+        if ($startDate && $endDate) {
+            // Ensure the date format is consistent, adjust as necessary
+            $attendance->whereBetween('attendance_date', [
+                $startDate,
+                $endDate
+            ]);
+        }
+    
+        // Apply search filter if there's a search query
+        if ($searchQuery) {
+            $attendance->where(function($query) use ($searchQuery) {
+                $query->where('attendance_id', 'like', "%{$searchQuery}%")
+                      ->orWhere('employee_id', 'like', "%{$searchQuery}%");
+            });
+        }
+    
+        // Execute the query to fetch the filtered attendance records
+        $attendance = $attendance->get();
+    
+        // Return the view with the filtered attendance data
         return view('reports.attendance', compact('attendance', 'startDate', 'endDate', 'searchQuery'));
     }
-
+    
 
 
     //LEAVES REPORTS

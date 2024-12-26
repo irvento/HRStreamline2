@@ -16,8 +16,16 @@
             <button type="submit" class="px-6 py-3 bg-blue-600 text-white rounded-md shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
                 Filter
             </button>
+
+           
+
         </div>
+         <div class="flex items-end">
+            <button onclick="window.print()" class="px-7 py-0.3  bg-green-500 text-white rounded-md shadow hover:bg-green-600">Print Table</button>    
+        </div>       
+
     </form>
+    
 </div>
 
 <!-- Salary Reports Table -->
@@ -43,5 +51,53 @@
         </tbody>
     </table>
 </div>
-
+<style>
+    @media print {
+        /* Hide everything except the table */
+        body * {
+            visibility: hidden;
+        }
+    
+        /* Make the table and its contents visible */
+        table, table * {
+            visibility: visible;
+        }
+    
+        /* Position the table for printing */
+        table {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            border-collapse: collapse; /* Ensure borders are neat */
+        }
+    
+        /* Add styling for headers */
+        th {
+            background-color: #f2f2f2; /* Light gray background for headers */
+            color: black; /* Text color */
+            font-weight: bold;
+            border: 1px solid #ddd; /* Header borders */
+            padding: 8px;
+        }
+    
+        /* Add styling for table rows */
+        td {
+            border: 1px solid #ddd; /* Row borders */
+            padding: 8px;
+            color: black;
+        }
+    
+        /* Remove background colors for print */
+        table {
+            background: none !important;
+        }
+    
+        /* Ensure white background for table in case of dark mode */
+        table {
+            background-color: white !important;
+        }
+    }
+    
+    </style>
 @endsection
