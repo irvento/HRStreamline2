@@ -148,38 +148,101 @@
             @endif
             <!-- User Section -->
             @if (Auth::user()->role === 'user')
-                <div class="grid gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                    <a href="{{ route('payrolluser.index') }}" class="card">
-                        <div class="flex flex-col items-center">
-                            <div class="icon bg-amber-50 text-amber-400"><i
-                                    class="fas fa-money-bill-wave text-3xl"></i></div>
-                            <div class="text-lg font-semibold text-black">Payroll</div>
-                        </div>
-                    </a>
-
-                    <a href="{{ route('attendance.index') }}" class="card">
-                        <div class="flex flex-col items-center">
-                            <div class="icon bg-teal-50 text-teal-400"><i class="fas fa-calendar-check text-3xl"></i>
+            <div style="margin-top: -10%; width: 115%; height: auto;">
+                <div class="grid grid-flow-dense gap-4 auto-rows-min lg:grid-cols-12">
+                    <!-- Payroll Card -->
+                    <a href="{{ route('payrolluser.index') }}" class="card col-span-12 lg:col-span-6 row-span-1 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg shadow-lg hover:shadow-xl transition duration-300">
+                        <div class="flex flex-col items-center p-4">
+                            <div class="icon bg-white rounded-full p-3 mb-2 shadow-md">
+                                <i class="fas fa-money-bill-wave text-3xl text-blue-600"></i>
                             </div>
-                            <div class="text-lg font-semibold text-black">Attendance</div>
-                        </div>
-                    </a>
-
-                    <a href="{{ route('departmentuser.index') }}" class="card">
-                        <div class="flex flex-col items-center">
-                            <div class="icon bg-indigo-50 text-indigo-400"><i class="fas fa-sitemap text-3xl"></i>
+                            <h2 class="text-xl font-bold text-white">Payroll</h2>
+                            <div id="payroll-chart" class="mt-2 w-full h-12">
+                                <div class="mt-2 text-sm text-white">
+                                    <p>Pending: <span class="font-semibold text-yellow-200">{{$salaryuserstatuspendingcount}}</span></p>
+                                    <p>Completed: <span class="font-semibold text-green-200">{{$salaryuserstatuscompletedcount}}</span></p>
+                                    <p>Cancelled: <span class="font-semibold text-red-200">{{$salaryuserstatuscancelledcount}}</span></p>
+                                </div>
                             </div>
-                            <div class="text-lg font-semibold text-black">Department</div>
                         </div>
                     </a>
-
-                    <a href="{{ route('leaveuser.index') }}" class="card">
-                        <div class="flex flex-col items-center">
-                            <div class="icon bg-green-50 text-green-400"><i class="fas fa-leaf text-3xl"></i></div>
-                            <div class="text-lg font-semibold text-black">Leaves</div>
+            
+                    <!-- Attendance Card -->
+                    <a href="{{ route('attendance.index') }}" class="card col-span-12 sm:col-span-6 lg:col-span-4 row-span-1 bg-gradient-to-r from-green-600 to-teal-600 rounded-lg shadow-lg hover:shadow-xl transition duration-300">
+                        <div class="flex flex-col items-center p-4">
+                            <div class="icon bg-white rounded-full p-3 mb-2 shadow-md">
+                                <i class="fas fa-calendar-check text-3xl text-green-600"></i>
+                            </div>
+                            <h2 class="text-xl font-bold text-white">Attendance</h2>
+                            <div id="attendance-ratio" class="mt-2 w-full h-8"></div> <!-- Reduced height -->
                         </div>
                     </a>
+            
+                    <!-- Department Card -->
+                    <a href="{{ route('departmentuser.index') }}" class="card col-span-12 sm:col-span-6 lg:col-span-3 row-span-1 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg shadow-lg hover:shadow-xl transition duration-300">
+                        <div class="flex flex-col items-center p-4">
+                            <div class="icon bg-white rounded-full p-3 mb-2 shadow-md">
+                                <i class="fas fa-sitemap text-3xl text-purple-600"></i>
+                            </div>
+                            <h2 class="text-xl font-bold text-white">Department</h2>
+                        </div>
+                    </a>
+            
+                    <!-- Leaves Card -->
+                    <a href="{{ route('leaveuser.index') }}" class="card col-span-12 sm:col-span-8 lg:col-span-4 row-span-1 bg-gradient-to-r from-yellow-600 to-orange-600 rounded-lg shadow-lg hover:shadow-xl transition duration-300">
+                        <div class="flex flex-col items-center p-4">
+                            <div class="icon bg-white rounded-full p-3 mb-2 shadow-md">
+                                <i class="fas fa-leaf text-3xl text-yellow-600"></i>
+                            </div>
+                            <h2 class="text-xl font-bold text-white">Leaves</h2>
+                            <div class="mt-2 text-sm text-white">
+                                <p>Pending: <span class="font-semibold text-yellow-200">{{$leaveuserstatuspendingcount}}</span></p>
+                                <p>Approved: <span class="font-semibold text-green-200">{{$leaveuserstatusapprovedcount}}</span></p>
+                                <p>Rejected: <span class="font-semibold text-red-200">{{$leaveuserstatusrejectedcount}}</span></p>
+                            </div>
+                        </div>
+                    </a>
+            
+                    <!-- Salary Summary -->
+                    <a href="{{ route('payrolluser.index') }}" class="card col-span-12 sm:col-span-4 lg:col-span-3 row-span-1 bg-gradient-to-r from-cyan-600 to-blue-600 rounded-lg shadow-lg hover:shadow-xl transition duration-300">
+                        <div class="flex flex-col items-center p-4">
+                            <div class="icon bg-white rounded-full p-3 mb-2 shadow-md">
+                                <i class="fas fa-coins text-3xl text-cyan-600"></i>
+                            </div>
+                            <h2 class="text-xl font-bold text-white">Salary Summary</h2>
+                            <div class="mt-2 text-sm text-white">
+                                <p>Total Salary: <span class="font-semibold text-green-200">{{$salaryuser}}</span></p>
+                                <p>Average Salary: <span class="font-semibold text-blue-200">{{$salaryuseraverage}}</span></p>
+                            </div>
+                        </div>
+                    </a>
+            
+                    <!-- Performance Summary -->
+                    <div class="card col-span-12 sm:col-span-6 lg:col-span-6 row-span-1 bg-gradient-to-r from-pink-600 to-purple-600 rounded-lg shadow-lg hover:shadow-xl transition duration-300">
+                        <div class="flex flex-col items-center p-4">
+                            <div class="icon bg-white rounded-full p-3 mb-2 shadow-md">
+                                <i class="fas fa-chart-line text-3xl text-pink-600"></i>
+                            </div>
+                            <h2 class="text-xl font-bold text-white">Performance</h2>
+                            <div id="performance-chart" class="mt-2 w-full h-12"></div>
+                            <p class="text-sm mt-2 text-white">Total Performance: <span class="font-semibold text-yellow-200">{{$totaluserreviews}}</span></p>
+                            <p class="text-sm mt-2 text-white">Average: <span class="font-semibold text-pink-200">{{$averageuserperformance}}</span></p>
+                        </div>
+                    </div>
+            
+                    <!-- Reviews Summary -->
+                    <div class="card col-span-12 sm:col-span-4 lg:col-span-4 row-span-1 bg-gradient-to-r from-orange-600 to-yellow-600 rounded-lg shadow-lg hover:shadow-xl transition duration-300">
+                        <div class="flex flex-col items-center p-4">
+                            <div class="icon bg-white rounded-full p-3 mb-2 shadow-md">
+                                <i class="fas fa-star text-3xl text-orange-600"></i>
+                            </div>
+                            <h2 class="text-xl font-bold text-white">Reviews</h2>
+                            <p class="text-sm mt-2 text-white">Total: <span class="font-semibold text-yellow-200">{{$totaluserreviews}}</span></p>
+                        </div>
+                    </div>
                 </div>
+            </div>
+            
             @endif
         </div>
     </div>
