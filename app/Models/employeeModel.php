@@ -15,6 +15,7 @@ class employeeModel extends Model
         'birthdate',
         'gender',
         'user_id',
+        'status',
         'image',
         'employee_fname',
         'employee_lname',
@@ -83,4 +84,15 @@ class employeeModel extends Model
             'salary_id' // Local key on tbl_job
         );
     }
+
+    public function activate()
+    {
+        $this->update(['status' => 'active']);
+    }
+
+    public function deactivate()
+    {
+        $this->update(['status' => 'inactive']);
+    }
+
 }

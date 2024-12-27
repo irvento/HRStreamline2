@@ -25,24 +25,38 @@ class employeeController extends Controller
     public function index(Request $request)
     {
         $search = $request->input('search');
+        $status = $request->input('status', 'all'); // Default to 'all'
         $query = employeeModel::query();
 
+        // Apply search filter
         if ($search) {
-            $query->where('employee_fname', 'LIKE', "%{$search}%")
-                ->orWhere('employee_lname', 'LIKE', "%{$search}%")
-                ->orWhere('contact1', 'LIKE', "%{$search}%");
+            $query->where(function ($q) use ($search) {
+                $q->where('employee_fname', 'LIKE', "%{$search}%")
+                    ->orWhere('employee_lname', 'LIKE', "%{$search}%")
+                    ->orWhere('contact1', 'LIKE', "%{$search}%");
+            });
+        }
+
+        // Apply status filter
+        if ($status === 'active') {
+            $query->where('status', 'active');
+        } elseif ($status === 'inactive') {
+            $query->where('status', 'inactive');
         }
 
         // Fetch the employees and map them to add the 'is_registered' flag
         $employees = $query->paginate(10)->withQueryString();
 
-        // Add the registration status for each employee
         $employees->getCollection()->transform(function ($employee) {
             $employee->is_registered = $this->checkEmployeeRegistration($employee->employee_id);
             return $employee;
         });
 
-        return view('employee', ['employees' => $employees, 'search' => $search]);
+        return view('employee', [
+            'employees' => $employees,
+            'search' => $search,
+            'status' => $status, // Pass the current status filter
+        ]);
     }
 
 
@@ -176,6 +190,28 @@ class employeeController extends Controller
         return view('employee.show', compact('employee'));
     }
 
+    public function activate($id)
+    {
+        $employee = employeeModel::findOrFail($id);
+        $employee->activate();
 
+        return redirect()->back()->with('success', 'Employee activated successfully.');
+    }
+
+    public function deactivate($id)
+    {
+        $employee = employeeModel::findOrFail($id);
+        $employee->deactivate();
+
+        return redirect()->back()->with('success', 'Employee deactivated successfully.');
+    }
+    public function toggleStatus($id)
+    {
+        $employee = employeeModel::findOrFail($id);
+        $employee->status = $employee->status === 'active' ? 'inactive' : 'active';
+        $employee->save();
+
+        return redirect()->back()->with('success', 'Employee status updated successfully.');
+    }
 
 }
