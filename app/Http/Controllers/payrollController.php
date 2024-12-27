@@ -2,9 +2,15 @@
 
 namespace App\Http\Controllers;
 
+
 use Illuminate\Support\Facades\Auth;
+
 use App\Models\employeeModel;
 use App\Models\payrollModel;
+use App\Models\jobModel;
+use App\Models\Salary;
+use App\Models\employee_infoModel;
+
 use Illuminate\Http\Request;
 
 
@@ -16,10 +22,13 @@ class payrollController extends Controller
         // Capture the search query
         $search = $request->input('search');
         $user = Auth::user();
-    
+
         // Query payrolls with optional search for admins
         $payrolls = payrollModel::join('tbl_employee', 'tbl_payroll.employee_id', '=', 'tbl_employee.employee_id')
-            ->select('tbl_payroll.*', 'tbl_employee.employee_fname', 'tbl_employee.employee_lname')
+            ->join('tbl_employee_info', 'tbl_employee.employee_id', '=', 'tbl_employee_info.employee_id')
+            ->join('tbl_job', 'tbl_employee_info.job_id', '=', 'tbl_job.job_id')
+            ->join('tbl_salary', 'tbl_salary.salary_id', '=', 'tbl_job.salary_id')
+            ->select('tbl_payroll.*', 'tbl_employee.employee_fname', 'tbl_employee.employee_lname', 'tbl_salary.salary_amount')
             ->when($search, function ($query, $search) {
                 $query->where('tbl_employee.employee_fname', 'like', "%{$search}%")
                     ->orWhere('tbl_employee.employee_lname', 'like', "%{$search}%")
@@ -28,8 +37,8 @@ class payrollController extends Controller
                     ->orWhere('tbl_payroll.employee_id', 'like', "%($search)%");
             })
             ->paginate(10);
-    
-    
+
+
         // Return the view with payroll data
         return view('Salary.payroll', compact('payrolls', 'search'));
     }
@@ -39,7 +48,7 @@ class payrollController extends Controller
     {
         // Retrieve all employees from employeeModel
         $employees = employeeModel::all();
-        
+
         // Return the view with employees data
         return view('Salary.create', compact('employees'));
     }
@@ -49,23 +58,38 @@ class payrollController extends Controller
     {
         // Validate the request
         $request->validate([
-            'employee_id' => 'required|integer',
+            'employee_id' => 'required|integer|exists:tbl_employee,employee_id',
             'payroll_status' => 'required|string',
             'pay_period' => 'required|string',
             'payment_date' => 'required|date',
         ]);
+    
+        // Retrieve the salary amount for the given employee
+        $salary = employeeModel::join('tbl_employee_info', 'tbl_employee.employee_id', '=', 'tbl_employee_info.employee_id')
+            ->join('tbl_job', 'tbl_employee_info.job_id', '=', 'tbl_job.job_id')
+            ->join('tbl_salary', 'tbl_salary.salary_id', '=', 'tbl_job.salary_id')
+            ->where('tbl_employee.employee_id', $request->employee_id)
+            ->select('tbl_salary.salary_amount')
+            ->first();
 
+        // Ensure salary data exists
+        if (!$salary) {
+            return redirect()->back()->withErrors(['employee_id' => 'Salary data not found for the selected employee.']);
+        }
         // Create the payroll record
         payrollModel::create([
             'employee_id' => $request->employee_id,
             'payroll_status' => $request->payroll_status,
             'pay_period' => $request->pay_period,
+            'payroll_amount' => $salary->salary_amount, // Set payroll_amount to the salary_amount
             'payment_date' => $request->payment_date,
         ]);
-
+    
         // Redirect to payroll index with success message
         return redirect()->route('payroll.index')->with('success', 'Payroll record created successfully.');
     }
+    
+
 
     // Show the form to edit a specific payroll record
     public function edit($id)

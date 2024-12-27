@@ -54,4 +54,33 @@ class employeeModel extends Model
         return $this->hasMany(languagesModel::class, 'employee_id', 'employee_id');
     }
 
+
+    public function employeeInfo()
+    {
+        return $this->hasOne(employee_infoModel::class, 'employee_id', 'employee_id');
+    }
+
+    public function job()
+    {
+        return $this->hasOneThrough(
+            jobModel::class,
+            employee_infoModel::class,
+            'employee_id', // Foreign key on tbl_employee_info
+            'job_id', // Foreign key on tbl_job
+            'employee_id', // Local key on tbl_employee
+            'job_id' // Local key on tbl_employee_info
+        );
+    }
+
+    public function salary()
+    {
+        return $this->hasOneThrough(
+            Salary::class,
+            jobModel::class,
+            'job_id', // Foreign key on tbl_job
+            'salary_id', // Foreign key on tbl_salary
+            'employee_id', // Local key on tbl_employee
+            'salary_id' // Local key on tbl_job
+        );
+    }
 }

@@ -1,4 +1,5 @@
 <?php
+use App\Http\Controllers\activitylogController;
 use App\Http\Controllers\payrollController;
 use App\Http\Controllers\employee_info_viewController;
 use App\Http\Controllers\employee_infoController;
@@ -19,7 +20,6 @@ use App\Http\Controllers\skillsController;
 use App\Http\Controllers\SalaryController;
 use App\Http\Controllers\performanceController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\DashboardController;
 
 use App\Http\Controllers\payrolluserController;
 use App\Http\Controllers\leavesuserController;
@@ -62,22 +62,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/attendance/logout', [attendanceController::class, 'logout'])->name('attendance.logout');
     Route::get('/attendance/history', [attendanceController::class, 'showAttendance'])->name('attendance.history');
 
-    //SALARIES ROUTES
-    Route::get('/salaries', [salaryController::class, 'index'])->name('salary');
-    Route::post('/salaries', [salaryController::class, 'store'])->name('salaries.store');
-    Route::get('/payment-frequencies', [paymentFrequencyController::class, 'index']);
-    Route::get('/salary/{salary_id}', [SalaryController::class, 'show'])->name('salary.view');
-    Route::get('/salary/{salary_id}/edit', [SalaryController::class, 'edit'])->name('salary.edit');
-    Route::put('/salary/{salary_id}', [SalaryController::class, 'update'])->name('salary.update');
-    Route::delete('/salaries/{salary_id}', [salaryController::class, 'destroy'])->name('salary.destroy');
 
-    // PAYROLL
-    Route::get('/payroll', [payrollController::class, 'index'])->name('payroll.index');
-    Route::get('/payroll/create', [payrollController::class, 'create'])->name('payroll.create');
-    Route::post('/payroll/store', [payrollController::class, 'store'])->name('payroll.store');
-    Route::get('/payroll/{id}/edit', [payrollController::class, 'edit'])->name('payroll.edit');
-    Route::put('/payroll/{id}', [payrollController::class, 'update'])->name('payroll.update');
-    Route::delete('/payroll/{id}', [payrollController::class, 'delete'])->name('payroll.delete');
+
+
+
 
     //DEPARTMENT ROUTES
     Route::get('/department/{id}/view', [departmentController::class, 'view'])->name('department.view');
@@ -90,10 +78,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/employees', action: [employeeController::class, 'store'])->name('employees.store');
 
 });
-
-
-
-
 
 
 //ADMIN
@@ -110,6 +94,14 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
     //employee view button from index
     Route::get('/employeedetails/{id}', [employeedetailController::class, 'index'])->name('employees.details');
+
+    //payroll
+    Route::get('/payroll', [payrollController::class, 'index'])->name('payroll.index');
+    Route::get('/payroll/create', [payrollController::class, 'create'])->name('payroll.create');
+    Route::post('/payroll/store', [payrollController::class, 'store'])->name('payroll.store');
+    Route::get('/payroll/{id}/edit', [payrollController::class, 'edit'])->name('payroll.edit');
+    Route::put('/payroll/{id}', [payrollController::class, 'update'])->name('payroll.update');
+    Route::delete('/payroll/{id}', [payrollController::class, 'delete'])->name('payroll.delete');
 
     //LEAVES ROUTES
     Route::get('/leaves', [leavesController::class, 'index'])->name('leaves.index');
@@ -128,6 +120,14 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::delete('/department/{id}', [departmentController::class, 'destroy'])->name('department.destroy');
     Route::get('/department/{id}/delete', [departmentController::class, 'showDeleteConfirmation'])->name('department.delete_confirmation');
 
+    //SALARIES ROUTES
+    Route::get('/salaries', [salaryController::class, 'index'])->name('salary');
+    Route::post('/salaries', [salaryController::class, 'store'])->name('salaries.store');
+    Route::get('/payment-frequencies', [paymentFrequencyController::class, 'index']);
+    Route::get('/salary/{salary_id}', [SalaryController::class, 'show'])->name('salary.view');
+    Route::get('/salary/{salary_id}/edit', [SalaryController::class, 'edit'])->name('salary.edit');
+    Route::put('/salary/{salary_id}', [SalaryController::class, 'update'])->name('salary.update');
+    Route::delete('/salaries/{salary_id}', [salaryController::class, 'destroy'])->name('salary.destroy');
 
     // Certificates Routes
     Route::get('/certificates', [certificatesController::class, 'index'])->name('certificates.index');
@@ -219,6 +219,9 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
     // QUALIFICATIONS ROUTES
     Route::get('/qualifications', [qualificationsController::class, 'index'])->name('qualifications.index');
+
+    //LOG
+    Route::get('/logs', [activitylogController::class, 'index'])->name('activitylog.index');
 });
 
 
@@ -242,19 +245,9 @@ Route::middleware(['role:user'])->group(function () {
     Route::post('/leave/user', [leavesuserController::class, 'store'])->name('leaveuser.store');
     Route::delete('/leaveuser/{id}/{employee_id}', [leavesuserController::class, 'destroy'])->name('leaveuser.destroy');
 
-
-
-
     //USER DEPARTMENT
     Route::get('/department/user', [departmentuserController::class, 'index'])->name('departmentuser.index');
 });
-
-
-
-
-
-
-
 
 
 //DASHBOARD ROUTES

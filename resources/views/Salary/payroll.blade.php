@@ -37,6 +37,7 @@
                                 <th class="px-6 py-4 font-medium">Employee ID</th>
                                 <th class="px-6 py-4 font-medium">Employee Name</th>
                                 <th class="px-6 py-4 font-medium">Payroll Status</th>
+                                <th class="px-6 py-4 font-medium">Payroll Amount</th>
                                 <th class="px-6 py-4 font-medium">Pay Period</th>
                                 <th class="px-6 py-4 font-medium">Payment Date</th>
                                 <th class="px-6 py-4 text-center font-medium">Actions</th>
@@ -56,6 +57,7 @@
                                             {{ $payroll->payroll_status }}
                                         </span>
                                     </td>
+                                    <td class="px-6 py-4">{{ $payroll->payroll_amount}}</td>
                                     <td class="px-6 py-4">{{ $payroll->pay_period }}</td>
                                     <td class="px-6 py-4">{{ \Carbon\Carbon::parse($payroll->payment_date)->format('M d, Y') }}</td>
                                     <td class="px-6 py-4 text-center">

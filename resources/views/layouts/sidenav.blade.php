@@ -21,7 +21,6 @@
         </li>
 
 
-
         <!-- Conditional Admin/Manager Link -->
         @if (Auth::user()->role === 'admin')
             <li>
@@ -95,23 +94,13 @@
                     <span class="font-medium">Assign</span>
                 </a>
             </li>
-            <li>
-                <a href="{{ route('report') }}"
-                    class="flex items-center space-x-4 text-gray-800 dark:text-gray-200 hover:text-gray-500 dark:hover:text-gray-400 transition-colors 
-                      {{ request()->routeIs('report') ? 'bg-gray-200 dark:bg-gray-700' : '' }} 
-               px-4 py-3 rounded-md">
-                    <i
-                        class="fas fa-file-alt text-gray-500 text-xl {{ request()->routeIs('report') ? 'text-gray-700' : '' }}"></i>
-                    <span class="font-medium">Reports</span>
-                </a>
-            </li>
+            
             <li>
                 <a href="{{ route('leaves.index') }}"
                     class="flex items-center space-x-4 text-gray-800 dark:text-gray-200 hover:text-green-500 dark:hover:text-green-400 transition-colors 
                           {{ request()->routeIs('leaves.index') ? 'bg-gray-200 dark:bg-gray-700' : '' }} 
                    px-4 py-3 rounded-md">
-                    <i
-                        class="fas fa-leaf text-green-500 text-xl {{ request()->routeIs('leaves.index') ? 'text-green-700' : '' }}"></i>
+                   <i class="fas fa-calendar-times text-green-500 text-xl {{ request()->routeIs('leaves.index') ? 'text-green-700' : '' }}"></i>
                     <span class="font-medium">Leaves</span>
                 </a>
             </li>
@@ -135,6 +124,28 @@
                     <span class="font-medium">Department</span>
                 </a>
             </li>
+            <li>
+                <a href="{{ route('report') }}"
+                    class="flex items-center space-x-4 text-gray-800 dark:text-gray-200 hover:text-cyan-500 dark:hover:text-cyan-400 transition-colors 
+                      {{ request()->routeIs('report') ? 'bg-gray-200 dark:bg-gray-700' : '' }} 
+               px-4 py-3 rounded-md">
+                    <i
+                        class="fas fa-file-alt text-cyan-500 text-xl {{ request()->routeIs('report') ? 'text-cyan-700' : '' }}"></i>
+                    <span class="font-medium">Reports</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ route('activitylog.index') }}"
+                    class="flex items-center space-x-4 text-gray-800 dark:text-gray-200 hover:text-gray-500 dark:hover:text-gray-400 transition-colors 
+                      {{ request()->routeIs('activitylog.index') ? 'bg-gray-200 dark:bg-gray-700' : '' }} 
+               px-4 py-3 rounded-md">
+                    <i
+                        class="fas fa-history text-gray-500 text-xl {{ request()->routeIs('activitylog.index') ? 'text-gray-700' : '' }}"></i>
+                    <span class="font-medium">Activity Logs</span>
+                </a>
+            </li>
+
         @endif
 
             @if (Auth::user()->role === 'user')
@@ -167,7 +178,7 @@
                       {{ request()->routeIs('leaveuser.index') ? 'bg-gray-200 dark:bg-gray-700' : '' }} 
                px-4 py-3 rounded-md">
                 <i
-                    class="fas fa-leaf text-green-500 text-xl {{ request()->routeIs('leaveuser.index') ? 'text-green-700' : '' }}"></i>
+                    class="fas fa-calendar-times text-green-500 text-xl {{ request()->routeIs('leaveuser.index') ? 'text-green-700' : '' }}"></i>
                 <span class="font-medium">Leaves</span>
             </a>
         </li>
