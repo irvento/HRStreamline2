@@ -36,26 +36,29 @@ class departmentController extends Controller
     
 
     public function store(Request $request)
-{
-    $alreadyExists = departmentModel::where('department_name', $request->department_name)->exists();
-
-    if ($alreadyExists) {
-        return redirect()->route('department.index')->with('error', 'Department already exists.');
+    {
+        $alreadyExists = departmentModel::where('department_name', $request->department_name)->exists();
+    
+        if ($alreadyExists) {
+            return redirect()->route('department.index')->with('error', 'Department already exists.');
+        }
+    
+        $validated = $request->validate([
+            'department_name' => 'required|string|max:50',
+            'department_head' => 'nullable|exists:tbl_employee,employee_id', // Ensure the selected head exists in the employee table
+        ]);
+    
+        // Assign a default value if no department head is provided
+        $defaultHead = employeeModel::first(); // Get the first employee as default
+        $departmentHead = $validated['department_head'] ?? ($defaultHead ? $defaultHead->employee_id : null);
+    
+        $department = new departmentModel();
+        $department->department_name = $validated['department_name'];
+        $department->department_head = $departmentHead; // Save the department head
+        $department->save();
+    
+        return redirect()->route('department.index')->with('success', 'Department created successfully!');
     }
-
-    $validated = $request->validate([
-        'department_name' => 'required|string|max:50',
-        'department_head' => 'required|exists:tbl_employee,employee_id', // Ensure the selected head exists in the employee table
-    ]);
-
-    $department = new departmentModel();
-    $department->department_name = $validated['department_name'];
-    $department->department_head = $validated['department_head']; // Save the department head
-    $department->save();
-
-    return redirect()->route('department.index')->with('success', 'Department created successfully!');
-}
-
 
     // Show the form for editing the specified department
     public function edit($id)
@@ -68,18 +71,23 @@ class departmentController extends Controller
 
     public function update(Request $request, $id)
     {
-        $request->validate([
+        $validated = $request->validate([
             'department_name' => 'required|string|max:255',
-            'department_head' => 'required|exists:tbl_employee,employee_id', // Ensure the selected head exists in the employee table
+            'department_head' => 'nullable|exists:tbl_employee,employee_id', // Ensure the selected head exists in the employee table
         ]);
     
+        // Assign a default value if no department head is provided
+        $defaultHead = employeeModel::first(); // Get the first employee as default
+        $departmentHead = $validated['department_head'] ?? ($defaultHead ? $defaultHead->employee_id : null);
+    
         $department = departmentModel::findOrFail($id);
-        $department->department_name = $request->input('department_name');
-        $department->department_head = $request->input('department_head'); // Update the department head
+        $department->department_name = $validated['department_name'];
+        $department->department_head = $departmentHead; // Update the department head
         $department->save();
     
         return redirect()->route('department.index')->with('success', 'Department updated successfully.');
     }
+    
     
 
     // Remove the specified department from storage

@@ -13,6 +13,7 @@ class leavesModel extends Model
 
     public function employee()
     {
-        return $this->belongsTo(employeeModel::class, 'employee_id');
+        return $this->belongsTo(employeeModel::class, 'employee_id','employee_id');
     }
+
 }
