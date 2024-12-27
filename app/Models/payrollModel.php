@@ -16,10 +16,12 @@ class payrollModel extends Model
     public $timestamps = false;
 
     // Define the fillable properties for mass assignment
+
     protected $fillable = [
-        'employee_id', // Add employee_id to the fillable array
+        'employee_id',
         'payroll_status',
         'pay_period',
+        'payroll_amount', 
         'payment_date',
     ];
 }
