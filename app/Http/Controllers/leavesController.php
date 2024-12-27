@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\leavesModel;
 use App\Models\employee_user_viewModel;
+use App\Models\employeeModel;
 class leavesController extends Controller
 {
     public function index(Request $request)
@@ -26,7 +27,8 @@ class leavesController extends Controller
 
     public function create()
     {
-        return view('leaves.create');
+        $employee = employeeModel::all();
+        return view('leaves.create', compact('employee'));
     }
 
     public function update(Request $request, $id)
@@ -48,12 +50,16 @@ class leavesController extends Controller
     {
         $user = Auth::user(); // Get the authenticated user
     
-        // Fetch the employee_user_viewModel record for the authenticated user
-        $employeeuser = employee_user_viewModel::where('user_id', $user->id)->first();
-    
-        // Check if a matching record exists
-        if (!$employeeuser) {
-            return redirect()->back()->with('error', 'No employee record found for the current user.');
+        // If the user is an admin, they can choose an employee
+        if ($user->role === 'admin') {
+            $employee_id = $request->input('employee_id');
+        } else {
+            // If the user is not an admin, associate the leave with their own employee_id
+            $employeeuser = employee_user_viewModel::where('user_id', $user->id)->first();
+            if (!$employeeuser) {
+                return redirect()->back()->with('error', 'No employee record found for the current user.');
+            }
+            $employee_id = $employeeuser->employee_id;
         }
     
         // Validate the input
@@ -69,7 +75,7 @@ class leavesController extends Controller
         $leaves->start_date = $validated['start_date'];
         $leaves->end_date = $validated['end_date'];
         $leaves->leave_status = $validated['leave_status'] ?? 'Pending';
-        $leaves->employee_id = $employeeuser->employee_id; // Use the fetched employee_id
+        $leaves->employee_id = $employee_id; // Use the selected or authenticated employee_id
         $leaves->remarks = $validated['remarks'] ?? null;
     
         // Save the leave record
@@ -78,6 +84,7 @@ class leavesController extends Controller
         // Redirect with success message
         return redirect()->route('leaves.index');
     }
+    
 
     public function edit($id)
     {
