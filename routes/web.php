@@ -53,6 +53,10 @@ require __DIR__ . '/auth.php';
 //PUBLIC
 Route::middleware('auth')->group(function () {
 
+    //dashboard route
+
+    Route::get('/dashboard', [dashboardController::class, 'index'])->name('dashboard');
+
     //leave route
     Route::get('/leaves/create', [leavesController::class, 'create'])->name('leaves.create');
 
@@ -62,10 +66,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/attendance/login', [attendanceController::class, 'login'])->name('attendance.login');
     Route::post('/attendance/logout', [attendanceController::class, 'logout'])->name('attendance.logout');
     Route::get('/attendance/history', [attendanceController::class, 'showAttendance'])->name('attendance.history');
-
-
-
-
 
 
     //DEPARTMENT ROUTES
@@ -254,6 +254,5 @@ Route::middleware(['role:user'])->group(function () {
 });
 
 
-//DASHBOARD ROUTES
 
-Route::get('/dashboard', [dashboardController::class, 'index'])->name('dashboard');
+
