@@ -1,4 +1,5 @@
 <?php
+use App\Http\Controllers\activitylogController;
 use App\Http\Controllers\payrollController;
 use App\Http\Controllers\employee_info_viewController;
 use App\Http\Controllers\employee_infoController;
@@ -77,10 +78,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/employees', action: [employeeController::class, 'store'])->name('employees.store');
 
 });
-
-
-
-
 
 
 //ADMIN
@@ -221,6 +218,9 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
     // QUALIFICATIONS ROUTES
     Route::get('/qualifications', [qualificationsController::class, 'index'])->name('qualifications.index');
+
+    //LOG
+    Route::get('/logs', [activitylogController::class, 'index'])->name('activitylog.index');
 });
 
 
@@ -244,19 +244,9 @@ Route::middleware(['role:user'])->group(function () {
     Route::post('/leave/user', [leavesuserController::class, 'store'])->name('leaveuser.store');
     Route::delete('/leaveuser/{id}/{employee_id}', [leavesuserController::class, 'destroy'])->name('leaveuser.destroy');
 
-
-
-
     //USER DEPARTMENT
     Route::get('/department/user', [departmentuserController::class, 'index'])->name('departmentuser.index');
 });
-
-
-
-
-
-
-
 
 
 //DASHBOARD ROUTES
