@@ -50,7 +50,7 @@
                         @foreach ($leaves as $leave)
                             <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
                                 <td class="px-6 py-4">{{ $leave->leave_id }}</td>
-                                <td class="px-6 py-4">{{ $leave->employee->name }}</td>
+                                <td class="px-6 py-4">{{ $leave->employee->employee_fname }} {{ $leave->employee->employee_lname }}</td>
                                 <td class="px-6 py-4">{{ $leave->start_date }}</td>
                                 <td class="px-6 py-4">{{ $leave->end_date }}</td>
                                 <td class="px-6 py-4">
