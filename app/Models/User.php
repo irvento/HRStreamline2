@@ -18,12 +18,12 @@ class User extends Authenticatable
      * @var list<string>
      */
 
-  
+
     protected $fillable = [
         'name',
         'email',
         'password',
-        
+
     ];
 
     /**
@@ -48,4 +48,16 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function isAdmin()
+    {
+        // Assuming you have an 'is_admin' column in your users table
+        return $this->is_admin; // Adjust based on your actual column name
+    }
+
+    public function employee()
+    {
+        return $this->hasOne(employeeModel::class);
+    }
+
 }

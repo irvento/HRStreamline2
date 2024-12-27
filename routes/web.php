@@ -47,7 +47,7 @@ Route::middleware('auth')->group(function () {
 
 });
 
-
+Route::view('/inactive', 'inactive')->name('inactive');
 require __DIR__ . '/auth.php';
 
 //PUBLIC

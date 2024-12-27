@@ -3,15 +3,12 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
-use Illuminate\Auth\Events\Registered;
+use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use App\Models\ActivityLog;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
 use Illuminate\View\View;
+
 class AuthenticatedSessionController extends Controller
 {
     /**
@@ -25,46 +22,25 @@ class AuthenticatedSessionController extends Controller
     /**
      * Handle an incoming authentication request.
      */
-
-    /**
-     * Handle an incoming registration request.
-     *
-     * @throws \Illuminate\Validation\ValidationException
-     */
-    public function store(Request $request): RedirectResponse
+    public function store(LoginRequest $request): RedirectResponse
     {
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ]);
+        // Authenticate the user
+        $user = $request->authenticate();
 
-        // Create the user
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
-
-        // Ensure the user is created successfully
-        if ($user) {
-            // Log the activity after creating the user
-            ActivityLog::create([
-                'user_id' => $user->id, // user_id must be set to the newly created user's ID
-                'table_name' => 'users',
-                'row_id' => $user->id,
-                'action' => 'created',
-            ]);
-
-            // Fire the Registered event
-            event(new Registered($user));
-
-            // Log the user in
-            Auth::login($user);
+        // Check if the user has a related employee record and if it's inactive, excluding admins
+        if ($user->employee && $user->employee->status !== 'active' && !$user->isAdmin()) {
+            // Log the user out and redirect to the inactive error page
+            Auth::logout();
+            return redirect()->route('inactive'); // Route to the inactive error page
         }
 
-        return redirect(route('dashboard', absolute: false));
+        // If the user is active or an admin, regenerate the session
+        $request->session()->regenerate();
+
+        return redirect()->intended(route('dashboard', absolute: false));
     }
+
+
     /**
      * Destroy an authenticated session.
      */
