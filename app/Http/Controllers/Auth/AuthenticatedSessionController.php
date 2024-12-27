@@ -24,18 +24,26 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
-        // Authenticate the user
-        $user = $request->authenticate();
+        // Authenticate the user using the request's authenticate method (no assignment to $user)
+        $request->authenticate();  // This will handle the authentication and throw an error if invalid
 
-        // Check if the user has a related employee record and if it's inactive, excluding admins
-        if ($user->employee && $user->employee->status !== 'active' && !$user->isAdmin()) {
-            // Log the user out and redirect to the inactive error page
-            Auth::logout();
-            return redirect()->route('inactive'); // Route to the inactive error page
+        // After authentication, get the authenticated user from the session
+        $user = Auth::user();
+
+        // Check if the user is authenticated and has an associated employee record
+        if ($user) {
+            // Check if the employee relationship exists
+            $employee = $user->employee;
+
+            if ($employee && $employee->status !== 'active' && !$user->isAdmin()) {
+                // Log the user out and redirect to the inactive error page
+                Auth::logout();
+                return redirect()->route('inactive'); // Route to the inactive error page
+            }
+
+            // If the user is active or an admin, regenerate the session
+            $request->session()->regenerate();
         }
-
-        // If the user is active or an admin, regenerate the session
-        $request->session()->regenerate();
 
         return redirect()->intended(route('dashboard', absolute: false));
     }
