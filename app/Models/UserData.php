@@ -10,10 +10,10 @@ use Illuminate\Database\Eloquent\Model;
 class UserData extends Model
 {
 
-    use Notifiable, HasRoles;
+    use Notifiable;
     public function user()
-{
-    return $this->belongsTo(User::class);
-}
+    {
+        return $this->belongsTo(User::class);
+    }
 
 }
