@@ -46,7 +46,6 @@ Route::middleware('auth')->group(function () {
 
 });
 
-Route::get('/dashboard/admin', [DashboardController::class, 'adminDashboard'])->middleware(['auth', 'role:admin'])->name('dashboard.admin');
 
 require __DIR__ . '/auth.php';
 
@@ -187,6 +186,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/payment-frequency/{payment_frequency_id}/edit', [paymentFrequencyController::class, 'edit'])->name('payment-frequency.edit')->middleware('auth');
     Route::put('/payment-frequency/{payment_frequency_id}', [paymentFrequencyController::class, 'update'])->name('payment-frequency.update')->middleware('auth');
     Route::delete('/payment-frequencies/{id}', [paymentFrequencyController::class, 'destroy'])->name('payment-frequency.destroy')->middleware('auth');
+    Route::resource('payment-frequency', PaymentFrequencyController::class);
     Route::get('/payment-frequency/{payment_frequency_id}', [paymentFrequencyController::class, 'show'])->name('payment-frequency.show')->middleware('auth');
 
     //JOB ROUTES
@@ -259,8 +259,4 @@ Route::middleware(['role:user'])->group(function () {
 
 //DASHBOARD ROUTES
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-
+Route::get('/dashboard', [dashboardController::class, 'index'])->name('dashboard');
