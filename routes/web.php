@@ -1,5 +1,6 @@
 <?php
 use App\Http\Controllers\activitylogController;
+use App\Http\Controllers\dashboardController;
 use App\Http\Controllers\payrollController;
 use App\Http\Controllers\employee_info_viewController;
 use App\Http\Controllers\employee_infoController;
@@ -90,6 +91,9 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::put('/employees/{id}', [employeeController::class, 'update'])->name('employees.update');
     Route::delete('/employees/{id}', [employeeController::class, 'destroy'])->name('employees.destroy');
     Route::get('/employees/{id}', [EmployeeController::class, 'show'])->name('employees.show');
+    Route::post('/employees/{id}/activate', [EmployeeController::class, 'activate'])->name('employees.activate');
+    Route::post('/employees/{id}/deactivate', [EmployeeController::class, 'deactivate'])->name('employees.deactivate');
+    Route::post('/employees/{id}/toggle-status', [EmployeeController::class, 'toggleStatus'])->name('employees.toggleStatus');
 
 
     //employee view button from index
