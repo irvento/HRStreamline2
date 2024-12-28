@@ -48,8 +48,20 @@ class DashboardController extends Controller
         //USER
         $user = Auth::user();
 
-        $employeeuser = employeeModel::where('user_id', $user->id)->pluck('employee_id');
-
+        $employeeuser = employeeModel::where('user_id', $user->id)->pluck('employee_id')->toArray();
+        if (empty($employeeuser)) {
+            $leaveusercount = 0;
+            $leaveuserstatuspendingcount = 0;
+            $leaveuserstatusapprovedcount = 0;
+            $leaveuserstatusrejectedcount = 0;
+            $salaryuserstatuspendingcount = 0;
+            $salaryuserstatuscompletedcount = 0;
+            $salaryuserstatuscancelledcount = 0;
+            $salaryuser = 0;
+            $salaryuseraverage = 0;
+            $totaluserreviews = 0;
+            $averageuserperformance = 0;
+        } else {
         //leaves
         $leaveusercount = leavesModel::where('employee_id', $employeeuser)->count();
 
@@ -87,7 +99,7 @@ class DashboardController extends Controller
         ->count();
         $averageuserperformance = performanceModel::whereIn('employee_id', $employeeuser)
         ->avg('review_score');
-
+        }
         return view('dashboard', compact(
             'totalEmployees',
             'pendingLeaves',
