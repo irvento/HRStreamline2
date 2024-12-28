@@ -94,7 +94,7 @@
             </div>
             <div class="flex justify-end">
                 <button type="submit" 
-                    class="px-6 py-2 text-white bg-primary-500 rounded-lg hover:bg-primary-600 transition">
+                    class="px-6 py-2 dark:text-white  bg-primary-500 rounded-lg hover:bg-primary-600 transition">
                     Submit
                 </button>
             </div>
