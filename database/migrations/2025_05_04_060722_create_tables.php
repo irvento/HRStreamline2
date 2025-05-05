@@ -11,9 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->enum('role', ['admin', 'manager', 'user'])->default('user')->after('email');
-        });
+
 
         Schema::create('tbl_employee', function (Blueprint $table) {
             $table->increments('employee_id');
@@ -263,9 +261,5 @@ return new class extends Migration
         Schema::dropIfExists('cache');
         Schema::dropIfExists('cache_locks');
         Schema::dropIfExists('migrations');
-
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('role');
-        });
     }
 };
