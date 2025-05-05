@@ -13,6 +13,9 @@ RUN apt-get update && apt-get install -y \
     curl \
     libzip-dev \
     libpq-dev \
+    python3 \
+    make \
+    g++ \
     && docker-php-ext-install pdo pdo_mysql pdo_pgsql mbstring zip exif pcntl bcmath gd
 
 # Install Node.js (needed for Vite)
@@ -31,8 +34,8 @@ COPY . .
 # Install PHP dependencies using Composer
 RUN composer install --no-dev --optimize-autoloader
 
-# Install Node.js dependencies and run Vite build
-RUN npm install && npm run build
+# Install Node.js dependencies and run Vite build with verbose logging
+RUN npm install --verbose && npm run build --verbose
 
 # Ensure proper permissions for Laravel's storage and cache
 RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
