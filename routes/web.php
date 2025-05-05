@@ -186,7 +186,6 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     // PAYMENT FREQUENCY ROUTES
   //  the resource route, which handles the full CRUD operations
 Route::resource('payment-frequency', PaymentFrequencyController::class)->middleware('auth');
-Route::get('/payment-frequency/{payment_frequency_id}', [paymentFrequencyController::class, 'show'])->name('payment-frequency.show')->middleware('auth');
   
 
 //JOB ROUTES
