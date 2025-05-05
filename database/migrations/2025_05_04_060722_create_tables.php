@@ -244,6 +244,31 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tables');
+        Schema::dropIfExists('users');
+        Schema::dropIfExists('tbl_employee');
+        Schema::dropIfExists('tbl_department');
+        Schema::dropIfExists('tbl_job');
+        Schema::dropIfExists('tbl_salary');
+        Schema::dropIfExists('tbl_payment_frequency_type');
+        Schema::dropIfExists('tbl_employee_info');
+        Schema::dropIfExists('tbl_performance');
+        Schema::dropIfExists('tbl_attendance');
+        Schema::dropIfExists('tbl_leaves');
+        Schema::dropIfExists('tbl_payroll');
+        Schema::dropIfExists('tbl_certificate');
+        Schema::dropIfExists('tbl_education');
+        Schema::dropIfExists('tbl_skills');
+        Schema::dropIfExists('tbl_languages');
+        Schema::dropIfExists('languagesetup');
+        Schema::dropIfExists('activity_logs');
+        Schema::dropIfExists('permissions');
+        Schema::dropIfExists('sessions');
+        Schema::dropIfExists('jobs');
+        Schema::dropIfExists('job_batches');
+        Schema::dropIfExists('failed_jobs');
+        Schema::dropIfExists('password_reset_tokens');
+        Schema::dropIfExists('cache');
+        Schema::dropIfExists('cache_locks');
+        Schema::dropIfExists('migrations');
     }
 };
