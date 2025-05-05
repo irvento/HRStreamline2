@@ -11,15 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->enum('role', ['admin', 'manager', 'user'])->default('user');
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
-            $table->timestamps();
+        Schema::table('users', function (Blueprint $table) {
+            $table->enum('role', ['admin', 'manager', 'user'])->default('user')->after('email');
         });
 
         Schema::create('tbl_employee', function (Blueprint $table) {
@@ -244,7 +237,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+
         Schema::dropIfExists('tbl_employee');
         Schema::dropIfExists('tbl_department');
         Schema::dropIfExists('tbl_job');
@@ -270,5 +263,9 @@ return new class extends Migration
         Schema::dropIfExists('cache');
         Schema::dropIfExists('cache_locks');
         Schema::dropIfExists('migrations');
+
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('role');
+        });
     }
 };
