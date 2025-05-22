@@ -1,4 +1,4 @@
-Sure! Here's the edited version of your provided information in a clean, structured format for a `README.md` file.
+
 
 ````markdown
 # HRIS (Human Resource Information System) - Laravel Application
